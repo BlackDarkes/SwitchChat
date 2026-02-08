@@ -1,0 +1,21 @@
+{
+  "name": "@repo/core",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tanstack/react-query": "^5.90.20",
+    "axios": "^1.13.4",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.11"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
