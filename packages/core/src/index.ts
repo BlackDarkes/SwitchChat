@@ -1,5 +1,3 @@
-"use client";
-
 export * from "./schemas/login-schema";
 export * from "./store/create-auth-store";
 export * from "./api/query-client";
