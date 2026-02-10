@@ -26,23 +26,14 @@ export default tseslint.config(
 		},
 		rules: {
 			"@typescript-eslint/no-redundant-type-constituents": "error",
-			"no-restricted-syntax": [
-				"error",
-				{
-					selector: "ImportDeclaration[source.value=/^\\./]:not([source.value=/\\.js$/]):not([source.value=/\\.json$/])",
-					message: "В NodeNext/ESM относительные импорты должны заканчиваться на .js (или .json)."
-				},
-			],
 			"prettier/prettier": [
 				"error",
 				{
 					endOfLine: "auto",
 					singleQuote: false,
 					trailingComma: "all",
-					tabWidth: 2,
 					useTabs: true,
 					semi: true,
-					printWidth: 80,
 				},
 			],
 			"@typescript-eslint/no-explicit-any": "off",

@@ -1,7 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
+		"module": "commonjs",
 		"declaration": true,
 		"removeComments": true,
 		"emitDecoratorMetadata": true,
@@ -13,7 +12,8 @@
 		"baseUrl": "./",
 		"paths": {
 			"@/app/*": ["./src/*"],
-			"@/modules/*": ["./src/modules/*"]
+			"@/modules/*": ["./src/modules/*"],
+			"@/generated/*": ["./src/generated/*"]
 		},
 		"resolveJsonModule": true,
 		"incremental": true,
