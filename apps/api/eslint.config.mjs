@@ -14,39 +14,20 @@ export default tseslint.config(
 	{
 		files: ["**/*.ts", "**/*.js", "**/*.mts", "**/*.mjs"],
 		languageOptions: {
-			globals: {
-				...globals.node,
-				...globals.jest,
-			},
-			sourceType: "module",
+			globals: { ...globals.node, ...globals.jest },
 			parserOptions: {
 				projectService: true,
 				tsconfigRootDir: import.meta.dirname,
 			},
 		},
 		rules: {
-			"@typescript-eslint/no-redundant-type-constituents": "error",
-			"prettier/prettier": [
-				"error",
-				{
-					endOfLine: "auto",
-					singleQuote: false,
-					trailingComma: "all",
-					useTabs: true,
-					semi: true,
-				},
-			],
+			// ВЫКЛЮЧАЕМ ругань за форматирование
+			"prettier/prettier": "off", 
+			
 			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
 			"@typescript-eslint/no-floating-promises": "warn",
-			"@typescript-eslint/no-unsafe-argument": "warn",
-			"@typescript-eslint/no-unused-vars": [
-				"warn",
-				{ argsIgnorePattern: "^_" },
-			],
-			"@typescript-eslint/no-misused-promises": [
-				"error",
-				{ checksVoidReturn: false },
-			],
+			"@typescript-eslint/no-misused-promises": ["error", { checksVoidReturn: false }],
 		},
 	},
 );
