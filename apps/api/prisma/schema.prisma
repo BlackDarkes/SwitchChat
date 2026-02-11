@@ -6,3 +6,317 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// USER Entity #user
+
+model User {
+  id String @id @default(uuid())
+
+  email String @unique
+  name String
+  tag String? @unique
+  password String 
+  avatar String?
+  bio String?
+  isOnline Boolean @map("is_online")
+  lastSeen DateTime @map("last_seen")
+  role EnumUserRole @default(USER)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // user
+  usersSession UserSession[]
+  contacts Contact[] @relation("UserContacts")
+  addedByUsers Contact[] @relation("UserAsContact")
+
+  // chat
+  owner Chat[]
+
+  // message
+  message Message[]
+  reaction Reaction[]
+  comment Comment[]
+
+  // call
+  call Call[] 
+
+  // co_viewing_session
+  co_viewing_session CoViewingSession[]
+
+  // report
+  report Report[]
+  user BlackList[] @relation("User")
+  admin BlackList[] @relation("Admin")
+
+  @@map("user")
+}
+
+model UserSession {
+  id String @id @default(uuid())
+
+  userId String @map("user_id")
+  refreshToken String @map("refresh_token")
+  userAgent String @map("user_agent")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_session")
+}
+
+model Contact {
+  id String @id @default(uuid())
+
+  ownerId String @map("owner_id")
+  contactId String @map("contact_id")
+  addedAt DateTime @default(now()) @map("added_at")
+
+  owner User @relation("UserContacts", fields: [ownerId], references: [id], onDelete: Cascade)
+  contact User @relation("UserAsContact", fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@map("contact")
+  @@unique([ownerId, contactId])
+}
+
+
+// CHAT Entity #chat
+
+model Chat {
+  id String @id @default(uuid())
+
+  type EnumChatTypes @default(GROUP)
+  name String
+  description String
+  avatar String
+  ownerId String @map("owner_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  owner User @relation(fields: [ownerId], references: [id])
+
+  // message
+  message Message[]
+
+  // call
+  call Call[]
+
+  // co_viewing_session
+  co_viewing_session CoViewingSession[]
+
+  // report
+  black_list BlackList[]
+
+  @@map("chat")
+}
+
+model ChatMember {
+  id String @id @default(uuid())
+
+  chatId String @map("chat_id")
+  userId String @map("user_id")
+  role EnumRoleMember @default(MEMBER)
+  joinedAt DateTime @default(now()) @map("joined_at")
+  lastReadMessageId String 
+
+  message Message @relation(fields: [lastReadMessageId], references: [id])
+
+  @@map("chat_member")
+}
+
+enum EnumUserRole {
+  USER
+  ADMIN
+}
+
+enum EnumChatTypes {
+  DIRECT
+  GROUP
+  CHANEL
+}
+
+enum EnumRoleMember {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+// MESSAGE Entity #message
+
+model Message {
+  id String @id @default(uuid())
+
+  userId String @map("user_id")
+  chatId String @map("chat_id")
+  text String
+  type EnumMessageType @default(TEXT)
+  isEdited Boolean @map("is_edited")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id])
+
+  // chat
+  chatMembers ChatMember[]
+
+  // message
+  reaction Reaction[]
+  comment Comment[]
+
+  // report
+  report Report[]
+
+  @@map("message")
+}
+
+model Attachment {
+  id String @id @default(uuid())
+
+  messageId String @map("message_id")
+  fileUrl String @map("file_url")
+  fileName String @map("file_name")
+  fileSize Int @map("file_size")
+  mimeType EnumMimeType @map("mime_type")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("attachment")
+}
+
+model Reaction {
+  id String @id @default(uuid())
+
+  userId String @map("user_id")
+  messageId String @map("message_id")
+  emoji String
+
+  user User @relation(fields: [userId], references: [id])
+  message Message @relation(fields: [messageId], references: [id])
+
+  @@map("reaction")
+}
+
+model Comment {
+  id String @id @default(uuid())
+
+  userId String @map("user_id")
+  messageId String @map("message_id")
+  text String
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+  message Message @relation(fields: [messageId], references: [id])
+
+  @@map("comment")
+}
+
+enum EnumMessageType {
+  TEXT 
+  SYSTEM
+  FILE
+  CALL_START
+}
+
+enum EnumMimeType {
+  IMAGE
+  PDF
+  VIDEO
+}
+
+// CALL Entity #call
+
+model Call {
+  id String @id @default(uuid())
+
+  chatId String @map("chat_id")
+  initiatorId String @map("initiator_id")
+  status EnumCallStatus
+  type EnumCallType
+  startedAt DateTime @default(now())
+  endedAt DateTime
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  initiator User @relation(fields: [initiatorId], references: [id])
+
+  @@map("call")
+}
+
+model CoViewingSession {
+  id String @id @default(uuid())
+
+  chatId String @map("chat_id")
+  videoUrl String @map("video_url")
+  source String // СДЕЛАТЬ ENUM!!!!!!!!!!!
+  currentTime DateTime 
+  status EnumCoViewingSessionStatus
+  lastUpdaterId String
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  lastUpdater User @relation(fields: [lastUpdaterId], references: [id])
+
+  @@map("co_viewing_session")
+}
+
+enum EnumCallStatus {
+  ONGOING
+  ENDED
+  MISSED
+}
+
+enum EnumCallType {
+  AUDIO
+  VIDEO
+}
+
+enum EnumCoViewingSessionStatus {
+  PLAY
+  PAUSE
+}
+
+// REPORT Entity #report
+
+model Report {
+  id String @id @default(uuid())
+
+  reporterId String @map("reporter_id")
+  targetId String @map("target_id")
+  reason String // СДЕЛАТЬ ENUM!!!!!!!!!!!!!!
+  status EnumReportStatus @default(OPEN)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  reporter User @relation(fields: [reporterId], references: [id])
+  target Message @relation(fields: [targetId], references: [id])
+
+  @@map("report")
+}
+
+model BlackList {
+  id String @id @default(uuid())
+
+  userId String @map("user_id")
+  chatId String @map("chat_id")
+  adminId String @map("admin_id")
+  reason String // СДЕЛАТЬ ENUM!!!!!!!!!!!!!!
+  expiresAt DateTime @map("expires_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation("User", fields: [userId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id])
+  admin User @relation("Admin", fields: [adminId], references: [id])
+
+  @@map("black_list")
+}
+
+enum EnumReportStatus {
+  OPEN
+  RESOLVED
+}
