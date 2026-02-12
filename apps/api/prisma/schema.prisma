@@ -18,7 +18,7 @@ model User {
   password String 
   avatar String?
   bio String?
-  isOnline Boolean @map("is_online")
+  isOnline Boolean @map("is_online") @default(false)
   lastSeen DateTime @map("last_seen")
   role EnumUserRole @default(USER)
 
@@ -31,25 +31,27 @@ model User {
   addedByUsers Contact[] @relation("UserAsContact")
 
   // chat
-  owner Chat[]
+  owners Chat[]
+  chatMembers ChatMember[]
 
   // message
-  message Message[]
-  reaction Reaction[]
-  comment Comment[]
+  messages Message[]
+  reactions Reaction[]
+  comments Comment[]
 
   // call
-  call Call[] 
+  calls Call[] 
 
   // co_viewing_session
-  co_viewing_session CoViewingSession[]
+  coViewingSessions CoViewingSession[]
 
   // report
-  report Report[]
-  user BlackList[] @relation("User")
-  admin BlackList[] @relation("Admin")
+  reports Report[]
+  users BlackList[] @relation("UserBanned")
+  admins BlackList[] @relation("AdminWhoBanned")
 
   @@map("user")
+  @@index([tag, name])
 }
 
 model UserSession {
@@ -65,6 +67,7 @@ model UserSession {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("user_session")
+  @@index([userId])
 }
 
 model Contact {
@@ -79,6 +82,7 @@ model Contact {
 
   @@map("contact")
   @@unique([ownerId, contactId])
+  @@index([ownerId, contactId])
 }
 
 
@@ -87,10 +91,11 @@ model Contact {
 model Chat {
   id String @id @default(uuid())
 
-  type EnumChatTypes @default(GROUP)
+  type EnumChatTypes? @default(GROUP)
   name String
-  description String
-  avatar String
+  tag String
+  description String?
+  avatar String?
   ownerId String @map("owner_id")
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -99,18 +104,22 @@ model Chat {
   owner User @relation(fields: [ownerId], references: [id])
 
   // message
-  message Message[]
+  messages Message[]
 
   // call
-  call Call[]
+  calls Call[]
+
+  // chat
+  chatMembers ChatMember[]
 
   // co_viewing_session
-  co_viewing_session CoViewingSession[]
+  coViewingSessions CoViewingSession[]
 
   // report
-  black_list BlackList[]
+  blackLists BlackList[]
 
   @@map("chat")
+  @@index([name, tag])
 }
 
 model ChatMember {
@@ -120,11 +129,14 @@ model ChatMember {
   userId String @map("user_id")
   role EnumRoleMember @default(MEMBER)
   joinedAt DateTime @default(now()) @map("joined_at")
-  lastReadMessageId String 
+  lastReadMessageId String?
 
-  message Message @relation(fields: [lastReadMessageId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message Message? @relation(fields: [lastReadMessageId], references: [id])
 
   @@map("chat_member")
+  @@index([userId])
 }
 
 enum EnumUserRole {
@@ -151,27 +163,34 @@ model Message {
 
   userId String @map("user_id")
   chatId String @map("chat_id")
-  text String
+  text String?
   type EnumMessageType @default(TEXT)
-  isEdited Boolean @map("is_edited")
+  isEdited Boolean? @map("is_edited") @default(false)
+  replyToId String? @map("reply_to_id") 
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
 
   user User @relation(fields: [userId], references: [id])
-  chat Chat @relation(fields: [chatId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  replyTo Message? @relation("ReplyTo", fields: [replyToId], references: [id])
 
   // chat
   chatMembers ChatMember[]
 
   // message
-  reaction Reaction[]
-  comment Comment[]
+  replies Message[] @relation("ReplyTo")
+  reactions Reaction[]
+  comments Comment[]
+
+  // call
+  attachments Attachment[]
 
   // report
-  report Report[]
+  reports Report[]
 
   @@map("message")
+  @@index([userId, createdAt])
 }
 
 model Attachment {
@@ -185,7 +204,10 @@ model Attachment {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  messages Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
   @@map("attachment")
+  @@index([messageId])
 }
 
 model Reaction {
@@ -196,9 +218,10 @@ model Reaction {
   emoji String
 
   user User @relation(fields: [userId], references: [id])
-  message Message @relation(fields: [messageId], references: [id])
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
   @@map("reaction")
+  @@index([messageId])
 }
 
 model Comment {
@@ -215,6 +238,7 @@ model Comment {
   message Message @relation(fields: [messageId], references: [id])
 
   @@map("comment")
+  @@index([userId])
 }
 
 enum EnumMessageType {
@@ -240,12 +264,13 @@ model Call {
   status EnumCallStatus
   type EnumCallType
   startedAt DateTime @default(now())
-  endedAt DateTime
+  endedAt DateTime?
 
-  chat Chat @relation(fields: [chatId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
   initiator User @relation(fields: [initiatorId], references: [id])
 
   @@map("call")
+  @@index([chatId])
 }
 
 model CoViewingSession {
@@ -253,12 +278,12 @@ model CoViewingSession {
 
   chatId String @map("chat_id")
   videoUrl String @map("video_url")
-  source String // СДЕЛАТЬ ENUM!!!!!!!!!!!
-  currentTime DateTime 
+  source EnumCoViewingSessionSource
+  currentTime Int 
   status EnumCoViewingSessionStatus
   lastUpdaterId String
 
-  chat Chat @relation(fields: [chatId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
   lastUpdater User @relation(fields: [lastUpdaterId], references: [id])
 
   @@map("co_viewing_session")
@@ -280,6 +305,12 @@ enum EnumCoViewingSessionStatus {
   PAUSE
 }
 
+enum EnumCoViewingSessionSource {
+  YOUTUBE
+  DIRECT_LINK
+  LOCAL
+}
+
 // REPORT Entity #report
 
 model Report {
@@ -287,8 +318,8 @@ model Report {
 
   reporterId String @map("reporter_id")
   targetId String @map("target_id")
-  reason String // СДЕЛАТЬ ENUM!!!!!!!!!!!!!!
-  status EnumReportStatus @default(OPEN)
+  reason EnumReportReason
+  status EnumReportStatus? @default(OPEN)
 
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -302,21 +333,36 @@ model BlackList {
   id String @id @default(uuid())
 
   userId String @map("user_id")
-  chatId String @map("chat_id")
+  chatId String? @map("chat_id")
   adminId String @map("admin_id")
-  reason String // СДЕЛАТЬ ENUM!!!!!!!!!!!!!!
+  reason EnumBlackListReason
   expiresAt DateTime @map("expires_at")
 
   createdAt DateTime @default(now()) @map("created_at")
 
-  user User @relation("User", fields: [userId], references: [id])
-  chat Chat @relation(fields: [chatId], references: [id])
-  admin User @relation("Admin", fields: [adminId], references: [id])
+  user User @relation("UserBanned", fields: [userId], references: [id])
+  chat Chat? @relation(fields: [chatId], references: [id])
+  admin User @relation("AdminWhoBanned", fields: [adminId], references: [id])
 
   @@map("black_list")
+}
+
+enum EnumReportReason {
+  SPAM
+  ADULT_CONTENT
+  VIOLENCE
+  HATE_SPEECH
+  OTHER
 }
 
 enum EnumReportStatus {
   OPEN
   RESOLVED
+}
+
+enum EnumBlackListReason {
+  RULES_VIOLENT
+  SPAM_BOT
+  INAPPROPRIATE_BEHAVIOR
+  OTHER
 }
