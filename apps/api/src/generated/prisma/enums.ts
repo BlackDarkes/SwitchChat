@@ -9,7 +9,109 @@
 * 🟢 You can import this file directly.
 */
 
+export const EnumUserRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+} as const
+
+export type EnumUserRole = (typeof EnumUserRole)[keyof typeof EnumUserRole]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const EnumChatTypes = {
+  DIRECT: 'DIRECT',
+  GROUP: 'GROUP',
+  CHANEL: 'CHANEL'
+} as const
+
+export type EnumChatTypes = (typeof EnumChatTypes)[keyof typeof EnumChatTypes]
+
+
+export const EnumRoleMember = {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+} as const
+
+export type EnumRoleMember = (typeof EnumRoleMember)[keyof typeof EnumRoleMember]
+
+
+export const EnumMessageType = {
+  TEXT: 'TEXT',
+  SYSTEM: 'SYSTEM',
+  FILE: 'FILE',
+  CALL_START: 'CALL_START'
+} as const
+
+export type EnumMessageType = (typeof EnumMessageType)[keyof typeof EnumMessageType]
+
+
+export const EnumMimeType = {
+  IMAGE: 'IMAGE',
+  PDF: 'PDF',
+  VIDEO: 'VIDEO'
+} as const
+
+export type EnumMimeType = (typeof EnumMimeType)[keyof typeof EnumMimeType]
+
+
+export const EnumCallStatus = {
+  ONGOING: 'ONGOING',
+  ENDED: 'ENDED',
+  MISSED: 'MISSED'
+} as const
+
+export type EnumCallStatus = (typeof EnumCallStatus)[keyof typeof EnumCallStatus]
+
+
+export const EnumCallType = {
+  AUDIO: 'AUDIO',
+  VIDEO: 'VIDEO'
+} as const
+
+export type EnumCallType = (typeof EnumCallType)[keyof typeof EnumCallType]
+
+
+export const EnumCoViewingSessionStatus = {
+  PLAY: 'PLAY',
+  PAUSE: 'PAUSE'
+} as const
+
+export type EnumCoViewingSessionStatus = (typeof EnumCoViewingSessionStatus)[keyof typeof EnumCoViewingSessionStatus]
+
+
+export const EnumCoViewingSessionSource = {
+  YOUTUBE: 'YOUTUBE',
+  DIRECT_LINK: 'DIRECT_LINK',
+  LOCAL: 'LOCAL'
+} as const
+
+export type EnumCoViewingSessionSource = (typeof EnumCoViewingSessionSource)[keyof typeof EnumCoViewingSessionSource]
+
+
+export const EnumReportReason = {
+  SPAM: 'SPAM',
+  ADULT_CONTENT: 'ADULT_CONTENT',
+  VIOLENCE: 'VIOLENCE',
+  HATE_SPEECH: 'HATE_SPEECH',
+  OTHER: 'OTHER'
+} as const
+
+export type EnumReportReason = (typeof EnumReportReason)[keyof typeof EnumReportReason]
+
+
+export const EnumReportStatus = {
+  OPEN: 'OPEN',
+  RESOLVED: 'RESOLVED'
+} as const
+
+export type EnumReportStatus = (typeof EnumReportStatus)[keyof typeof EnumReportStatus]
+
+
+export const EnumBlackListReason = {
+  RULES_VIOLENT: 'RULES_VIOLENT',
+  SPAM_BOT: 'SPAM_BOT',
+  INAPPROPRIATE_BEHAVIOR: 'INAPPROPRIATE_BEHAVIOR',
+  OTHER: 'OTHER'
+} as const
+
+export type EnumBlackListReason = (typeof EnumBlackListReason)[keyof typeof EnumBlackListReason]

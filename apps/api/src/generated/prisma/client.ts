@@ -12,16 +12,14 @@
 
 import * as process from 'node:process'
 import * as path from 'node:path'
-import { fileURLToPath } from 'node:url'
-globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
 
 import * as runtime from "@prisma/client/runtime/client"
-import * as $Enums from "./enums.js"
-import * as $Class from "./internal/class.js"
-import * as Prisma from "./internal/prismaNamespace.js"
+import * as $Enums from "./enums"
+import * as $Class from "./internal/class"
+import * as Prisma from "./internal/prismaNamespace"
 
-export * as $Enums from './enums.js'
-export * from "./enums.js"
+export * as $Enums from './enums'
+export * from "./enums"
 /**
  * ## Prisma Client
  * 
@@ -39,4 +37,68 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
-
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model UserSession
+ * 
+ */
+export type UserSession = Prisma.UserSessionModel
+/**
+ * Model Contact
+ * 
+ */
+export type Contact = Prisma.ContactModel
+/**
+ * Model Chat
+ * 
+ */
+export type Chat = Prisma.ChatModel
+/**
+ * Model ChatMember
+ * 
+ */
+export type ChatMember = Prisma.ChatMemberModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
+/**
+ * Model Attachment
+ * 
+ */
+export type Attachment = Prisma.AttachmentModel
+/**
+ * Model Reaction
+ * 
+ */
+export type Reaction = Prisma.ReactionModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
+/**
+ * Model Call
+ * 
+ */
+export type Call = Prisma.CallModel
+/**
+ * Model CoViewingSession
+ * 
+ */
+export type CoViewingSession = Prisma.CoViewingSessionModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel
+/**
+ * Model BlackList
+ * 
+ */
+export type BlackList = Prisma.BlackListModel

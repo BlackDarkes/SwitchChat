@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -51,7 +51,19 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  User: 'User',
+  UserSession: 'UserSession',
+  Contact: 'Contact',
+  Chat: 'Chat',
+  ChatMember: 'ChatMember',
+  Message: 'Message',
+  Attachment: 'Attachment',
+  Reaction: 'Reaction',
+  Comment: 'Comment',
+  Call: 'Call',
+  CoViewingSession: 'CoViewingSession',
+  Report: 'Report',
+  BlackList: 'BlackList'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +80,196 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  tag: 'tag',
+  password: 'password',
+  avatar: 'avatar',
+  bio: 'bio',
+  isOnline: 'isOnline',
+  lastSeen: 'lastSeen',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  refreshToken: 'refreshToken',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserSessionScalarFieldEnum = (typeof UserSessionScalarFieldEnum)[keyof typeof UserSessionScalarFieldEnum]
+
+
+export const ContactScalarFieldEnum = {
+  id: 'id',
+  ownerId: 'ownerId',
+  contactId: 'contactId',
+  addedAt: 'addedAt'
+} as const
+
+export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const ChatScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  name: 'name',
+  tag: 'tag',
+  description: 'description',
+  avatar: 'avatar',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChatScalarFieldEnum = (typeof ChatScalarFieldEnum)[keyof typeof ChatScalarFieldEnum]
+
+
+export const ChatMemberScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  userId: 'userId',
+  role: 'role',
+  joinedAt: 'joinedAt',
+  lastReadMessageId: 'lastReadMessageId'
+} as const
+
+export type ChatMemberScalarFieldEnum = (typeof ChatMemberScalarFieldEnum)[keyof typeof ChatMemberScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  chatId: 'chatId',
+  text: 'text',
+  type: 'type',
+  isEdited: 'isEdited',
+  replyToId: 'replyToId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const AttachmentScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  fileUrl: 'fileUrl',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  createdAt: 'createdAt'
+} as const
+
+export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
+
+
+export const ReactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  messageId: 'messageId',
+  emoji: 'emoji'
+} as const
+
+export type ReactionScalarFieldEnum = (typeof ReactionScalarFieldEnum)[keyof typeof ReactionScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  messageId: 'messageId',
+  text: 'text',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+export const CallScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  initiatorId: 'initiatorId',
+  status: 'status',
+  type: 'type',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt'
+} as const
+
+export type CallScalarFieldEnum = (typeof CallScalarFieldEnum)[keyof typeof CallScalarFieldEnum]
+
+
+export const CoViewingSessionScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  videoUrl: 'videoUrl',
+  source: 'source',
+  currentTime: 'currentTime',
+  status: 'status',
+  lastUpdaterId: 'lastUpdaterId'
+} as const
+
+export type CoViewingSessionScalarFieldEnum = (typeof CoViewingSessionScalarFieldEnum)[keyof typeof CoViewingSessionScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  reporterId: 'reporterId',
+  targetId: 'targetId',
+  reason: 'reason',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
+export const BlackListScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  chatId: 'chatId',
+  adminId: 'adminId',
+  reason: 'reason',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type BlackListScalarFieldEnum = (typeof BlackListScalarFieldEnum)[keyof typeof BlackListScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

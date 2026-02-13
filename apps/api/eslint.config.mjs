@@ -21,7 +21,6 @@ export default tseslint.config(
 			},
 		},
 		rules: {
-			// ВЫКЛЮЧАЕМ ругань за форматирование
 			"prettier/prettier": "off", 
 			
 			"@typescript-eslint/no-explicit-any": "off",

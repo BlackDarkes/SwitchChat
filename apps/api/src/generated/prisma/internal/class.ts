@@ -12,7 +12,7 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "./prismaNamespace.js"
+import type * as Prisma from "./prismaNamespace"
 
 
 const config: runtime.GetPrismaClientConfig = {
@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// USER Entity #user\n\nmodel User {\n  id String @id @default(uuid())\n\n  email    String       @unique\n  name     String\n  tag      String?      @unique\n  password String\n  avatar   String?\n  bio      String?\n  isOnline Boolean      @default(false) @map(\"is_online\")\n  lastSeen DateTime     @map(\"last_seen\")\n  role     EnumUserRole @default(USER)\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  // user\n  usersSession UserSession[]\n  contacts     Contact[]     @relation(\"UserContacts\")\n  addedByUsers Contact[]     @relation(\"UserAsContact\")\n\n  // chat\n  owners      Chat[]\n  chatMembers ChatMember[]\n\n  // message\n  messages  Message[]\n  reactions Reaction[]\n  comments  Comment[]\n\n  // call\n  calls Call[]\n\n  // co_viewing_session\n  coViewingSessions CoViewingSession[]\n\n  // report\n  reports Report[]\n  users   BlackList[] @relation(\"UserBanned\")\n  admins  BlackList[] @relation(\"AdminWhoBanned\")\n\n  @@index([tag, name])\n  @@map(\"user\")\n}\n\nmodel UserSession {\n  id String @id @default(uuid())\n\n  userId       String @map(\"user_id\")\n  refreshToken String @map(\"refresh_token\")\n  userAgent    String @map(\"user_agent\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n  @@map(\"user_session\")\n}\n\nmodel Contact {\n  id String @id @default(uuid())\n\n  ownerId   String   @map(\"owner_id\")\n  contactId String   @map(\"contact_id\")\n  addedAt   DateTime @default(now()) @map(\"added_at\")\n\n  owner   User @relation(\"UserContacts\", fields: [ownerId], references: [id], onDelete: Cascade)\n  contact User @relation(\"UserAsContact\", fields: [contactId], references: [id], onDelete: Cascade)\n\n  @@unique([ownerId, contactId])\n  @@index([ownerId, contactId])\n  @@map(\"contact\")\n}\n\n// CHAT Entity #chat\n\nmodel Chat {\n  id String @id @default(uuid())\n\n  type        EnumChatTypes? @default(GROUP)\n  name        String\n  tag         String\n  description String?\n  avatar      String?\n  ownerId     String         @map(\"owner_id\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  owner User @relation(fields: [ownerId], references: [id])\n\n  // message\n  messages Message[]\n\n  // call\n  calls Call[]\n\n  // chat\n  chatMembers ChatMember[]\n\n  // co_viewing_session\n  coViewingSessions CoViewingSession[]\n\n  // report\n  blackLists BlackList[]\n\n  @@index([name, tag])\n  @@map(\"chat\")\n}\n\nmodel ChatMember {\n  id String @id @default(uuid())\n\n  chatId            String         @map(\"chat_id\")\n  userId            String         @map(\"user_id\")\n  role              EnumRoleMember @default(MEMBER)\n  joinedAt          DateTime       @default(now()) @map(\"joined_at\")\n  lastReadMessageId String?\n\n  chat    Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)\n  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  message Message? @relation(fields: [lastReadMessageId], references: [id])\n\n  @@index([userId])\n  @@map(\"chat_member\")\n}\n\nenum EnumUserRole {\n  USER\n  ADMIN\n}\n\nenum EnumChatTypes {\n  DIRECT\n  GROUP\n  CHANEL\n}\n\nenum EnumRoleMember {\n  OWNER\n  ADMIN\n  MEMBER\n}\n\n// MESSAGE Entity #message\n\nmodel Message {\n  id String @id @default(uuid())\n\n  userId    String          @map(\"user_id\")\n  chatId    String          @map(\"chat_id\")\n  text      String?\n  type      EnumMessageType @default(TEXT)\n  isEdited  Boolean?        @default(false) @map(\"is_edited\")\n  replyToId String?         @map(\"reply_to_id\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt() @map(\"updated_at\")\n\n  user    User     @relation(fields: [userId], references: [id])\n  chat    Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)\n  replyTo Message? @relation(\"ReplyTo\", fields: [replyToId], references: [id])\n\n  // chat\n  chatMembers ChatMember[]\n\n  // message\n  replies   Message[]  @relation(\"ReplyTo\")\n  reactions Reaction[]\n  comments  Comment[]\n\n  // call\n  attachments Attachment[]\n\n  // report\n  reports Report[]\n\n  @@index([userId, createdAt])\n  @@map(\"message\")\n}\n\nmodel Attachment {\n  id String @id @default(uuid())\n\n  messageId String       @map(\"message_id\")\n  fileUrl   String       @map(\"file_url\")\n  fileName  String       @map(\"file_name\")\n  fileSize  Int          @map(\"file_size\")\n  mimeType  EnumMimeType @map(\"mime_type\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  messages Message @relation(fields: [messageId], references: [id], onDelete: Cascade)\n\n  @@index([messageId])\n  @@map(\"attachment\")\n}\n\nmodel Reaction {\n  id String @id @default(uuid())\n\n  userId    String @map(\"user_id\")\n  messageId String @map(\"message_id\")\n  emoji     String\n\n  user    User    @relation(fields: [userId], references: [id])\n  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)\n\n  @@index([messageId])\n  @@map(\"reaction\")\n}\n\nmodel Comment {\n  id String @id @default(uuid())\n\n  userId    String @map(\"user_id\")\n  messageId String @map(\"message_id\")\n  text      String\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt() @map(\"updated_at\")\n\n  user    User    @relation(fields: [userId], references: [id])\n  message Message @relation(fields: [messageId], references: [id])\n\n  @@index([userId])\n  @@map(\"comment\")\n}\n\nenum EnumMessageType {\n  TEXT\n  SYSTEM\n  FILE\n  CALL_START\n}\n\nenum EnumMimeType {\n  IMAGE\n  PDF\n  VIDEO\n}\n\n// CALL Entity #call\n\nmodel Call {\n  id String @id @default(uuid())\n\n  chatId      String         @map(\"chat_id\")\n  initiatorId String         @map(\"initiator_id\")\n  status      EnumCallStatus\n  type        EnumCallType\n  startedAt   DateTime       @default(now())\n  endedAt     DateTime?\n\n  chat      Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)\n  initiator User @relation(fields: [initiatorId], references: [id])\n\n  @@index([chatId])\n  @@map(\"call\")\n}\n\nmodel CoViewingSession {\n  id String @id @default(uuid())\n\n  chatId        String                     @map(\"chat_id\")\n  videoUrl      String                     @map(\"video_url\")\n  source        EnumCoViewingSessionSource\n  currentTime   Int\n  status        EnumCoViewingSessionStatus\n  lastUpdaterId String\n\n  chat        Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)\n  lastUpdater User @relation(fields: [lastUpdaterId], references: [id])\n\n  @@map(\"co_viewing_session\")\n}\n\nenum EnumCallStatus {\n  ONGOING\n  ENDED\n  MISSED\n}\n\nenum EnumCallType {\n  AUDIO\n  VIDEO\n}\n\nenum EnumCoViewingSessionStatus {\n  PLAY\n  PAUSE\n}\n\nenum EnumCoViewingSessionSource {\n  YOUTUBE\n  DIRECT_LINK\n  LOCAL\n}\n\n// REPORT Entity #report\n\nmodel Report {\n  id String @id @default(uuid())\n\n  reporterId String            @map(\"reporter_id\")\n  targetId   String            @map(\"target_id\")\n  reason     EnumReportReason\n  status     EnumReportStatus? @default(OPEN)\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  reporter User    @relation(fields: [reporterId], references: [id])\n  target   Message @relation(fields: [targetId], references: [id])\n\n  @@map(\"report\")\n}\n\nmodel BlackList {\n  id String @id @default(uuid())\n\n  userId    String              @map(\"user_id\")\n  chatId    String?             @map(\"chat_id\")\n  adminId   String              @map(\"admin_id\")\n  reason    EnumBlackListReason\n  expiresAt DateTime            @map(\"expires_at\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n\n  user  User  @relation(\"UserBanned\", fields: [userId], references: [id])\n  chat  Chat? @relation(fields: [chatId], references: [id])\n  admin User  @relation(\"AdminWhoBanned\", fields: [adminId], references: [id])\n\n  @@map(\"black_list\")\n}\n\nenum EnumReportReason {\n  SPAM\n  ADULT_CONTENT\n  VIOLENCE\n  HATE_SPEECH\n  OTHER\n}\n\nenum EnumReportStatus {\n  OPEN\n  RESOLVED\n}\n\nenum EnumBlackListReason {\n  RULES_VIOLENT\n  SPAM_BOT\n  INAPPROPRIATE_BEHAVIOR\n  OTHER\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tag\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bio\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isOnline\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_online\"},{\"name\":\"lastSeen\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"last_seen\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"EnumUserRole\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"usersSession\",\"kind\":\"object\",\"type\":\"UserSession\",\"relationName\":\"UserToUserSession\"},{\"name\":\"contacts\",\"kind\":\"object\",\"type\":\"Contact\",\"relationName\":\"UserContacts\"},{\"name\":\"addedByUsers\",\"kind\":\"object\",\"type\":\"Contact\",\"relationName\":\"UserAsContact\"},{\"name\":\"owners\",\"kind\":\"object\",\"type\":\"Chat\",\"relationName\":\"ChatToUser\"},{\"name\":\"chatMembers\",\"kind\":\"object\",\"type\":\"ChatMember\",\"relationName\":\"ChatMemberToUser\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"MessageToUser\"},{\"name\":\"reactions\",\"kind\":\"object\",\"type\":\"Reaction\",\"relationName\":\"ReactionToUser\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CommentToUser\"},{\"name\":\"calls\",\"kind\":\"object\",\"type\":\"Call\",\"relationName\":\"CallToUser\"},{\"name\":\"coViewingSessions\",\"kind\":\"object\",\"type\":\"CoViewingSession\",\"relationName\":\"CoViewingSessionToUser\"},{\"name\":\"reports\",\"kind\":\"object\",\"type\":\"Report\",\"relationName\":\"ReportToUser\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"BlackList\",\"relationName\":\"UserBanned\"},{\"name\":\"admins\",\"kind\":\"object\",\"type\":\"BlackList\",\"relationName\":\"AdminWhoBanned\"}],\"dbName\":\"user\"},\"UserSession\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"refreshToken\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"refresh_token\"},{\"name\":\"userAgent\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_agent\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserSession\"}],\"dbName\":\"user_session\"},\"Contact\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"owner_id\"},{\"name\":\"contactId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"contact_id\"},{\"name\":\"addedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"added_at\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserContacts\"},{\"name\":\"contact\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserAsContact\"}],\"dbName\":\"contact\"},\"Chat\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"EnumChatTypes\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tag\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"owner_id\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ChatToUser\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ChatToMessage\"},{\"name\":\"calls\",\"kind\":\"object\",\"type\":\"Call\",\"relationName\":\"CallToChat\"},{\"name\":\"chatMembers\",\"kind\":\"object\",\"type\":\"ChatMember\",\"relationName\":\"ChatToChatMember\"},{\"name\":\"coViewingSessions\",\"kind\":\"object\",\"type\":\"CoViewingSession\",\"relationName\":\"ChatToCoViewingSession\"},{\"name\":\"blackLists\",\"kind\":\"object\",\"type\":\"BlackList\",\"relationName\":\"BlackListToChat\"}],\"dbName\":\"chat\"},\"ChatMember\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"chatId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"chat_id\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"EnumRoleMember\"},{\"name\":\"joinedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"joined_at\"},{\"name\":\"lastReadMessageId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"chat\",\"kind\":\"object\",\"type\":\"Chat\",\"relationName\":\"ChatToChatMember\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ChatMemberToUser\"},{\"name\":\"message\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ChatMemberToMessage\"}],\"dbName\":\"chat_member\"},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"chatId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"chat_id\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"EnumMessageType\"},{\"name\":\"isEdited\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_edited\"},{\"name\":\"replyToId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"reply_to_id\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MessageToUser\"},{\"name\":\"chat\",\"kind\":\"object\",\"type\":\"Chat\",\"relationName\":\"ChatToMessage\"},{\"name\":\"replyTo\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ReplyTo\"},{\"name\":\"chatMembers\",\"kind\":\"object\",\"type\":\"ChatMember\",\"relationName\":\"ChatMemberToMessage\"},{\"name\":\"replies\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ReplyTo\"},{\"name\":\"reactions\",\"kind\":\"object\",\"type\":\"Reaction\",\"relationName\":\"MessageToReaction\"},{\"name\":\"comments\",\"kind\":\"object\",\"type\":\"Comment\",\"relationName\":\"CommentToMessage\"},{\"name\":\"attachments\",\"kind\":\"object\",\"type\":\"Attachment\",\"relationName\":\"AttachmentToMessage\"},{\"name\":\"reports\",\"kind\":\"object\",\"type\":\"Report\",\"relationName\":\"MessageToReport\"}],\"dbName\":\"message\"},\"Attachment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"messageId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"message_id\"},{\"name\":\"fileUrl\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"file_url\"},{\"name\":\"fileName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"file_name\"},{\"name\":\"fileSize\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"file_size\"},{\"name\":\"mimeType\",\"kind\":\"enum\",\"type\":\"EnumMimeType\",\"dbName\":\"mime_type\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"AttachmentToMessage\"}],\"dbName\":\"attachment\"},\"Reaction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"messageId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"message_id\"},{\"name\":\"emoji\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReactionToUser\"},{\"name\":\"message\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"MessageToReaction\"}],\"dbName\":\"reaction\"},\"Comment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"messageId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"message_id\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CommentToUser\"},{\"name\":\"message\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"CommentToMessage\"}],\"dbName\":\"comment\"},\"Call\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"chatId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"chat_id\"},{\"name\":\"initiatorId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"initiator_id\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"EnumCallStatus\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"EnumCallType\"},{\"name\":\"startedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"chat\",\"kind\":\"object\",\"type\":\"Chat\",\"relationName\":\"CallToChat\"},{\"name\":\"initiator\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CallToUser\"}],\"dbName\":\"call\"},\"CoViewingSession\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"chatId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"chat_id\"},{\"name\":\"videoUrl\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"video_url\"},{\"name\":\"source\",\"kind\":\"enum\",\"type\":\"EnumCoViewingSessionSource\"},{\"name\":\"currentTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"EnumCoViewingSessionStatus\"},{\"name\":\"lastUpdaterId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"chat\",\"kind\":\"object\",\"type\":\"Chat\",\"relationName\":\"ChatToCoViewingSession\"},{\"name\":\"lastUpdater\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CoViewingSessionToUser\"}],\"dbName\":\"co_viewing_session\"},\"Report\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reporterId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"reporter_id\"},{\"name\":\"targetId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"target_id\"},{\"name\":\"reason\",\"kind\":\"enum\",\"type\":\"EnumReportReason\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"EnumReportStatus\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"reporter\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ReportToUser\"},{\"name\":\"target\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"MessageToReport\"}],\"dbName\":\"report\"},\"BlackList\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"user_id\"},{\"name\":\"chatId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"chat_id\"},{\"name\":\"adminId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"admin_id\"},{\"name\":\"reason\",\"kind\":\"enum\",\"type\":\"EnumBlackListReason\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"expires_at\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserBanned\"},{\"name\":\"chat\",\"kind\":\"object\",\"type\":\"Chat\",\"relationName\":\"BlackListToChat\"},{\"name\":\"admin\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AdminWhoBanned\"}],\"dbName\":\"black_list\"}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -37,10 +37,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.js"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.js")
     return await decodeBase64AsWasm(wasm)
   },
 
@@ -176,7 +176,135 @@ export interface PrismaClient<
     extArgs: ExtArgs
   }>>
 
-    
+      /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.userSession`: Exposes CRUD operations for the **UserSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserSessions
+    * const userSessions = await prisma.userSession.findMany()
+    * ```
+    */
+  get userSession(): Prisma.UserSessionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.contact`: Exposes CRUD operations for the **Contact** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Contacts
+    * const contacts = await prisma.contact.findMany()
+    * ```
+    */
+  get contact(): Prisma.ContactDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.chat`: Exposes CRUD operations for the **Chat** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Chats
+    * const chats = await prisma.chat.findMany()
+    * ```
+    */
+  get chat(): Prisma.ChatDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.chatMember`: Exposes CRUD operations for the **ChatMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChatMembers
+    * const chatMembers = await prisma.chatMember.findMany()
+    * ```
+    */
+  get chatMember(): Prisma.ChatMemberDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.message`: Exposes CRUD operations for the **Message** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Messages
+    * const messages = await prisma.message.findMany()
+    * ```
+    */
+  get message(): Prisma.MessageDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.attachment`: Exposes CRUD operations for the **Attachment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Attachments
+    * const attachments = await prisma.attachment.findMany()
+    * ```
+    */
+  get attachment(): Prisma.AttachmentDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.reaction`: Exposes CRUD operations for the **Reaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reactions
+    * const reactions = await prisma.reaction.findMany()
+    * ```
+    */
+  get reaction(): Prisma.ReactionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comments
+    * const comments = await prisma.comment.findMany()
+    * ```
+    */
+  get comment(): Prisma.CommentDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.call`: Exposes CRUD operations for the **Call** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Calls
+    * const calls = await prisma.call.findMany()
+    * ```
+    */
+  get call(): Prisma.CallDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.coViewingSession`: Exposes CRUD operations for the **CoViewingSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CoViewingSessions
+    * const coViewingSessions = await prisma.coViewingSession.findMany()
+    * ```
+    */
+  get coViewingSession(): Prisma.CoViewingSessionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.report`: Exposes CRUD operations for the **Report** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reports
+    * const reports = await prisma.report.findMany()
+    * ```
+    */
+  get report(): Prisma.ReportDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.blackList`: Exposes CRUD operations for the **BlackList** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BlackLists
+    * const blackLists = await prisma.blackList.findMany()
+    * ```
+    */
+  get blackList(): Prisma.BlackListDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
