@@ -1,8 +1,8 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "messenger api",
+  "author": "Daniil Gordeev",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -11,23 +11,40 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:client": "pnpm prisma generate",
+    "db:generate": "pnpm prisma migrate dev --name",
+    "db:migrate": "pnpm prisma migrate deploy" 
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/mapped-types": "*",
+    "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-socket.io": "^11.1.13",
+    "@nestjs/serve-static": "^5.0.4",
+    "@nestjs/websockets": "^11.1.13",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.3.1",
+    "ioredis": "^5.9.3",
+    "nodemailer": "^8.0.1",
+    "passport-js": "^1.0.0",
+    "passport-jwt": "^4.0.1",
     "prisma": "^7.4.0",
+    "redis": "^5.10.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.8.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -39,7 +56,9 @@
     "@prisma/client": "^7.4.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
+    "@types/multer": "^2.0.0",
     "@types/node": "^22.10.7",
+    "@types/passport-jwt": "^4.0.1",
     "@types/pg": "^8.16.0",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
@@ -47,6 +66,8 @@
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^16.0.0",
     "jest": "^30.0.0",
+    "multer": "^2.0.2",
+    "nestjs-zod": "^5.1.1",
     "pg": "^8.18.0",
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
@@ -56,7 +77,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "zod": "^4.3.6"
   },
   "jest": {
     "moduleFileExtensions": [
