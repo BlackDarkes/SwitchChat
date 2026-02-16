@@ -455,10 +455,6 @@ export type EnumEnumCallTypeFieldUpdateOperationsInput = {
   set?: $Enums.EnumCallType
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type CallCreateWithoutInitiatorInput = {
   id?: string
   status: $Enums.EnumCallStatus

@@ -14,12 +14,12 @@ model User {
 
   email String @unique
   name String
-  tag String? @unique
+  tag String @unique
   password String 
   avatar String?
   bio String?
   isOnline Boolean @map("is_online") @default(false)
-  lastSeen DateTime @map("last_seen")
+  lastSeen DateTime? @map("last_seen")
   role EnumUserRole @default(USER)
 
   createdAt DateTime @default(now()) @map("created_at")

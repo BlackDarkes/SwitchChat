@@ -9,4 +9,4 @@ const loginSchema = object({
 class LoginDto extends createZodDto(loginSchema) {};
 type TypeLoginSchema = zInfer<typeof loginSchema>
 
-export { LoginDto, type TypeLoginSchema };
+export { type TypeLoginSchema, LoginDto };

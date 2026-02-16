@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:client": "pnpm prisma generate",
     "db:generate": "pnpm prisma migrate dev --name",
-    "db:migrate": "pnpm prisma migrate deploy" 
+    "db:migrate": "pnpm prisma migrate deploy"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -44,7 +44,8 @@
     "redis": "^5.10.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.3",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
