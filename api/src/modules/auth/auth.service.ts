@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from "@nestjs/jwt";
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { hash, compare } from "bcryptjs";
 import { isDev } from "@/utils/is-dev.utils";
 import { v4 as uuid } from "uuid";
@@ -72,6 +72,30 @@ export class AuthService {
   async logout(res: Response) {
     return this.clearTokens(res);
   }
+
+  async refresh(req: Request, res: Response) {
+    const refreshToken = req?.cookies?.["refresh_token"];
+
+    if (!refreshToken) {
+      throw new UnauthorizedException("Пользователь не авторизован");
+    }
+
+    try {
+      const payload: IPayload = this.jwtService.verify(refreshToken);
+      const user = await this.userService.getById(payload.id);
+
+      if (!user) {
+        throw new UnauthorizedException("Пользователь не найден");
+      }
+
+      this.auth(res, user.id, user.email, user.tag);
+      return user;
+    } catch {
+      this.clearTokens(res);
+      throw new UnauthorizedException("Пользователь не авторизован");
+    }
+  }
+
 
   private crateTokens = (id: string, email: string, tag: string) => {
     const payload: IPayload = { id, email, tag };

@@ -12,6 +12,7 @@
 		"baseUrl": "./",
 		"paths": {
 			"@/app/*": ["./src/*"],
+			"@/config/*": ["./src/config/*"],
 			"@/modules/*": ["./src/modules/*"],
 			"@/generated/*": ["./src/generated/*"],
 			"@/utils/*": ["./src/utils/*"]
