@@ -55,7 +55,7 @@ export class AuthService {
       throw new UnauthorizedException("Неверный логин или пароль");
     }
 
-    this.auth(res, user.id, user.email, user.tag, userAgent);
+    await this.auth(res, user.id, user.email, user.tag, userAgent);
     return user;
   }
 
