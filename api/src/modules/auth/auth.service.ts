@@ -37,12 +37,12 @@ export class AuthService {
     }
 
     const id = uuid();
-    const tag = this.createTag(id);
+    const username = this.createUsername(id);
 
     await this.userService.create({
       email,
       name, 
-      tag,
+      username,
       password: await hash(password, 10),
     })
   }
@@ -55,7 +55,7 @@ export class AuthService {
       throw new UnauthorizedException("Неверный логин или пароль");
     }
 
-    await this.auth(res, user.id, user.email, user.tag, userAgent);
+    await this.auth(res, user.id, user.email, user.username, userAgent);
     return user;
   }
 
@@ -96,7 +96,7 @@ export class AuthService {
         throw new UnauthorizedException("Пользователь не найден");
       }
 
-      this.auth(res, user.id, user.email, user.tag, userAgent);
+      this.auth(res, user.id, user.email, user.username, userAgent);
       return user;
     } catch {
       this.clearTokens(res);
@@ -153,7 +153,7 @@ export class AuthService {
     this.setCookie(res, "refresh_token", refresh_token, refreshTokenExpires);
   }
 
-  private createTag(id: string) {
+  private createUsername(id: string) {
     return `user_${id.split("-")[0]}`;
   }
 }

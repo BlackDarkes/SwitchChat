@@ -20,8 +20,8 @@ export class UserService {
     return this.prismaService.client.user.findUnique({ where: {email } });
   }
 
-  async getByTag(tag: string) {
-    return this.prismaService.client.user.findUnique({ where: {tag } });
+  async getByUsername(username: string) {
+    return this.prismaService.client.user.findUnique({ where: { username } });
   }
 
   async create(data: Prisma.UserCreateInput) {
@@ -32,8 +32,8 @@ export class UserService {
     return this.prismaService.client.user.update({ where: { id }, data });
   }
 
-  async updateTag(id: string, tag: string) {
-    return this.prismaService.client.user.update({ where: { id }, data: { tag } });
+  async updateUsername(id: string, username: string) {
+    return this.prismaService.client.user.update({ where: { id }, data: { username } });
   }
 
   async remove(id: string) {

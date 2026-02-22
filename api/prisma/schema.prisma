@@ -14,7 +14,7 @@ model User {
 
   email String @unique
   name String
-  tag String @unique
+  username String @unique
   password String 
   avatar String?
   bio String?
@@ -51,7 +51,7 @@ model User {
   admins BlackList[] @relation("AdminWhoBanned")
 
   @@map("user")
-  @@index([tag, name])
+  @@index([username, name])
 }
 
 model UserSession {
@@ -93,7 +93,7 @@ model Chat {
 
   type EnumChatTypes? @default(GROUP)
   name String
-  tag String?
+  username String? @unique
   description String?
   avatar String?
   ownerId String @map("owner_id")
@@ -119,7 +119,7 @@ model Chat {
   blackLists BlackList[]
 
   @@map("chat")
-  @@index([name, tag])
+  @@index([name, username])
 }
 
 model ChatMember {

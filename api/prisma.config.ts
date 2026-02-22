@@ -3,8 +3,6 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-console.log(process.env["DB_PORT"]);
-
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
