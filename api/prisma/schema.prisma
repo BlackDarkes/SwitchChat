@@ -93,7 +93,7 @@ model Chat {
 
   type EnumChatTypes? @default(GROUP)
   name String
-  tag String
+  tag String?
   description String?
   avatar String?
   ownerId String @map("owner_id")
@@ -147,7 +147,7 @@ enum EnumUserRole {
 enum EnumChatTypes {
   DIRECT
   GROUP
-  CHANEL
+  CHANNEL
 }
 
 enum EnumRoleMember {

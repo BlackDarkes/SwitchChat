@@ -133,8 +133,10 @@ export class AuthService {
     res.cookie("refresh_token", "", { ...cookieOptions, expires: new Date(0) });
   }
 
-  private auth(res: Response, id: string, email: string, tag: string) {
+  private async auth(res: Response, id: string, email: string, tag: string) {
     const { access_token, refresh_token } = this.crateTokens(id, email, tag);
+
+    /* Добавить сохранение в сессию */
 
     const accessTokenExpires = new Date(Date.now() + 1000 * 60 * 60); // 1 hours
     const refreshTokenExpires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // 30 days
