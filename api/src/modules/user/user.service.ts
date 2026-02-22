@@ -39,12 +39,4 @@ export class UserService {
   async remove(id: string) {
     return this.prismaService.client.user.delete({ where: { id } });
   }
-
-  async updateSession(userId: string, refreshToken: string, userAgent: string) {
-    /* Сделать */
-  }
-
-  async findSessionId(userId: string, userAgent: string) {}
-
-  async removeSession(refreshToken: string) {}
 }

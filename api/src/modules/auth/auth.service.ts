@@ -9,6 +9,7 @@ import { TypeRegisterSchema } from './common/dto/register.dto';
 import { UserService } from '../user/user.service';
 import { TypeLoginSchema } from './common/dto/login.dto';
 import { IPayload } from './types/payload.interface';
+import { SessionService } from '../session/session.service';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,8 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UserService,
-    private readonly jwtService: JwtService
+    private readonly sessionService: SessionService,
+    private readonly jwtService: JwtService,
   ) {
     this.TTL_ACCESS_TOKEN = this.configService.getOrThrow<string>("TTL_ACCESS_TOKEN");
     this.TTL_REFRESH_TOKEN = this.configService.getOrThrow<string>("TTL_REFRESH_TOKEN");
@@ -45,7 +47,7 @@ export class AuthService {
     })
   }
 
-  async login(res: Response, data: TypeLoginSchema) {
+  async login(res: Response, data: TypeLoginSchema, userAgent) {
     const { email, password } = data;
     const user = await this.userService.getByEmail(email);
 
@@ -53,7 +55,7 @@ export class AuthService {
       throw new UnauthorizedException("Неверный логин или пароль");
     }
 
-    this.auth(res, user.id, user.email, user.tag);
+    this.auth(res, user.id, user.email, user.tag, userAgent);
     return user;
   }
 
@@ -69,11 +71,17 @@ export class AuthService {
     return user;
   }
 
-  async logout(res: Response) {
+  async logout(req: Request, res: Response) {
+    const refreshToken = req.cookies?.["refresh_token"];
+
+    if (refreshToken) {
+      await this.sessionService.removeSession(refreshToken);
+    }
+
     return this.clearTokens(res);
   }
 
-  async refresh(req: Request, res: Response) {
+  async refresh(req: Request, res: Response, userAgent: string) {
     const refreshToken = req?.cookies?.["refresh_token"];
 
     if (!refreshToken) {
@@ -88,7 +96,7 @@ export class AuthService {
         throw new UnauthorizedException("Пользователь не найден");
       }
 
-      this.auth(res, user.id, user.email, user.tag);
+      this.auth(res, user.id, user.email, user.tag, userAgent);
       return user;
     } catch {
       this.clearTokens(res);
@@ -133,10 +141,10 @@ export class AuthService {
     res.cookie("refresh_token", "", { ...cookieOptions, expires: new Date(0) });
   }
 
-  private async auth(res: Response, id: string, email: string, tag: string) {
+  private async auth(res: Response, id: string, email: string, tag: string, userAgent: string) {
     const { access_token, refresh_token } = this.crateTokens(id, email, tag);
 
-    /* Добавить сохранение в сессию */
+    await this.sessionService.updateSession(id, refresh_token, userAgent);
 
     const accessTokenExpires = new Date(Date.now() + 1000 * 60 * 60); // 1 hours
     const refreshTokenExpires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // 30 days

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Body, Controller, HttpCode, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Req, Res, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { TypeRegisterSchema } from './common/dto/register.dto';
 import { Request, Response } from 'express';
@@ -24,8 +24,9 @@ export class AuthController {
   async login(
     @Res({ passthrough: true }) res: Response,
     @Body() data: TypeLoginSchema,
+    @Headers("user-agent") userAgent: string
   ) {
-    const { password: _, ...user } = await this.authService.login(res, data);
+    const { password: _, ...user } = await this.authService.login(res, data, userAgent);
 
     return {
       message: "Пользователь успешно авторизован",
@@ -35,8 +36,11 @@ export class AuthController {
 
   @Post("logout")
   @HttpCode(200)
-  async logout(@Res({ passthrough: true }) res: Response) {
-    await this.authService.logout(res);
+  async logout(
+    @Res({ passthrough: true }) res: Response,
+    @Req() req: Request
+  ) {
+    await this.authService.logout(req, res);
 
     return {
       message: "Вы успешно вышли из аккаунта",
@@ -48,8 +52,9 @@ export class AuthController {
   async refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
+    @Headers("user-agent") userAgent: string
   ) {
-    const user = await this.authService.refresh(req, res);
+    const user = await this.authService.refresh(req, res, userAgent);
 
     return {
       message: "Токены успешно обновлены",
