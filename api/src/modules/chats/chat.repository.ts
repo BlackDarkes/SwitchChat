@@ -31,7 +31,11 @@ export class ChatRepository {
 			where: { id: chatId },
 			include: {
 				chatMembers: true,
-				messages: { take: 1, orderBy: { createdAt: "desc" }, include: { user: true } },
+				messages: {
+					take: 1,
+					orderBy: { createdAt: "desc" },
+					include: { user: true },
+				},
 			},
 		});
 	}
@@ -39,11 +43,22 @@ export class ChatRepository {
 	async searchChats(userId: string, search: string): Promise<Chat[] | null> {
 		return this.prismaService.client.chat.findMany({
 			where: {
-				OR: [
-					{ name: { contains: search, mode: "insensitive" } },
-					{ username: { contains: search, mode: "insensitive" } },
+				AND: [
+					{
+						OR: [
+							{ name: { contains: search, mode: "insensitive" } },
+							{ username: { contains: search, mode: "insensitive" } },
+						],
+					},
+					{
+						OR: [
+							{ type: { in: ["DIRECT", "CHANNEL"] } },
+							{ chatMembers: { some: { userId } } },
+						],
+					},
 				],
 			},
+			take: 20,
 		});
 	}
 
@@ -51,7 +66,10 @@ export class ChatRepository {
 		return this.prismaService.client.chat.findFirst({
 			where: {
 				type: "DIRECT",
-				chatMembers: { every: { userId: { in: [user1Id, user2Id] } } },
+				AND: [
+					{ chatMembers: { some: { userId: user1Id } } },
+					{ chatMembers: { some: { userId: user2Id } }},
+				]
 			},
 		});
 	}
