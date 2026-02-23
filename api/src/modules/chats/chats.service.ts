@@ -49,27 +49,27 @@ export class ChatsService {
     })
   }
 
-  async kikMember(chatId: string, userId: string) {
-    const user = await this.prismaService.client.user.findUnique({
-      where: { id: userId },
+  async kikMember(chatId: string, userId: string, adminId: string) {
+    const admin = await this.prismaService.client.chatMember.findFirst({
+      where: { chatId, userId: adminId },
     })
 
-    if (user?.role !== "ADMIN") {
-      return;
+    if (!admin || admin.role !== "OWNER") {
+      throw new Error("У вас недостаточно прав");
     }
-
+    
     return this.prismaService.client.chatMember.deleteMany({
       where: { chatId, userId },
     })
   }
 
 	async joinChat(chatId: string, userId: string) {
-    const chat = await this.prismaService.client.chat.findUnique({
-      where: { id: chatId },
-    });
+    const member = await this.prismaService.client.chatMember.findFirst({
+      where: { chatId, userId },
+    })
 
-    if (chat?.ownerId === userId) {
-      return;
+    if (member) {
+      return member;
     }
 
 		return this.prismaService.client.chat.update({
@@ -87,13 +87,29 @@ export class ChatsService {
   async changeOwner(chatId: string, newOwnerId: string) {
     const chat = await this.prismaService.client.chat.findUnique({
       where: { id: chatId },
+      select: {  ownerId: true },
     })
 
-    if (chat?.ownerId === newOwnerId) {
+    if (!chat || chat?.ownerId === newOwnerId) {
       return;
     }
 
-    // Доделать
+    return this.prismaService.client.$transaction(async (tx) => {
+      await tx.chat.update({
+        where: { id: chatId },
+        data: { ownerId: newOwnerId },
+      });
+
+      await tx.chatMember.updateMany({
+        where: { chatId, userId: chat.ownerId },
+        data: { role: "ADMIN" },
+      });
+
+      await tx.chatMember.updateMany({
+        where: { chatId, userId: newOwnerId },
+        data: { role: "OWNER" },
+      })
+    })
   }
 
 	private createUsername(id: string) {
