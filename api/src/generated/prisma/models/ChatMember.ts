@@ -209,6 +209,7 @@ export type ChatMemberOrderByWithRelationInput = {
 
 export type ChatMemberWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  chatId_userId?: Prisma.ChatMemberChatIdUserIdCompoundUniqueInput
   AND?: Prisma.ChatMemberWhereInput | Prisma.ChatMemberWhereInput[]
   OR?: Prisma.ChatMemberWhereInput[]
   NOT?: Prisma.ChatMemberWhereInput | Prisma.ChatMemberWhereInput[]
@@ -220,7 +221,7 @@ export type ChatMemberWhereUniqueInput = Prisma.AtLeast<{
   chat?: Prisma.XOR<Prisma.ChatScalarRelationFilter, Prisma.ChatWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   message?: Prisma.XOR<Prisma.MessageNullableScalarRelationFilter, Prisma.MessageWhereInput> | null
-}, "id">
+}, "id" | "chatId_userId">
 
 export type ChatMemberOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -314,6 +315,11 @@ export type ChatMemberListRelationFilter = {
 
 export type ChatMemberOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ChatMemberChatIdUserIdCompoundUniqueInput = {
+  chatId: string
+  userId: string
 }
 
 export type ChatMemberCountOrderByAggregateInput = {

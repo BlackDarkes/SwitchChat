@@ -25,4 +25,34 @@ export class ChatRepository {
 			orderBy: { updatedAt: "desc" },
 		});
 	}
+
+	async getChatWithFullInfo(chatId: string): Promise<Chat | null> {
+		return this.prismaService.client.chat.findUnique({
+			where: { id: chatId },
+			include: {
+				chatMembers: true,
+				messages: { take: 1, orderBy: { createdAt: "desc" }, include: { user: true } },
+			},
+		});
+	}
+
+	async searchChats(userId: string, search: string): Promise<Chat[] | null> {
+		return this.prismaService.client.chat.findMany({
+			where: {
+				OR: [
+					{ name: { contains: search, mode: "insensitive" } },
+					{ username: { contains: search, mode: "insensitive" } },
+				],
+			},
+		});
+	}
+
+	async findDirectChat(user1Id: string, user2Id: string): Promise<Chat | null> {
+		return this.prismaService.client.chat.findFirst({
+			where: {
+				type: "DIRECT",
+				chatMembers: { every: { userId: { in: [user1Id, user2Id] } } },
+			},
+		});
+	}
 }

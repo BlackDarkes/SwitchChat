@@ -19,6 +19,7 @@ export type EnumUserRole = (typeof EnumUserRole)[keyof typeof EnumUserRole]
 
 export const EnumChatTypes = {
   DIRECT: 'DIRECT',
+  SELF: 'SELF',
   GROUP: 'GROUP',
   CHANNEL: 'CHANNEL'
 } as const

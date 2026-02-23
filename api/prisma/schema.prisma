@@ -92,7 +92,7 @@ model Chat {
   id String @id @default(uuid())
 
   type EnumChatTypes? @default(GROUP)
-  name String
+  name String?
   username String? @unique
   description String?
   avatar String?
@@ -135,6 +135,8 @@ model ChatMember {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   message Message? @relation(fields: [lastReadMessageId], references: [id])
 
+  @@unique([chatId, userId])
+
   @@map("chat_member")
   @@index([userId])
 }
@@ -145,7 +147,8 @@ enum EnumUserRole {
 }
 
 enum EnumChatTypes {
-  DIRECT
+  DIRECT // С другом
+  SELF // Личка
   GROUP
   CHANNEL
 }
@@ -167,6 +170,7 @@ model Message {
   type EnumMessageType @default(TEXT)
   isEdited Boolean? @map("is_edited") @default(false)
   replyToId String? @map("reply_to_id") 
+  isPined Boolean @default(false) @map("is_pined")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
@@ -190,7 +194,7 @@ model Message {
   reports Report[]
 
   @@map("message")
-  @@index([userId, createdAt])
+  @@index([userId, isPined, createdAt])
 }
 
 model Attachment {

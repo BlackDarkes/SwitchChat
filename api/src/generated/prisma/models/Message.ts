@@ -32,6 +32,7 @@ export type MessageMinAggregateOutputType = {
   type: $Enums.EnumMessageType | null
   isEdited: boolean | null
   replyToId: string | null
+  isPined: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +45,7 @@ export type MessageMaxAggregateOutputType = {
   type: $Enums.EnumMessageType | null
   isEdited: boolean | null
   replyToId: string | null
+  isPined: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,7 @@ export type MessageCountAggregateOutputType = {
   type: number
   isEdited: number
   replyToId: number
+  isPined: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,6 +73,7 @@ export type MessageMinAggregateInputType = {
   type?: true
   isEdited?: true
   replyToId?: true
+  isPined?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +86,7 @@ export type MessageMaxAggregateInputType = {
   type?: true
   isEdited?: true
   replyToId?: true
+  isPined?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +99,7 @@ export type MessageCountAggregateInputType = {
   type?: true
   isEdited?: true
   replyToId?: true
+  isPined?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +185,7 @@ export type MessageGroupByOutputType = {
   type: $Enums.EnumMessageType
   isEdited: boolean | null
   replyToId: string | null
+  isPined: boolean
   createdAt: Date
   updatedAt: Date
   _count: MessageCountAggregateOutputType | null
@@ -212,6 +219,7 @@ export type MessageWhereInput = {
   type?: Prisma.EnumEnumMessageTypeFilter<"Message"> | $Enums.EnumMessageType
   isEdited?: Prisma.BoolNullableFilter<"Message"> | boolean | null
   replyToId?: Prisma.StringNullableFilter<"Message"> | string | null
+  isPined?: Prisma.BoolFilter<"Message"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -233,6 +241,7 @@ export type MessageOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   isEdited?: Prisma.SortOrderInput | Prisma.SortOrder
   replyToId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPined?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -257,6 +266,7 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumEnumMessageTypeFilter<"Message"> | $Enums.EnumMessageType
   isEdited?: Prisma.BoolNullableFilter<"Message"> | boolean | null
   replyToId?: Prisma.StringNullableFilter<"Message"> | string | null
+  isPined?: Prisma.BoolFilter<"Message"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -278,6 +288,7 @@ export type MessageOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   isEdited?: Prisma.SortOrderInput | Prisma.SortOrder
   replyToId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPined?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MessageCountOrderByAggregateInput
@@ -296,6 +307,7 @@ export type MessageScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumEnumMessageTypeWithAggregatesFilter<"Message"> | $Enums.EnumMessageType
   isEdited?: Prisma.BoolNullableWithAggregatesFilter<"Message"> | boolean | null
   replyToId?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
+  isPined?: Prisma.BoolWithAggregatesFilter<"Message"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
 }
@@ -305,6 +317,7 @@ export type MessageCreateInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -326,6 +339,7 @@ export type MessageUncheckedCreateInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -341,6 +355,7 @@ export type MessageUpdateInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -362,6 +377,7 @@ export type MessageUncheckedUpdateInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -380,6 +396,7 @@ export type MessageCreateManyInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -389,6 +406,7 @@ export type MessageUpdateManyMutationInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -401,6 +419,7 @@ export type MessageUncheckedUpdateManyInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -428,6 +447,7 @@ export type MessageCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   isEdited?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
+  isPined?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -440,6 +460,7 @@ export type MessageMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   isEdited?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
+  isPined?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,6 +473,7 @@ export type MessageMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   isEdited?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
+  isPined?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -688,6 +710,7 @@ export type MessageCreateWithoutUserInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chat: Prisma.ChatCreateNestedOneWithoutMessagesInput
@@ -707,6 +730,7 @@ export type MessageUncheckedCreateWithoutUserInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -754,6 +778,7 @@ export type MessageScalarWhereInput = {
   type?: Prisma.EnumEnumMessageTypeFilter<"Message"> | $Enums.EnumMessageType
   isEdited?: Prisma.BoolNullableFilter<"Message"> | boolean | null
   replyToId?: Prisma.StringNullableFilter<"Message"> | string | null
+  isPined?: Prisma.BoolFilter<"Message"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
 }
@@ -763,6 +788,7 @@ export type MessageCreateWithoutChatInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -782,6 +808,7 @@ export type MessageUncheckedCreateWithoutChatInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -823,6 +850,7 @@ export type MessageCreateWithoutChatMembersInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -843,6 +871,7 @@ export type MessageUncheckedCreateWithoutChatMembersInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   replies?: Prisma.MessageUncheckedCreateNestedManyWithoutReplyToInput
@@ -873,6 +902,7 @@ export type MessageUpdateWithoutChatMembersInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -893,6 +923,7 @@ export type MessageUncheckedUpdateWithoutChatMembersInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   replies?: Prisma.MessageUncheckedUpdateManyWithoutReplyToNestedInput
@@ -907,6 +938,7 @@ export type MessageCreateWithoutRepliesInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -927,6 +959,7 @@ export type MessageUncheckedCreateWithoutRepliesInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -946,6 +979,7 @@ export type MessageCreateWithoutReplyToInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -965,6 +999,7 @@ export type MessageUncheckedCreateWithoutReplyToInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -1001,6 +1036,7 @@ export type MessageUpdateWithoutRepliesInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1021,6 +1057,7 @@ export type MessageUncheckedUpdateWithoutRepliesInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1051,6 +1088,7 @@ export type MessageCreateWithoutAttachmentsInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -1071,6 +1109,7 @@ export type MessageUncheckedCreateWithoutAttachmentsInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -1101,6 +1140,7 @@ export type MessageUpdateWithoutAttachmentsInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1121,6 +1161,7 @@ export type MessageUncheckedUpdateWithoutAttachmentsInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1135,6 +1176,7 @@ export type MessageCreateWithoutReactionsInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -1155,6 +1197,7 @@ export type MessageUncheckedCreateWithoutReactionsInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -1185,6 +1228,7 @@ export type MessageUpdateWithoutReactionsInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1205,6 +1249,7 @@ export type MessageUncheckedUpdateWithoutReactionsInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1219,6 +1264,7 @@ export type MessageCreateWithoutCommentsInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -1239,6 +1285,7 @@ export type MessageUncheckedCreateWithoutCommentsInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -1269,6 +1316,7 @@ export type MessageUpdateWithoutCommentsInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1289,6 +1337,7 @@ export type MessageUncheckedUpdateWithoutCommentsInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1303,6 +1352,7 @@ export type MessageCreateWithoutReportsInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMessagesInput
@@ -1323,6 +1373,7 @@ export type MessageUncheckedCreateWithoutReportsInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMembers?: Prisma.ChatMemberUncheckedCreateNestedManyWithoutMessageInput
@@ -1353,6 +1404,7 @@ export type MessageUpdateWithoutReportsInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1373,6 +1425,7 @@ export type MessageUncheckedUpdateWithoutReportsInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1389,6 +1442,7 @@ export type MessageCreateManyUserInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1398,6 +1452,7 @@ export type MessageUpdateWithoutUserInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chat?: Prisma.ChatUpdateOneRequiredWithoutMessagesNestedInput
@@ -1417,6 +1472,7 @@ export type MessageUncheckedUpdateWithoutUserInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1434,6 +1490,7 @@ export type MessageUncheckedUpdateManyWithoutUserInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1445,6 +1502,7 @@ export type MessageCreateManyChatInput = {
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
   replyToId?: string | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1454,6 +1512,7 @@ export type MessageUpdateWithoutChatInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1473,6 +1532,7 @@ export type MessageUncheckedUpdateWithoutChatInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1490,6 +1550,7 @@ export type MessageUncheckedUpdateManyWithoutChatInput = {
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   replyToId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1501,6 +1562,7 @@ export type MessageCreateManyReplyToInput = {
   text?: string | null
   type?: $Enums.EnumMessageType
   isEdited?: boolean | null
+  isPined?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1510,6 +1572,7 @@ export type MessageUpdateWithoutReplyToInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMessagesNestedInput
@@ -1529,6 +1592,7 @@ export type MessageUncheckedUpdateWithoutReplyToInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMembers?: Prisma.ChatMemberUncheckedUpdateManyWithoutMessageNestedInput
@@ -1546,6 +1610,7 @@ export type MessageUncheckedUpdateManyWithoutReplyToInput = {
   text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEnumMessageTypeFieldUpdateOperationsInput | $Enums.EnumMessageType
   isEdited?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isPined?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1634,6 +1699,7 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   type?: boolean
   isEdited?: boolean
   replyToId?: boolean
+  isPined?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1656,6 +1722,7 @@ export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   type?: boolean
   isEdited?: boolean
   replyToId?: boolean
+  isPined?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1671,6 +1738,7 @@ export type MessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   type?: boolean
   isEdited?: boolean
   replyToId?: boolean
+  isPined?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1686,11 +1754,12 @@ export type MessageSelectScalar = {
   type?: boolean
   isEdited?: boolean
   replyToId?: boolean
+  isPined?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "chatId" | "text" | "type" | "isEdited" | "replyToId" | "createdAt" | "updatedAt", ExtArgs["result"]["message"]>
+export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "chatId" | "text" | "type" | "isEdited" | "replyToId" | "isPined" | "createdAt" | "updatedAt", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
@@ -1735,6 +1804,7 @@ export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     type: $Enums.EnumMessageType
     isEdited: boolean | null
     replyToId: string | null
+    isPined: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["message"]>
@@ -2176,6 +2246,7 @@ export interface MessageFieldRefs {
   readonly type: Prisma.FieldRef<"Message", 'EnumMessageType'>
   readonly isEdited: Prisma.FieldRef<"Message", 'Boolean'>
   readonly replyToId: Prisma.FieldRef<"Message", 'String'>
+  readonly isPined: Prisma.FieldRef<"Message", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Message", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Message", 'DateTime'>
 }
