@@ -17,5 +17,6 @@ import { JwtConfig } from "@/app/config/jwt.config";
 	],
 	controllers: [ChatsController],
 	providers: [ChatsService, ChatRepository, ChatsGateway],
+	exports: [ChatsGateway],
 })
 export class ChatsModule {}

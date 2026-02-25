@@ -11,6 +11,7 @@ import { ChatRepository } from "./chat.repository";
 import { Logger, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { IPayload } from "@/modules/auth/types/payload.interface";
+import { TypeUpdateMessageSchema } from "../messages/common/dto/update-message.dto";
 
 @WebSocketGateway({
 	namespace: "chats",
@@ -86,14 +87,21 @@ export class ChatsGateway {
 		};
 	}
 
-  emitNewMessage(chatId: string, message: string) {
+  emitNewMessage(chatId: string, message: any) {
     this.server.to(chatId).emit("message_received", message);
-
-    return {
-      status: "ok",
-      message,
-    };
   }
+
+	emitMessageUpdated(chatId: string, message: any) {
+		this.server.to(chatId).emit("message_updated", message);
+	}
+
+	emitMessageDeleted(chatId: string, messageId: string) {
+		this.server.to(chatId).emit("message_deleted", { messageId });
+	}
+
+	emitReactionUpdate(chatId: string, data: { messageId: string, emoji: string }) {
+		this.server.to(chatId).emit("reaction_updated", data);
+	}
 
   @SubscribeMessage("typing")
   handleTyping(
