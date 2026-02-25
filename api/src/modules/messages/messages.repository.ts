@@ -54,7 +54,7 @@ export class MessagesRepository {
 	async update(messageId: string, data: TypeUpdateMessageSchema) {
 		return this.prismaService.client.message.update({
 			where: { id: messageId },
-			data,
+			data: { ...data, isEdited: true },
 		});
 	}
 
