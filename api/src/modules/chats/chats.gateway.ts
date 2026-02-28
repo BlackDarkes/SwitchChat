@@ -11,8 +11,7 @@ import { ChatRepository } from "./chat.repository";
 import { Logger, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { IPayload } from "@/modules/auth/types/payload.interface";
-import { TypeUpdateMessageSchema } from "../messages/common/dto/update-message.dto";
-
+ 
 @WebSocketGateway({
 	namespace: "chats",
 	cors: { origin: "*" },

@@ -1,7 +1,9 @@
-import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
 import { ChatsService } from './chats.service';
 import { ChatRepository } from './chat.repository';
 import { TypeCreateChatSchema } from './common/dto/create-chat.dto';
+import { CurrentUser } from '@/app/common/decorators/current-user.decorator';
+import { EnumRoleMember } from '@/app/generated/prisma/enums';
 
 @Controller('chats')
 export class ChatsController {
@@ -20,10 +22,10 @@ export class ChatsController {
     }
   }
 
-  @Get("/user/:userId")
+  @Get("")
   @HttpCode(200)
   async getAllByUserId(
-    @Param("userId") userId: string
+    @CurrentUser("id") userId: string
   ) {
     const chats = await this.chatRepository.getAllByUserId(userId);
 
@@ -32,16 +34,64 @@ export class ChatsController {
     }
   }
 
+  @Get(":id")
+  @HttpCode(200)
+  async getChatInfo(
+    @Param("id") chatId: string,
+  ) {
+    return this.chatRepository.getChatWithFullInfo(chatId);
+  }
+
   @Post("")
   @HttpCode(201)
   async create(
     @Body() data: TypeCreateChatSchema,
+    @CurrentUser("id") userId: string,
   ) {
-    const chat = await this.chatsService.create(data);
+    const chat = await this.chatsService.create({ ...data, ownerId: userId });
 
     return {
       message: "Чат успешно создан",
       chat
     }
+  }
+
+  @Post(":id/join")
+  @HttpCode(201)
+  async join(
+    @Param("id") id: string,
+    @CurrentUser("id") userId: string, 
+  ) {
+    return this.chatsService.joinChat(id, userId);
+  }
+
+  @Delete(":id/leave")
+  @HttpCode(200)
+  async leave(
+    @Param("id") chatId: string,
+    @CurrentUser("id") userId: string
+  ) {
+    return this.chatsService.leaveChat(chatId, userId);
+  }
+
+  // Добавить @role("admin")
+  @Delete(":id/kik/:targetUserId")
+  @HttpCode(200)
+  async kik(
+    @Param("id") chatId: string,
+    @Param("targetUserId") userId: string,
+    @CurrentUser("id") adminId: string
+  ) {
+    return this.chatsService.kikMember(chatId, userId, adminId);
+  }
+
+  @Patch(":id/member/:targetUserId/role")
+  @HttpCode(200)
+  async updateRole(
+    @Param("id") chatId: string,
+    @Param("targetUserId") userId: string,
+    @Body("role") role: EnumRoleMember,
+  ) {
+    return this.chatsService.updateMemberRole(chatId, userId, role);
   }
 }
