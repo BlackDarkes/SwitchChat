@@ -11,7 +11,7 @@ export class MessagesRepository {
 	async getChatMessage(
 		chatId: string,
 		limit: number,
-		cursor: string,
+		cursor?: string,
 	): Promise<Message[] | null> {
 		return this.prismaService.client.message.findMany({
 			where: { chatId },
