@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background */
+
+  --accent-bg: #e1f5fe;
+  --primary-bg: #ffffff;
+  --secondary-bg: #8e8e93; /* Не прочитанные сообщения */
+
+  --chat-bg: #ededed;
+  --message-bg: #ffffff;
+  --search-bg: #e6e6e6;
+
+  /* Color */
+
+  --accent-color: #007aff;
+  --inactive-color: #8e8e93;
+  --primary-color: #1c1c1e;
+  --secondary-color: #8e8e93;
+
+  --opacity-color: #000000b3; /* Время последнего сообщения */
+  --placeholder-color: #8e8e93;
+
+  /* Shadow */
+
+  --shadow-box: 4px 4px 4px #00000026;
+
+  /* Border-color */
+
+  --border-color: #e6e6e6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Background */
+
+  --color-accent-bg: var(--accent-bg);
+  --color-primary-bg: var(--primary-bg);
+  --color-secondary-bg: var(--secondary-bg); /* Не прочитанные сообщения */
+
+  --color-chat-bg: var(--chat-bg);
+  --color-message-bg: var(--message-bg);
+  --color-search-bg: var(--search-bg);
+
+  /* Color */
+
+  --color-accent-color: var(--accent-color);
+  --color-inactive-color: var(--inactive-color);
+  --color-primary-color: var(--primary-color);
+  --color-secondary-color: var(--secondary-color);
+
+  --color-opacity-color: var(--opacity-color); /* Время последнего сообщения */
+  --color-placeholder-color: var(--placeholder-color);
+
+  /* Shadow */
+
+  --shadow-box: var(--shadow-box);
+
+  /* Border-color */
+
+  --color-border-color: var(--border-color);
+
+  /* Font */
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+.dark {
+  /* Background */
+
+  --accent-bg: #0e141b;
+  --primary-bg: #1c2733;
+  --secondary-bg: #7f91a4; /* Не прочитанные сообщения */
+
+  --chat-bg: #17212b;
+  --message-bg: #2b5278;
+  --search-bg: #101921;
+
+  /* Color */
+
+  --accent-color: #4da8da;
+  --inactive-color: #6c7883;
+  --primary-color: #e6e6e6;
+  --secondary-color: #7f91a4;
+
+  --opacity-color: #ffffffb3; /* Время последнего сообщения */
+  --placeholder-color: #8e8e93;
+
+  /* Shadow */
+
+  --shadow-box: 4px 4px 4px #ffffff26;
+
+  /* Border-color */
+
+  --border-color: #101921;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not(.light) {
+    /* Background */
+
+    --accent-bg: #0e141b;
+    --primary-bg: #1c2733;
+    --secondary-bg: #7f91a4; /* Не прочитанные сообщения */
+
+    --chat-bg: #17212b;
+    --message-bg: #2b5278;
+    --search-bg: #101921;
+
+    /* Color */
+
+    --accent-color: #4da8da;
+    --inactive-color: #6c7883;
+    --primary-color: #e6e6e6;
+    --secondary-color: #7f91a4;
+
+    --opacity-color: #ffffffb3; /* Время последнего сообщения */
+    --placeholder-color: #8e8e93;
+
+    /* Shadow */
+
+    --shadow-box: 4px 4px 4px #ffffff26;
+
+    /* Border-color */
+
+    --border-color: #101921;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-color);
 }
