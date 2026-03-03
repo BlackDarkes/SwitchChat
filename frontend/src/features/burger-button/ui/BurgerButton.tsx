@@ -19,18 +19,22 @@ export const BurgerButton = ({ isOpen, handleOpen }: IBurgerButtonProps) => {
           after:content-[''] after:absolute after:w-full after:h-0.5 after:transition after:duration-400 after:ease-in after:bg-primary-color
           before:top-0
           after:bottom-0
+          cursor-pointer
         `,
+        isOpen ? "before:rotate-45 before:translate-y-2.5 after:-rotate-45 after:-translate-y-2" : ""
       )}
     >
       <span className={cn(
         `
           w-full h-0.5 transition duration-400 ease-in bg-primary-color
-        `
+        `,
+        isOpen ? "opacity-0" : ""
       )} />
       <span className={cn(
         `
           w-full h-0.5 transition duration-400 ease-in bg-primary-color
-        `
+        `,
+        isOpen ? "opacity-0" : ""
       )} />
     </button>
   );
