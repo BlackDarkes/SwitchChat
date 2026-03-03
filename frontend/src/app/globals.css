@@ -28,6 +28,11 @@
   /* Border-color */
 
   --border-color: #e6e6e6;
+
+
+  /* Font */
+
+  --font-inter: "Inter", sans-serif;
 }
 
 @theme inline {
@@ -61,8 +66,7 @@
 
   /* Font */
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
 }
 
 .dark {
@@ -130,4 +134,5 @@
 body {
   background-color: var(--primary-bg);
   color: var(--primary-color);
+  font-family: var(--font-inter);
 }
