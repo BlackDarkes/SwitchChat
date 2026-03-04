@@ -19,6 +19,7 @@ export const BurgerButton = ({ isOpen, handleOpen }: IBurgerButtonProps) => {
           after:content-[''] after:absolute after:w-full after:h-0.5 after:transition after:duration-300 after:ease-in after:bg-primary-color
           before:top-0
           after:bottom-0
+          z-500
         `,
         isOpen ? "before:rotate-45 before:translate-y-2.5 after:-rotate-45 after:-translate-y-2" : ""
       )}

@@ -31,6 +31,7 @@ export type ChatMemberMinAggregateOutputType = {
   role: $Enums.EnumRoleMember | null
   joinedAt: Date | null
   lastReadMessageId: string | null
+  isFavorite: boolean | null
 }
 
 export type ChatMemberMaxAggregateOutputType = {
@@ -40,6 +41,7 @@ export type ChatMemberMaxAggregateOutputType = {
   role: $Enums.EnumRoleMember | null
   joinedAt: Date | null
   lastReadMessageId: string | null
+  isFavorite: boolean | null
 }
 
 export type ChatMemberCountAggregateOutputType = {
@@ -49,6 +51,7 @@ export type ChatMemberCountAggregateOutputType = {
   role: number
   joinedAt: number
   lastReadMessageId: number
+  isFavorite: number
   _all: number
 }
 
@@ -60,6 +63,7 @@ export type ChatMemberMinAggregateInputType = {
   role?: true
   joinedAt?: true
   lastReadMessageId?: true
+  isFavorite?: true
 }
 
 export type ChatMemberMaxAggregateInputType = {
@@ -69,6 +73,7 @@ export type ChatMemberMaxAggregateInputType = {
   role?: true
   joinedAt?: true
   lastReadMessageId?: true
+  isFavorite?: true
 }
 
 export type ChatMemberCountAggregateInputType = {
@@ -78,6 +83,7 @@ export type ChatMemberCountAggregateInputType = {
   role?: true
   joinedAt?: true
   lastReadMessageId?: true
+  isFavorite?: true
   _all?: true
 }
 
@@ -160,6 +166,7 @@ export type ChatMemberGroupByOutputType = {
   role: $Enums.EnumRoleMember
   joinedAt: Date
   lastReadMessageId: string | null
+  isFavorite: boolean
   _count: ChatMemberCountAggregateOutputType | null
   _min: ChatMemberMinAggregateOutputType | null
   _max: ChatMemberMaxAggregateOutputType | null
@@ -190,6 +197,7 @@ export type ChatMemberWhereInput = {
   role?: Prisma.EnumEnumRoleMemberFilter<"ChatMember"> | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFilter<"ChatMember"> | Date | string
   lastReadMessageId?: Prisma.StringNullableFilter<"ChatMember"> | string | null
+  isFavorite?: Prisma.BoolFilter<"ChatMember"> | boolean
   chat?: Prisma.XOR<Prisma.ChatScalarRelationFilter, Prisma.ChatWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   message?: Prisma.XOR<Prisma.MessageNullableScalarRelationFilter, Prisma.MessageWhereInput> | null
@@ -202,6 +210,7 @@ export type ChatMemberOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   lastReadMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   chat?: Prisma.ChatOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   message?: Prisma.MessageOrderByWithRelationInput
@@ -218,6 +227,7 @@ export type ChatMemberWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumEnumRoleMemberFilter<"ChatMember"> | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFilter<"ChatMember"> | Date | string
   lastReadMessageId?: Prisma.StringNullableFilter<"ChatMember"> | string | null
+  isFavorite?: Prisma.BoolFilter<"ChatMember"> | boolean
   chat?: Prisma.XOR<Prisma.ChatScalarRelationFilter, Prisma.ChatWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   message?: Prisma.XOR<Prisma.MessageNullableScalarRelationFilter, Prisma.MessageWhereInput> | null
@@ -230,6 +240,7 @@ export type ChatMemberOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   lastReadMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
   _count?: Prisma.ChatMemberCountOrderByAggregateInput
   _max?: Prisma.ChatMemberMaxOrderByAggregateInput
   _min?: Prisma.ChatMemberMinOrderByAggregateInput
@@ -245,12 +256,14 @@ export type ChatMemberScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumEnumRoleMemberWithAggregatesFilter<"ChatMember"> | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeWithAggregatesFilter<"ChatMember"> | Date | string
   lastReadMessageId?: Prisma.StringNullableWithAggregatesFilter<"ChatMember"> | string | null
+  isFavorite?: Prisma.BoolWithAggregatesFilter<"ChatMember"> | boolean
 }
 
 export type ChatMemberCreateInput = {
   id?: string
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
+  isFavorite?: boolean
   chat: Prisma.ChatCreateNestedOneWithoutChatMembersInput
   user: Prisma.UserCreateNestedOneWithoutChatMembersInput
   message?: Prisma.MessageCreateNestedOneWithoutChatMembersInput
@@ -263,12 +276,14 @@ export type ChatMemberUncheckedCreateInput = {
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
   lastReadMessageId?: string | null
+  isFavorite?: boolean
 }
 
 export type ChatMemberUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   chat?: Prisma.ChatUpdateOneRequiredWithoutChatMembersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutChatMembersNestedInput
   message?: Prisma.MessageUpdateOneWithoutChatMembersNestedInput
@@ -281,6 +296,7 @@ export type ChatMemberUncheckedUpdateInput = {
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastReadMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberCreateManyInput = {
@@ -290,12 +306,14 @@ export type ChatMemberCreateManyInput = {
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
   lastReadMessageId?: string | null
+  isFavorite?: boolean
 }
 
 export type ChatMemberUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberUncheckedUpdateManyInput = {
@@ -305,6 +323,7 @@ export type ChatMemberUncheckedUpdateManyInput = {
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastReadMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberListRelationFilter = {
@@ -329,6 +348,7 @@ export type ChatMemberCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   lastReadMessageId?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
 }
 
 export type ChatMemberMaxOrderByAggregateInput = {
@@ -338,6 +358,7 @@ export type ChatMemberMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   lastReadMessageId?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
 }
 
 export type ChatMemberMinOrderByAggregateInput = {
@@ -347,6 +368,7 @@ export type ChatMemberMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   lastReadMessageId?: Prisma.SortOrder
+  isFavorite?: Prisma.SortOrder
 }
 
 export type ChatMemberCreateNestedManyWithoutUserInput = {
@@ -483,6 +505,7 @@ export type ChatMemberCreateWithoutUserInput = {
   id?: string
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
+  isFavorite?: boolean
   chat: Prisma.ChatCreateNestedOneWithoutChatMembersInput
   message?: Prisma.MessageCreateNestedOneWithoutChatMembersInput
 }
@@ -493,6 +516,7 @@ export type ChatMemberUncheckedCreateWithoutUserInput = {
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
   lastReadMessageId?: string | null
+  isFavorite?: boolean
 }
 
 export type ChatMemberCreateOrConnectWithoutUserInput = {
@@ -531,12 +555,14 @@ export type ChatMemberScalarWhereInput = {
   role?: Prisma.EnumEnumRoleMemberFilter<"ChatMember"> | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFilter<"ChatMember"> | Date | string
   lastReadMessageId?: Prisma.StringNullableFilter<"ChatMember"> | string | null
+  isFavorite?: Prisma.BoolFilter<"ChatMember"> | boolean
 }
 
 export type ChatMemberCreateWithoutChatInput = {
   id?: string
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
+  isFavorite?: boolean
   user: Prisma.UserCreateNestedOneWithoutChatMembersInput
   message?: Prisma.MessageCreateNestedOneWithoutChatMembersInput
 }
@@ -547,6 +573,7 @@ export type ChatMemberUncheckedCreateWithoutChatInput = {
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
   lastReadMessageId?: string | null
+  isFavorite?: boolean
 }
 
 export type ChatMemberCreateOrConnectWithoutChatInput = {
@@ -579,6 +606,7 @@ export type ChatMemberCreateWithoutMessageInput = {
   id?: string
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
+  isFavorite?: boolean
   chat: Prisma.ChatCreateNestedOneWithoutChatMembersInput
   user: Prisma.UserCreateNestedOneWithoutChatMembersInput
 }
@@ -589,6 +617,7 @@ export type ChatMemberUncheckedCreateWithoutMessageInput = {
   userId: string
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
+  isFavorite?: boolean
 }
 
 export type ChatMemberCreateOrConnectWithoutMessageInput = {
@@ -623,12 +652,14 @@ export type ChatMemberCreateManyUserInput = {
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
   lastReadMessageId?: string | null
+  isFavorite?: boolean
 }
 
 export type ChatMemberUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   chat?: Prisma.ChatUpdateOneRequiredWithoutChatMembersNestedInput
   message?: Prisma.MessageUpdateOneWithoutChatMembersNestedInput
 }
@@ -639,6 +670,7 @@ export type ChatMemberUncheckedUpdateWithoutUserInput = {
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastReadMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberUncheckedUpdateManyWithoutUserInput = {
@@ -647,6 +679,7 @@ export type ChatMemberUncheckedUpdateManyWithoutUserInput = {
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastReadMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberCreateManyChatInput = {
@@ -655,12 +688,14 @@ export type ChatMemberCreateManyChatInput = {
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
   lastReadMessageId?: string | null
+  isFavorite?: boolean
 }
 
 export type ChatMemberUpdateWithoutChatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutChatMembersNestedInput
   message?: Prisma.MessageUpdateOneWithoutChatMembersNestedInput
 }
@@ -671,6 +706,7 @@ export type ChatMemberUncheckedUpdateWithoutChatInput = {
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastReadMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberUncheckedUpdateManyWithoutChatInput = {
@@ -679,6 +715,7 @@ export type ChatMemberUncheckedUpdateManyWithoutChatInput = {
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastReadMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberCreateManyMessageInput = {
@@ -687,12 +724,14 @@ export type ChatMemberCreateManyMessageInput = {
   userId: string
   role?: $Enums.EnumRoleMember
   joinedAt?: Date | string
+  isFavorite?: boolean
 }
 
 export type ChatMemberUpdateWithoutMessageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   chat?: Prisma.ChatUpdateOneRequiredWithoutChatMembersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutChatMembersNestedInput
 }
@@ -703,6 +742,7 @@ export type ChatMemberUncheckedUpdateWithoutMessageInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type ChatMemberUncheckedUpdateManyWithoutMessageInput = {
@@ -711,6 +751,7 @@ export type ChatMemberUncheckedUpdateManyWithoutMessageInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumEnumRoleMemberFieldUpdateOperationsInput | $Enums.EnumRoleMember
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -722,6 +763,7 @@ export type ChatMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   role?: boolean
   joinedAt?: boolean
   lastReadMessageId?: boolean
+  isFavorite?: boolean
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   message?: boolean | Prisma.ChatMember$messageArgs<ExtArgs>
@@ -734,6 +776,7 @@ export type ChatMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   role?: boolean
   joinedAt?: boolean
   lastReadMessageId?: boolean
+  isFavorite?: boolean
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   message?: boolean | Prisma.ChatMember$messageArgs<ExtArgs>
@@ -746,6 +789,7 @@ export type ChatMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   role?: boolean
   joinedAt?: boolean
   lastReadMessageId?: boolean
+  isFavorite?: boolean
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   message?: boolean | Prisma.ChatMember$messageArgs<ExtArgs>
@@ -758,9 +802,10 @@ export type ChatMemberSelectScalar = {
   role?: boolean
   joinedAt?: boolean
   lastReadMessageId?: boolean
+  isFavorite?: boolean
 }
 
-export type ChatMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chatId" | "userId" | "role" | "joinedAt" | "lastReadMessageId", ExtArgs["result"]["chatMember"]>
+export type ChatMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chatId" | "userId" | "role" | "joinedAt" | "lastReadMessageId" | "isFavorite", ExtArgs["result"]["chatMember"]>
 export type ChatMemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   chat?: boolean | Prisma.ChatDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -791,6 +836,7 @@ export type $ChatMemberPayload<ExtArgs extends runtime.Types.Extensions.Internal
     role: $Enums.EnumRoleMember
     joinedAt: Date
     lastReadMessageId: string | null
+    isFavorite: boolean
   }, ExtArgs["result"]["chatMember"]>
   composites: {}
 }
@@ -1223,6 +1269,7 @@ export interface ChatMemberFieldRefs {
   readonly role: Prisma.FieldRef<"ChatMember", 'EnumRoleMember'>
   readonly joinedAt: Prisma.FieldRef<"ChatMember", 'DateTime'>
   readonly lastReadMessageId: Prisma.FieldRef<"ChatMember", 'String'>
+  readonly isFavorite: Prisma.FieldRef<"ChatMember", 'Boolean'>
 }
     
 

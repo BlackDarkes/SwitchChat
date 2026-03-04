@@ -36,12 +36,12 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <QueryProvider>
           <main className="flex max-h-screen h-screen max-w-screen w-screen">
-            <section className="w-[clamp(300px,45vw,760px)] shrink-0">
+            <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
               {children}
               <div>{chats}</div>
             </section>
 
-            <aside className="w-[max(100%,1160px)]">{sidebar}</aside>
+            <aside className="w-[max(100%,1160px)] bg-accent-bg max-md:hidden">{sidebar}</aside>
           </main>
         </QueryProvider>
       </body>

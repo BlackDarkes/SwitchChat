@@ -130,6 +130,7 @@ model ChatMember {
   role EnumRoleMember @default(MEMBER)
   joinedAt DateTime @default(now()) @map("joined_at")
   lastReadMessageId String?
+  isFavorite Boolean @map("is_favorite") @default(false)
 
   chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
