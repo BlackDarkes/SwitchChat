@@ -18,22 +18,32 @@ export const metadata: Metadata = {
     {
       name: "DaniilGorgeev(BlackDarkes)",
       url: "https://github.com/BlackDarkes",
-    }
+    },
   ],
 };
 
 export default function RootLayout({
   children,
-  
+  chats,
+  sidebar,
 }: Readonly<{
   children: React.ReactNode;
+  chats: React.ReactNode;
+  sidebar: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
-        <QueryProvider>{children}</QueryProvider>
+    <html lang="ru" className="light">
+      <body className={`${inter.variable} antialiased`}>
+        <QueryProvider>
+          <main className="flex max-h-screen h-screen max-w-screen w-screen">
+            <section className="w-[clamp(300px,45vw,760px)] shrink-0">
+              {children}
+              <div>{chats}</div>
+            </section>
+
+            <aside className="w-[max(100%,1160px)]">{sidebar}</aside>
+          </main>
+        </QueryProvider>
       </body>
     </html>
   );

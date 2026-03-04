@@ -14,7 +14,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="p-5 w-[min(100%,760px)] bg-primary-bg border-b border-border-color">
+    <header className="p-5 w-[min(100%,760px)] bg-primary-bg border-b-2 border-r-2 border-border-color">
       <div className="flex items-center justify-between gap-x-5">
         <BurgerButton isOpen={isOpen} handleOpen={handleOpen} />
         <SearchInput id="test" value={value} handleInput={handleInput} />
