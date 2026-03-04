@@ -14,7 +14,7 @@ export const BurgerMenu = ({ items, isOpen, handleOpen }: IBurgerMenuProps) => {
       onClick={handleOpen}
       className={cn(
         `
-          fixed top-0 left-0 w-full h-full -translate-x-full transition duration-500 cursor-pointer
+          fixed top-0 left-0 w-full h-full bg-opacity-bg -translate-x-full transition duration-500 cursor-pointer
         `,
         {
           "translate-x-0": isOpen,

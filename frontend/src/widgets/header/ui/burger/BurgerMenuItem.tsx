@@ -1,11 +1,24 @@
 import Link from "next/link";
 import { IBurgerItems } from "../../model/burger-items";
+import { useTheme } from "next-themes";
+import {  useSyncExternalStore } from "react";
 
 interface IBurgerMenuItemProps {
   item: IBurgerItems;
 }
 
+const emptySubscribe = () => () => {};
+
 export const BurgerMenuItem = ({ item }: IBurgerMenuItemProps) => {
+  const { theme, setTheme } = useTheme();
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  )
+
+  if (!isMounted) return null
+
   return (
     <li>
       {item.isLink ? (
@@ -13,10 +26,7 @@ export const BurgerMenuItem = ({ item }: IBurgerMenuItemProps) => {
       ) : (
         <button
           type="button"
-          onClick={() => {
-            document.documentElement.classList.toggle("dark");
-            localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
-          }}
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
           {item.title}
         </button>

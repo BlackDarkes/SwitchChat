@@ -11,6 +11,8 @@
   --message-bg: #ffffff;
   --search-bg: #e6e6e6;
 
+  --opacity-bg: #00000066;
+
   /* Color */
 
   --accent-color: #007aff;
@@ -46,6 +48,8 @@
   --color-message-bg: var(--message-bg);
   --color-search-bg: var(--search-bg);
 
+  --color-opacity-bg: var(--opacity-bg);
+
   /* Color */
 
   --color-accent-color: var(--accent-color);
@@ -79,6 +83,8 @@
   --chat-bg: #17212b;
   --message-bg: #2b5278;
   --search-bg: #101921;
+
+  --opacity-bg: #ffffff1a;
 
   /* Color */
 

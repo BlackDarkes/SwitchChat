@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "./providers/QueryProvider";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,18 +33,22 @@ export default function RootLayout({
   sidebar: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className="light">
+    <html lang="ru" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
-        <QueryProvider>
-          <main className="flex max-h-screen h-screen max-w-screen w-screen">
-            <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
-              {children}
-              <div>{chats}</div>
-            </section>
+        <ThemeProvider>
+          <QueryProvider>
+            <main className="flex max-h-screen h-screen max-w-screen w-screen">
+              <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
+                {children}
+                <div>{chats}</div>
+              </section>
 
-            <aside className="w-[max(100%,1160px)] bg-accent-bg max-md:hidden">{sidebar}</aside>
-          </main>
-        </QueryProvider>
+              <aside className="w-[max(100%,1160px)] bg-accent-bg max-md:hidden">
+                {sidebar}
+              </aside>
+            </main>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
