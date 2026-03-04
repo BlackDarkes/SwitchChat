@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useBurgerStore } from "@/features//burger-button/model/burger-store";
 import { BurgerButton } from "@/features//burger-button/ui/BurgerButton";
@@ -14,9 +14,11 @@ export const Header = () => {
   };
 
   return (
-    <header>
-      <BurgerButton isOpen={isOpen} handleOpen={handleOpen} />
-      <SearchInput id="test" value={value} handleInput={handleInput} />
+    <header className="p-5 w-[min(100%,760px)] bg-primary-bg border-b border-border-color">
+      <div className="flex items-center justify-between gap-x-5">
+        <BurgerButton isOpen={isOpen} handleOpen={handleOpen} />
+        <SearchInput id="test" value={value} handleInput={handleInput} />
+      </div>
     </header>
   );
-}
+};

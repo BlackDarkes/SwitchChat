@@ -136,3 +136,11 @@ body {
   color: var(--primary-color);
   font-family: var(--font-inter);
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+button {
+  cursor: pointer;
+}
