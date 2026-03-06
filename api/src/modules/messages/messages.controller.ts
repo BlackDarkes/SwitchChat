@@ -1,11 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { MessagesRepository } from './messages.repository';
 import { CurrentUser } from '@/app/common/decorators/current-user.decorator';
 import { TypeCreateMessageSchema } from './common/dto/create-message.dto';
 import { TypeUpdateMessageSchema } from './common/dto/update-message.dto';
+import { JwtGuard } from '../auth/common/guard/jwt.guard';
 
 @Controller('messages')
+@UseGuards(JwtGuard)
 export class MessagesController {
   constructor(
     private readonly messagesService: MessagesService,

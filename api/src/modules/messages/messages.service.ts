@@ -21,8 +21,8 @@ export class MessagesService {
 		const { attachments, ...message } = data;
 
 		const member = await this.prismaService.client.chatMember.findFirst({
-			where: { chatId, userId },
-		});
+			where: { userId, chatId },
+		})
 
 		if (!member) {
 			throw new Error("Вы не являетесь участником этого чата");
