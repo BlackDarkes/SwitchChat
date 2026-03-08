@@ -27,7 +27,7 @@ export const RegisterForm = () => {
 
       alert(resultMessage);
 
-      router.push("/");
+      router.push("/login");
     } catch (error) {
       alert(error);
     }

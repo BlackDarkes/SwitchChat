@@ -34,6 +34,7 @@ export const useLoginStore = create<ILoginStore>()(
         } catch(error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });
+          throw new Error(errorMessage);
         } finally {
           set({ isLoading: false });
         }

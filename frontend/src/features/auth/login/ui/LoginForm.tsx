@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, TypeLoginSchema } from "@/entities/user";
 import { ButtonAuth, FieldAuth } from "@/shared/ui";
@@ -14,25 +15,35 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    setValue,
   } = useForm<TypeLoginSchema>({
+    mode: "onChange",
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
   const { login, isLoading } = useLoginStore();
   const router = useRouter();
 
-  const onSubmit = async (data: TypeLoginSchema) => {
+  const onSubmit: SubmitHandler<TypeLoginSchema> = async (
+    data: TypeLoginSchema,
+  ) => {
     try {
-      const resultMessage = await login(data);
+      const serverMessage = await login(data);
 
-      alert(resultMessage);
+      alert(serverMessage);
+
+      setValue("email", "");
+      setValue("password", "");
 
       router.push("/");
-    } catch (error) {
+    } catch (error: any) {
       alert(error);
-    }
 
-    reset();
+      setValue("password", "");
+    }
   };
 
   return (

@@ -43,7 +43,12 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
         _retry: boolean;
       };
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (
+        error.response?.status === 401 &&
+        !originalRequest.url?.includes("/auth/login") && // api nest route
+        !originalRequest.url?.includes("/auth/refresh") && // api nest route
+        !originalRequest._retry
+      ) {
         if (isRefreshing) {
           throw new Promise((resolve, reject) => {
             failedQueue.push({ resolve, reject });

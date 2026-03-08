@@ -1,10 +1,10 @@
-import { type infer as zInfer, object, string } from "zod";
+import { z } from "zod";
 
-const loginSchema = object({
-  email: string().email("Неверная почта"),
-  password: string().min(6, "Минимум 6 символов"),
+const loginSchema = z.object({
+  email: z.string().email("Неверный формат почты"),
+  password: z.string().min(6, "Минимум 6 символов"),
 });
 
-type TypeLoginSchema = zInfer<typeof loginSchema>;
+type TypeLoginSchema = z.infer<typeof loginSchema>;
 
 export { type TypeLoginSchema, loginSchema };

@@ -16,7 +16,7 @@ export const FieldAuth = ({
   error,
   name,
 }: IFieldAuthProps) => {
-  const fieldError = error[name] as FieldError | undefined;
+  const message = error?.[name]?.message;
 
   return (
     <div>
@@ -26,7 +26,9 @@ export const FieldAuth = ({
         placeholder={placeholder}
         className={cn(``)}
       />
-      {fieldError && <p>{fieldError.message}</p>}
+      {typeof message === "string" && (
+        <p className="text-red-500">{message}</p>
+      )}
     </div>
   );
 };
