@@ -23,11 +23,10 @@
 			"@/app/*": ["./src/app/*"],
 			"@/pages/*": ["./src/pages/*"],
 			"@/widgets/*": ["./src/widgets/*"],
-			"@/features//*": ["./src/features//*"],
+			"@/features/*": ["./src/features/*"],
 			"@/entities/*": ["./src/entities/*"],
 			"@/shared/*": ["./src/shared/*"],
 			"@/libs/*": ["./src/libs/*"],
-			"@repo/core": ["../../packages/core/src/index.ts"]
 		}
 	},
 	"include": [

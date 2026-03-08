@@ -2,31 +2,32 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, TypeLoginSchema } from "@/entities/user";
+import { registerSchema, TypeRegisterSchema } from "@/entities/user";
 import { ButtonAuth, FieldAuth } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
-import { ThemeToggle } from "../../theme-toggle";
-import { useLoginStore } from "../model/login-store";
-import { redirect, RedirectType } from "next/navigation";
+import { ThemeToggle } from "../../../theme-toggle";
+import { useLoginStore } from "../../model/login-store";
+import { useRouter } from "next/navigation";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<TypeLoginSchema>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<TypeRegisterSchema>({
+    resolver: zodResolver(registerSchema),
   });
-  const { login, isLoading } = useLoginStore();
+  const { register: resisterUser, isLoading } = useLoginStore();
+  const router = useRouter();
 
-  const onSubmit = async (data: TypeLoginSchema) => {
+  const onSubmit = async (data: TypeRegisterSchema) => {
     try {
-      const resultMessage = await login(data);
-      
+      const resultMessage = await resisterUser(data);
+
       alert(resultMessage);
 
-      redirect("/", RedirectType.replace);
+      router.push("/");
     } catch (error) {
       alert(error);
     }
@@ -44,9 +45,9 @@ export const LoginForm = () => {
       <ThemeToggle />
 
       <div className="flex flex-col gap-y-2.5 items-center">
-        <h2 className="text-[clamp(24px,2.4vw,28px)]">Войти</h2>
+        <h2 className="text-[clamp(24px,2.4vw,28px)]">Регистрация</h2>
         <p className="text-[clamp(12px,1.4vw,14px)]">
-          Войдите в свою учетную запись
+          Пожалуйста, заполните поля для регистрации
         </p>
       </div>
 
@@ -60,6 +61,14 @@ export const LoginForm = () => {
         />
 
         <FieldAuth
+          type="text"
+          register={register("name")}
+          placeholder="Name"
+          error={errors}
+          name="name"
+        />
+
+        <FieldAuth
           type="password"
           register={register("password")}
           placeholder="Password"
@@ -68,11 +77,15 @@ export const LoginForm = () => {
         />
       </div>
 
-      <ButtonAuth>
-        {  isLoading
-          ? "Loading..."
-          : "Войти"}
-      </ButtonAuth>
+      <p>
+        Уже зарегистрированы?
+        <a href="/login" className="text-primary">
+          {" "}
+          Войти
+        </a>
+      </p>
+
+      <ButtonAuth>{isLoading ? "Loading..." : "Зарегистрироваться"}</ButtonAuth>
     </form>
   );
 };

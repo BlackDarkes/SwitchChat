@@ -1,8 +1,8 @@
 "use client";
 
-import { useBurgerStore } from "@/features//burger-button/model/burger-store";
-import { BurgerButton } from "@/features//burger-button/ui/BurgerButton";
-import { SearchInput } from "@/features//search";
+import { useBurgerStore } from "@/features/burger-button/model/burger-store";
+import { BurgerButton } from "@/features/burger-button/ui/BurgerButton";
+import { SearchInput } from "@/features/search";
 import { ChangeEvent, useState } from "react";
 import { BurgerMenu } from "./burger/BurgerMenu";
 import { BURGER_ITEMS } from "../model/burger-items";

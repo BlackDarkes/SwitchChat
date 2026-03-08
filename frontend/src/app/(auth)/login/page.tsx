@@ -1,12 +1,7 @@
-import { LoginForm } from "@/features//login";
-import { Container } from "@/shared/ui";
+import { LoginForm } from "@/features/auth/login";
 
 export default function AuthPage() {
   return (
-    <main>
-      <Container className="flex items-center h-screen">
-        <LoginForm />
-      </Container>
-    </main>
+    <LoginForm />
   );
 }
