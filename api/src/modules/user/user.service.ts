@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@/app/generated/prisma/client';
 
@@ -13,6 +13,10 @@ export class UserService {
   }
 
   async getById(id: string) {
+    if (!id) {
+      throw new BadRequestException("Пользователь с таким id не найден");
+    }
+
     return this.prismaService.client.user.findUnique({ where: { id } });
   }
 
