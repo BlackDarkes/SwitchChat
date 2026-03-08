@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type TypeLoginSchema, type TypeRegisterSchema, type IUser } from "@/entities/user";
+import { type TypeLoginSchema, type TypeRegisterSchema, type IUser, userApi } from "@/entities/user";
 import { apiClient } from "@/libs/api/clients";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
@@ -10,9 +10,9 @@ interface ILoginStore {
   isLoading: boolean;
   error: string;
 
-  login: (user: TypeLoginSchema) => void;
-  register: (user: TypeRegisterSchema) => void;
-  logout: () => void;
+  login: (user: TypeLoginSchema) => Promise<void>;
+  register: (user: TypeRegisterSchema) => Promise<void>;
+  logout: () => Promise<void>;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: string) => void;
 }
@@ -28,9 +28,9 @@ export const useLoginStore = create<ILoginStore>()(
       login: async (data: TypeLoginSchema) => {
         set({ isLoading: true, error: "" });
         try {
-          const { data: res  } = await apiClient.auth.login(data);
-          set({ user: res.user, isAuth: true, isLoading: false });
-          return res.message
+          const { message, user } = await userApi.login(data);
+          set({ user, isAuth: true, isLoading: false });
+          return message;
         } catch(error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });

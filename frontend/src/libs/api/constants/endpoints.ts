@@ -5,4 +5,7 @@ export const ENDPOINTS = {
     logout: "/auth/logout",
     refresh: "/auth/refresh",
   },
+  user: {
+    me: "/user/:id",
+  }
 };
