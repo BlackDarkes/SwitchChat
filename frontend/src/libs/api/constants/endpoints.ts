@@ -6,6 +6,6 @@ export const ENDPOINTS = {
     refresh: "/auth/refresh",
   },
   user: {
-    me: "/user/:id",
+    me: "/user/me",
   }
 };

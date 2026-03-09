@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import type {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 
 let isRefreshing: boolean = false;
 let failedQueue: Array<{
@@ -7,10 +12,7 @@ let failedQueue: Array<{
   reject: (reason: any) => void;
 }> = [];
 
-const processQueue = (
-  error: AxiosError | any,
-  token: string | null = null,
-) => {
+const processQueue = (error: AxiosError | any, token: string | null = null) => {
   failedQueue.forEach(({ resolve, reject }) => {
     if (error) {
       reject(error);
@@ -20,7 +22,7 @@ const processQueue = (
   });
 
   failedQueue = [];
-}
+};
 
 export const setupAuthInterceptor = (client: AxiosInstance) => {
   client.interceptors.request.use(
@@ -29,7 +31,7 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
     },
     (error: AxiosError) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   client.interceptors.response.use(
@@ -39,13 +41,15 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
     async (error: AxiosError) => {
       const originRequest = error.config as InternalAxiosRequestConfig & {
         _retry?: boolean;
-      }
+      };
+
+      console.log("TEst")
 
       if (
-        error.response?.status  === 401
-        && !originRequest.url?.includes("/auth/refresh")
-        && !originRequest.url?.includes("/auth/login")
-        && !originRequest._retry
+        error.response?.status === 401 &&
+        !originRequest.url?.includes("/auth/login") &&
+        !originRequest.url?.includes("/auth/refresh") &&
+        !originRequest._retry
       ) {
         if (isRefreshing) {
           return new Promise((resolve, reject) => {
@@ -63,15 +67,12 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
 
         try {
           await client.post("/auth/refresh");
-          processQueue(null, null);
+          processQueue(null);
           return client(originRequest);
-        } catch(refreshError) {
-          processQueue(refreshError as AxiosError, null);
-
-          if (typeof window !== "undefined" && !originRequest.url?.includes("/admin/me")) {
+        } catch (refreshError) {
+          if (typeof window !== "undefined") {
             window.location.href = "/login";
           }
-
           return Promise.reject(refreshError);
         } finally {
           isRefreshing = false;
@@ -79,8 +80,8 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 
   return client;
-}
+};
