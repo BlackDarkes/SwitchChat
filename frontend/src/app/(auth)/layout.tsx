@@ -1,7 +1,6 @@
 import { Container } from "@/shared/ui";
 
-
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;

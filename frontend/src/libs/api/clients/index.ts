@@ -14,6 +14,6 @@ export const apiClient = {
     refresh: () => baseClient.post(ENDPOINTS.auth.refresh),
   },
   user: {
-    me: (id: string) => baseClient.get(ENDPOINTS.user.me.replace(":id", id)),
+    me: () => baseClient.get(ENDPOINTS.user.me),
   },
 };

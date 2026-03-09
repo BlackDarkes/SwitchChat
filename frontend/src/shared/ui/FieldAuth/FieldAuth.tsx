@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/utils";
-import { UseFormRegisterReturn, FieldErrors, FieldError } from "react-hook-form";
+import { UseFormRegisterReturn, FieldErrors } from "react-hook-form";
 
 interface IFieldAuthProps {
   type: string;
