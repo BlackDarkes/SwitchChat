@@ -102,10 +102,6 @@ export class AuthService {
 
 			await this.auth(res, user.id, user.email, user.username, userAgent);
 
-			const access_token = req.cookies?.["access_token"];
-
-			console.log(access_token);
-
 			return user;
 		} catch {
 			this.clearTokens(res);

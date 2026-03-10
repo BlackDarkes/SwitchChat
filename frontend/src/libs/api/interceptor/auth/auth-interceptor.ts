@@ -43,8 +43,6 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
         _retry?: boolean;
       };
 
-      console.log("TEst");
-
       if (
         error.response?.status === 401 &&
         !originRequest.url?.includes("/auth/login") &&
@@ -68,7 +66,6 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
         try {
           await client.post("/auth/refresh");
           processQueue(null);
-          console.log("THIS GOOD");
           return client(originRequest);
         } catch (refreshError) {
           const path = window.location.pathname;
