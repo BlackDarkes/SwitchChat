@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type TypeLoginSchema, type TypeRegisterSchema, type IUser, userApi } from "@/entities/user";
 import { apiClient } from "@/libs/api/clients";
-import { IAuthUser } from "@/libs/auth/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -14,8 +13,7 @@ interface ILoginStore {
   login: (user: TypeLoginSchema) => Promise<void>;
   register: (user: TypeRegisterSchema) => Promise<void>;
   logout: () => Promise<void>;
-  fetchUser: () => Promise<void>;
-  initialize: (user: IUser | undefined) => void;
+  fetchUser: () => Promise<boolean>;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: string) => void;
 }
@@ -69,17 +67,15 @@ export const useLoginStore = create<ILoginStore>()(
         try {
           const { data } = await apiClient.user.me();
           set({ user: data, isAuth: true, isLoading: false });
+          return true;
         } catch(error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });
+          return false;
         } finally {
           set({ isLoading: false });
         }
       },
-
-      initialize: (user: IAuthUser) => {
-        set({ user, isAuth: true });
-      }
     }),
     {
       name: "login-store",

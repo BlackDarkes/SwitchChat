@@ -43,7 +43,7 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
         _retry?: boolean;
       };
 
-      console.log("TEst")
+      console.log("TEst");
 
       if (
         error.response?.status === 401 &&
@@ -68,9 +68,11 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
         try {
           await client.post("/auth/refresh");
           processQueue(null);
+          console.log("THIS GOOD");
           return client(originRequest);
         } catch (refreshError) {
-          if (typeof window !== "undefined") {
+          const path = window.location.pathname;
+          if (!path.includes("/login") && !path.includes("/register")) {
             window.location.href = "/login";
           }
           return Promise.reject(refreshError);

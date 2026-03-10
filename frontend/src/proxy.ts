@@ -1,16 +1,18 @@
 import { type NextRequest, NextResponse } from "next/server";
 
 export function proxy(request: NextRequest) {
-  const token = request.cookies.get("access_token");
   const { pathname } = request.nextUrl;
-
-  const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/register");
+  
+  const normalizedPath = pathname.replace(/\/$/, "");
+  
+  const token = request.cookies.get("access_token")?.value;
+  
+  const isAuthPage = normalizedPath === "/login" || normalizedPath === "/register";
 
   if (isAuthPage) {
     if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
-
     return NextResponse.next();
   }
 
@@ -19,7 +21,7 @@ export function proxy(request: NextRequest) {
   }
 
   return NextResponse.next();
-};
+}
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],

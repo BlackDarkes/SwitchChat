@@ -1,21 +1,21 @@
 "use client";
 
-import { IAuthUser } from "@/libs/auth/types";
 import { useLoginStore } from "@/features/auth/model/login-store";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-export function AuthProvider({
-  children,
-  initialData,
-}: {
-  children: React.ReactNode;
-  initialData: IAuthUser | undefined;
-}) {
-  const initialize = useLoginStore((state) => state.initialize);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const hasRun = useRef(false);
 
   useEffect(() => {
-    initialize(initialData);
-  }, [initialData, initialize]);
+    if (hasRun.current) return;
+    hasRun.current = true;
+
+    const store = useLoginStore.getState();
+    
+    if (store.isAuth) return;
+
+    store.fetchUser()
+  }, []); 
 
   return <>{children}</>;
 }
