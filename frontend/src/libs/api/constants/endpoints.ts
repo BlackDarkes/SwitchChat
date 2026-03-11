@@ -7,5 +7,11 @@ export const ENDPOINTS = {
   },
   user: {
     me: "/user/me",
+  },
+  chat: {
+    getUserChat: "/chats",
+  },
+  message: {
+
   }
 };

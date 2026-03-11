@@ -16,4 +16,7 @@ export const apiClient = {
   user: {
     me: () => baseClient.get(ENDPOINTS.user.me),
   },
+  chat: {
+    getUserChat: () => baseClient.get(ENDPOINTS.chat.getUserChat),
+  }
 };
