@@ -19,6 +19,7 @@
   --inactive-color: #8e8e93;
   --primary-color: #1c1c1e;
   --secondary-color: #8e8e93;
+  --not-read: #ffffff;
 
   --opacity-color: #000000b3; /* Время последнего сообщения */
   --placeholder-color: #8e8e93;
@@ -56,6 +57,7 @@
   --color-inactive-color: var(--inactive-color);
   --color-primary-color: var(--primary-color);
   --color-secondary-color: var(--secondary-color);
+  --color-not-read: var(--not-read);
 
   --color-opacity-color: var(--opacity-color); /* Время последнего сообщения */
   --color-placeholder-color: var(--placeholder-color);
@@ -92,6 +94,7 @@
   --inactive-color: #6c7883;
   --primary-color: #e6e6e6;
   --secondary-color: #7f91a4;
+  --not-read: #000000;
 
   --opacity-color: #ffffffb3; /* Время последнего сообщения */
   --placeholder-color: #8e8e93;
