@@ -15,7 +15,7 @@ import { SessionService } from "../session/session.service";
 export class AuthService {
 	private TTL_ACCESS_TOKEN: string;
 	private TTL_REFRESH_TOKEN: string;
-	private COOKIE_DOMAIN: string;
+	private COOKIE_DOMAIN: string | undefined;
 
 	constructor(
 		private readonly configService: ConfigService,
@@ -27,7 +27,7 @@ export class AuthService {
 			this.configService.getOrThrow<string>("TTL_ACCESS_TOKEN");
 		this.TTL_REFRESH_TOKEN =
 			this.configService.getOrThrow<string>("TTL_REFRESH_TOKEN");
-		this.COOKIE_DOMAIN = this.configService.getOrThrow<string>("COOKIE_DOMAIN");
+		this.COOKIE_DOMAIN = this.configService.get<string>("COOKIE_DOMAIN");
 	}
 
 	async register(data: TypeRegisterSchema) {
