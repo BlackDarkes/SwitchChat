@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { IBurgerItems } from "../../model/burger-items";
 import { useTheme } from "next-themes";
-import {  useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
+import { useLoginStore } from "@/features/auth/model/login-store";
 
 interface IBurgerMenuItemProps {
   item: IBurgerItems;
@@ -15,14 +16,25 @@ export const BurgerMenuItem = ({ item }: IBurgerMenuItemProps) => {
     emptySubscribe,
     () => true,
     () => false,
-  )
+  );
+  const { logout } = useLoginStore();
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
   return (
     <li>
       {item.isLink ? (
         <Link href={item.link || ""}>{item.title}</Link>
+      ) : item.title === "Выход" ? (
+        <button
+          type="button"
+          onClick={() => {
+            logout();
+            window.location.href = "/";
+          }}
+        >
+          {item.title}
+        </button>
       ) : (
         <button
           type="button"

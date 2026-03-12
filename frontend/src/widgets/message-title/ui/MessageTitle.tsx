@@ -10,23 +10,23 @@ interface IMessageTitleProps {
 
 export const MessageTitle = ({ chat }: IMessageTitleProps) => {
   return (
-    <header>
-      <Container>
-        <div>
+    <header className="p-4.25 bg-primary-bg border-b-2 border-border-color">
+      <Container className="flex justify-between">
+        <div className="flex items-center gap-x-10">
           <Link href={"/"}>
-            <ArrowLeft />
+            <ArrowLeft width={35} height={35} />
           </Link>
 
-          <div>
+          <div className="flex gap-x-2.5 cursor-pointer">
             {chat?.avatar ? (
               <Image src={chat.avatar} alt="avatar" width={60} height={60} />
             ) : (
-              <div className="flex justify-center items-center w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full">
+              <div className="flex justify-center items-center w-[clamp(40px,4vw,50px)] h-[clamp(40px,4vw,50px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full">
                 {chat?.name[0]}
               </div>
             )}
 
-            <div>
+            <div className="">
               <h3>{chat?.name}</h3>
               <p>{chat?.chatMembers.length} пользователей</p>
             </div>
@@ -34,7 +34,7 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
         </div>
 
         <button type="button">
-          <EllipsisVertical />
+          <EllipsisVertical width={35} height={35} />
         </button>
       </Container>
     </header>

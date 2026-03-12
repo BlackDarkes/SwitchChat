@@ -17,7 +17,7 @@ export const LoginForm = () => {
     formState: { errors },
     setValue,
   } = useForm<TypeLoginSchema>({
-    mode: "onChange",
+    mode: "onSubmit",
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",

@@ -35,6 +35,11 @@ const BURGER_ITEMS: IBurgerItems[] = [
     link: "/friends",
     isLink: true,
   },
+  {
+    id: 6,
+    title: "Выход",
+    isLink: false,
+  }
 ];
 
 export { type IBurgerItems, BURGER_ITEMS };
