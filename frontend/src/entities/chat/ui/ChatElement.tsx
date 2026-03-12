@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/shared/lib/utils";
 import { IChat } from "@/shared/types/chat.interface";
 import Image from "next/image";

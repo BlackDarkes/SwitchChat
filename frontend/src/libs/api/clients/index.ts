@@ -1,3 +1,5 @@
+"use client"
+
 import { ENDPOINTS } from "../constants/endpoints";
 import { baseClient } from "./base-client";
 
@@ -18,5 +20,6 @@ export const apiClient = {
   },
   chat: {
     getUserChat: () => baseClient.get(ENDPOINTS.chat.getUserChat),
+    getChatById: (id: string) => baseClient.get(ENDPOINTS.chat.getChatById.replace(":id", id)),
   }
 };

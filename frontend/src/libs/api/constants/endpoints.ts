@@ -10,6 +10,7 @@ export const ENDPOINTS = {
   },
   chat: {
     getUserChat: "/chats",
+    getChatById: "/chats/:id",
   },
   message: {
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { AxiosInstance } from "axios";
 import { setupAuthInterceptor } from "./auth/auth-interceptor";
 import { setupErrorInterceptor } from "./auth/error-interceptor";

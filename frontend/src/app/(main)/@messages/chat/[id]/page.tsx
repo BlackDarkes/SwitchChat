@@ -1,7 +1,29 @@
+"use client";
+
+import { chatApi } from "@/entities/chat";
+import { IChat } from "@/shared/types/chat.interface";
+import { MessageTitle } from "@/widgets/message-title";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 export default function Page() {
+  const { id } = useParams<{ id: string }>();
+  const [chat, setChat] = useState<IChat>();
+
+  useEffect(() => {
+    const fetchChat = async () => {
+      const chat = await chatApi.getChatById(id);
+      setChat(chat);
+    };
+
+    if (id) {
+      fetchChat();
+    }
+  }, [id])
+
   return (
-    <div className="flex items-center justify-center h-full text-inactive-color text-[clamp(18px,1.4vw,22px)]">
-      <p>КОРОЧЕ ЧАТ</p>
-    </div>
+    <>
+      <MessageTitle chat={chat} />
+    </>
   );
 }

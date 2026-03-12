@@ -68,6 +68,10 @@ export const setupAuthInterceptor = (client: AxiosInstance) => {
           processQueue(null);
           return client(originRequest);
         } catch (refreshError) {
+          if (!window.location.pathname) {
+            return;
+          }
+
           const path = window.location.pathname;
           if (!path.includes("/login") && !path.includes("/register")) {
             window.location.href = "/login";

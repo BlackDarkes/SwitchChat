@@ -17,17 +17,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const isOk = await store.fetchUser();
 
-      // if (store.isAuth) {
-      //   return router.push("/");
-      // }
+      if (store.isAuth) {
+        return router.push("/");
+      }
 
-      // if (isOk) {
-      //   return router.push("/");
-      // }
+      if (isOk) {
+        return router.push("/");
+      }
 
-      // if (store.isAuth) {
-      //   return router.push("/");
-      // }
+      if (store.isAuth) {
+        return router.push("/");
+      }
     };
 
     initialize();
