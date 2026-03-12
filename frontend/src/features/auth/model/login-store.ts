@@ -65,8 +65,9 @@ export const useLoginStore = create<ILoginStore>()(
       fetchUser: async () => {
         set({ isLoading: true, error: "" });
         try {
-          const { data } = await apiClient.user.me();
-          set({ user: data, isAuth: true, isLoading: false });
+          const user = await userApi.me();
+          console.log("STORE", user)
+          set({ user, isAuth: true, isLoading: false });
           return true;
         } catch(error: any) {
           const errorMessage = error?.response?.data?.message || error.message;

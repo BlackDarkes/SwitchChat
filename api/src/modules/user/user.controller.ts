@@ -16,7 +16,7 @@ export class UserController {
 		const user = await this.userService.getById(userId);
 
 		return {
-			user,
+			...user,
 		};
 	}
 }
