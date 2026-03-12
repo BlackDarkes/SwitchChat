@@ -13,6 +13,6 @@ export const ENDPOINTS = {
     getChatById: "/chats/:id",
   },
   message: {
-
+    getHistory: "/messages/:id",
   }
 };

@@ -21,5 +21,8 @@ export const apiClient = {
   chat: {
     getUserChat: () => baseClient.get(ENDPOINTS.chat.getUserChat),
     getChatById: (id: string) => baseClient.get(ENDPOINTS.chat.getChatById.replace(":id", id)),
-  }
+  },
+  message: {
+    getHistory: (id: string) => baseClient.get(ENDPOINTS.message.getHistory.replace(":id", id)),
+  },
 };
