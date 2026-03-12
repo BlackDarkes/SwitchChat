@@ -2,7 +2,7 @@ import { IChatMember } from "./chat-member.interface";
 import { IMessage } from "./message.interface";
 
 export interface IChat {
-  id: number;
+  id: string;
   type: "DIRECT" | "SELF" | "GROUP" | "CHANNEL";
   name: string;
   username: string;

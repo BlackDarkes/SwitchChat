@@ -1,11 +1,11 @@
 export default function MainLayout({
   children,
   chats,
-  sidebar,
+  messages,
 }: {
   children: React.ReactNode;
   chats: React.ReactNode;
-  sidebar: React.ReactNode;
+  messages: React.ReactNode;
 }) {
   return (
     <main className="flex max-h-screen h-screen max-w-screen w-screen">
@@ -15,7 +15,7 @@ export default function MainLayout({
       </section>
 
       <aside className="w-[max(100%,1160px)] bg-accent-bg max-md:hidden">
-        {sidebar}
+        {messages}
       </aside>
     </main>
   );

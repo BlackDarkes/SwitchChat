@@ -1,12 +1,17 @@
+import { cn } from "@/shared/lib/utils";
 import { IChat } from "@/shared/types/chat.interface";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface IChatElementProps {
   chat: IChat;
 }
 
 export const ChatElement = ({ chat }: IChatElementProps) => {
+  const param = useParams<{  id: string }>();
+
+
   const lastReadMessageId = chat.chatMembers.at(-1)?.lastReadMessageId;
   const lastMessageId = chat.messages.at(-1)?.id;
 
@@ -14,7 +19,12 @@ export const ChatElement = ({ chat }: IChatElementProps) => {
 
   return (
     <li>
-      <Link href={"#"} className="flex justify-between w-full bg-chat-bg p-[10px_15px] rounded-xl shadow-box">
+      <Link href={`/chat/${chat.id}`} className={cn(
+        `flex justify-between w-full bg-chat-bg p-[10px_15px] rounded-xl shadow-box`,
+        {
+          "shadow-none": param.id === chat.id
+        }
+      )}>
         <div className="flex gap-x-3.75">
           {chat.avatar ? (
             <Image src={chat.avatar} alt="avatar" width={60} height={60} />
