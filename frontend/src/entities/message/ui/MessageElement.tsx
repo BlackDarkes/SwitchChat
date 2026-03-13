@@ -23,7 +23,7 @@ export const MessageElement = ({ message, userId }: IMessageElementProps) => {
 
       <div
         className={cn(
-          `p-[10px_25px_23px_15px] w-[clamp(300px,35vw,600px)] bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_24px] shadow-box`,
+          `p-[10px_25px_23px_15px] w-[clamp(300px,35vw,600px)] bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_18px] shadow-box`,
         )}
       >
         {message.text}

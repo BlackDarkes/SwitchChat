@@ -3,7 +3,7 @@ import Image from "next/image";
 
 interface IUserAvatarProps {
   userAvatar: string | undefined | null;
-  userName: string;
+  userName: string | undefined;
 }
 
 export const UserAvatar = ({ userAvatar, userName }: IUserAvatarProps) => {
@@ -15,12 +15,12 @@ export const UserAvatar = ({ userAvatar, userName }: IUserAvatarProps) => {
           alt="avatar"
           width={60}
           height={60}
-          className={cn(`w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)] cursor-pointer`)}
+          className={cn(`w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] cursor-pointer`)}
         />
       ) : (
         <div
           className={cn(
-            `flex justify-center items-center w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full cursor-pointer`,
+            `flex justify-center items-center w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full cursor-pointer`,
           )}
         >
           {userName?.slice(0, 1)}

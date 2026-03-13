@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 interface IContainerProps {
   children: ReactNode;
-  mod: "default" | "contianer";
+  mod?: "default" | "contianer";
   className?: string;
 }
   
