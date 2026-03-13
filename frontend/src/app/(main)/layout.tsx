@@ -14,7 +14,7 @@ export default function MainLayout({
         <div>{chats}</div>
       </section>
 
-      <aside className="w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:hidden">
+      <aside className="flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:hidden">
         {messages}
       </aside>
     </main>

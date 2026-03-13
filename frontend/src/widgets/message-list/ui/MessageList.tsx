@@ -9,7 +9,7 @@ interface IMessagesListProps {
   chat: IChat | undefined;
 }
 
-export const MessagesList = ({ chat }: IMessagesListProps) => {
+export const MessageList = ({ chat }: IMessagesListProps) => {
   const { user } = useLoginStore();
 
   return (

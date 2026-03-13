@@ -2,7 +2,8 @@
 
 import { chatApi } from "@/entities/chat";
 import { IChat } from "@/shared/types/chat.interface";
-import { MessagesList } from "@/widgets/message-list/ui/MessagesList";
+import { MessageField } from "@/widgets/message-field/ui/MessageField";
+import { MessageList } from "@/widgets/message-list";
 import { MessageTitle } from "@/widgets/message-title";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,11 +22,14 @@ export default function Page() {
       fetchChat();
     }
   }, [id]);
-  
+
   return (
     <>
-      <MessageTitle chat={chat} />
-      <MessagesList chat={chat} />
+      <div>
+        <MessageTitle chat={chat} />
+        <MessageList chat={chat} />
+      </div>
+      <MessageField />
     </>
   );
 }
