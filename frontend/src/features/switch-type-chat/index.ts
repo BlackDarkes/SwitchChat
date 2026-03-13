@@ -1,0 +1,1 @@
+export { useTypeChatStore } from "./model/useTypeChatStore";

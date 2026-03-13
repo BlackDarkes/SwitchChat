@@ -21,11 +21,10 @@ export default function MainLayout({
         <div className="h-[calc(100%-clamp(83px,10vh,86px))]">{chats}</div>
       </section>
 
-      {/* <aside className="flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:hidden"> */}
       <aside className={cn(
         `flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:h-full max-md:-translate-x-[105%]`,
         {
-          "max-md:translate-x-0 z-600": isOpen
+          "max-md:translate-x-0 max-md:z-600": isOpen
         }
       )}>
         {messages}
