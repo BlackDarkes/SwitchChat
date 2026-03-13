@@ -1,5 +1,3 @@
-import { IUser } from "@/entities/user";
-
 export interface IChatMember {
   id: string;
   chatId: string;
@@ -8,5 +6,4 @@ export interface IChatMember {
   joinedAt: string;
   lastReadMessageId: string;
   isFavorite: boolean;
-  user: IUser;
 }

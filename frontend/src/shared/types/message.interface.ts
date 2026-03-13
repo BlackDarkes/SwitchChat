@@ -1,3 +1,5 @@
+import type { IUser } from "@/entities/user";
+
 export interface IMessage {
   id: string;
   userId: string;
@@ -9,4 +11,5 @@ export interface IMessage {
   isPined: boolean;
   createdAt: string;
   updatedAt: string;
+  user: IUser
 }

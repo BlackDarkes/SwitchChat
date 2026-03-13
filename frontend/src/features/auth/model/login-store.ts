@@ -66,7 +66,6 @@ export const useLoginStore = create<ILoginStore>()(
         set({ isLoading: true, error: "" });
         try {
           const user = await userApi.me();
-          console.log("STORE", user)
           set({ user, isAuth: true, isLoading: false });
           return true;
         } catch(error: any) {

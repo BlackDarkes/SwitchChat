@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   const { id } = useParams<{ id: string }>();
-  const [chat, setChat] = useState<IChat>();
+  const [chat, setChat] = useState<IChat | undefined>();
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -20,12 +20,12 @@ export default function Page() {
     if (id) {
       fetchChat();
     }
-  }, [id])
-
+  }, [id]);
+  
   return (
     <>
       <MessageTitle chat={chat} />
-      <MessagesList messages={chat?.messages} />
+      <MessagesList chat={chat} />
     </>
   );
 }

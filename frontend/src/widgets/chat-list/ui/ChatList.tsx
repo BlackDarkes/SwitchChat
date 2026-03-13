@@ -9,8 +9,6 @@ export const ChatList = () => {
 
   if (isPending) return <p>Loading...</p>;
 
-  console.log("Chats: ", data?.chats);
-
   return (
     <Container>
       <ul className="flex flex-col gap-y-5 pt-5">

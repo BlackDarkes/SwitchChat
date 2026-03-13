@@ -41,7 +41,9 @@ export class ChatsController {
   async getChatInfo(
     @Param("id") chatId: string,
   ) {
-    return this.chatRepository.getChatWithFullInfo(chatId);
+    const chat = await this.chatRepository.getChatWithFullInfo(chatId);
+
+    return chat;
   }
 
   @Post("")
