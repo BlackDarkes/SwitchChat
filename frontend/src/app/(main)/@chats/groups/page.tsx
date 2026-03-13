@@ -1,10 +1,7 @@
-import { ChatIsland } from "@/widgets/chat-island";
-
 export default function Page() {
   return (
-    <div className="flex items-center justify-center h-full text-inactive-color text-[clamp(18px,1.4vw,22px)]">
-      <p>ЭТО ГРУППЫ</p>
-      <ChatIsland />
-    </div>
+    <>
+      <p className="mt-5">ЭТО ГРУППЫ</p>
+    </>
   );
 }

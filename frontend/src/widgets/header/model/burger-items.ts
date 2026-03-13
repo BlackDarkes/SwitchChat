@@ -9,7 +9,7 @@ const BURGER_ITEMS: IBurgerItems[] = [
   {
     id: 1,
     title: "Избранное",
-    link: "#",
+    link: "/chat/direct",
     isLink: true,
   },
   {
@@ -25,18 +25,12 @@ const BURGER_ITEMS: IBurgerItems[] = [
   },
   {
     id: 4,
-    title: "Свои категории",
-    link: "#",
-    isLink: true,
-  },
-  {
-    id: 5,
     title: "Друзья",
     link: "/friends",
     isLink: true,
   },
   {
-    id: 6,
+    id: 5,
     title: "Выход",
     isLink: false,
   }

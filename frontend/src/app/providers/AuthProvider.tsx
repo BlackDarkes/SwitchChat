@@ -1,11 +1,12 @@
 "use client";
 
 import { useLoginStore } from "@/features/auth/model/login-store";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasRun = useRef(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
@@ -15,19 +16,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const initialize = async () => {
       const store = useLoginStore.getState();
 
-      const isOk = await store.fetchUser();
+      await store.fetchUser();
 
-      // if (store.isAuth) {
-      //   return router.push("/");
-      // }
+      const { isAuth } = useLoginStore.getState();
 
-      // if (isOk) {
-      //   return router.push("/");
-      // }
-
-      // if (store.isAuth) {
-      //   return router.push("/");
-      // }
+      if (isAuth) {
+        if (pathname !== "/login" && pathname !== "/register") {
+          router.push(pathname);
+        }
+      } else {
+        if (pathname !== '/login') {
+          router.push('/login');
+        }
+      }
     };
 
     initialize();
