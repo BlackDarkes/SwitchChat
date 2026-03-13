@@ -1,4 +1,5 @@
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
+import { useMobileMessages } from "@/features/mobile-messages";
 import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
 import { ArrowLeft, EllipsisVertical } from "lucide-react";
@@ -9,11 +10,13 @@ interface IMessageTitleProps {
 }
 
 export const MessageTitle = ({ chat }: IMessageTitleProps) => {
+  const { handleOpen } = useMobileMessages();
+
   return (
     <header className="py-4.25 bg-primary-bg border-b-2 border-border-color">
       <Container className="flex justify-between" mod="default">
         <div className="flex items-center gap-x-10">
-          <Link href={"/"}>
+          <Link href={"/"} onClick={handleOpen}>
             <ArrowLeft width={35} height={35} />
           </Link>
 

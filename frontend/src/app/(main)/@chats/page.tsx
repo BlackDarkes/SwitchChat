@@ -1,3 +1,5 @@
+"use client"
+
 import { ChatIsland } from "@/widgets/chat-island";
 import { ChatList } from "@/widgets/chat-list";
 

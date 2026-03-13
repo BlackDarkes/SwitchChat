@@ -1,3 +1,8 @@
+"use client"
+
+import { useMobileMessages } from "@/features/mobile-messages";
+import { cn } from "@/shared/lib/utils";
+
 export default function MainLayout({
   children,
   chats,
@@ -7,6 +12,8 @@ export default function MainLayout({
   chats: React.ReactNode;
   messages: React.ReactNode;
 }) {
+  const { isOpen } = useMobileMessages();
+
   return (
     <main className="flex max-h-screen h-screen max-w-screen w-screen overflow-hidden">
       <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
@@ -15,7 +22,12 @@ export default function MainLayout({
       </section>
 
       {/* <aside className="flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:hidden"> */}
-      <aside className="flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:h-full ">
+      <aside className={cn(
+        `flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:h-full max-md:-translate-x-[105%]`,
+        {
+          "max-md:translate-x-0 z-600": isOpen
+        }
+      )}>
         {messages}
       </aside>
     </main>

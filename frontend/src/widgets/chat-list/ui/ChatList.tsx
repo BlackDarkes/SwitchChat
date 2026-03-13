@@ -3,9 +3,11 @@
 import { ChatElement, useChats } from "@/entities/chat";
 import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
+import { useMobileMessages } from "@/features/mobile-messages";
 
 export const ChatList = () => {
   const { data, isPending } = useChats();
+  const { handleOpen } = useMobileMessages();
 
   if (isPending) return <p>Loading...</p>;
 
@@ -14,7 +16,7 @@ export const ChatList = () => {
       <ul className="flex flex-col gap-y-5 pt-5">
         {data?.chats.length ? (
           data.chats.map((chat: IChat) => (
-            <ChatElement key={chat.id} chat={chat} />
+            <ChatElement key={chat.id} chat={chat} handleOpen={handleOpen} />
           ))
         ) : (
           <p className="pt-10 text-center">Вступите в чат чтобы они появились тут</p>
