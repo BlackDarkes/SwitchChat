@@ -13,13 +13,13 @@ export const ChatList = () => {
 
   return (
     <Container>
-      <ul>
+      <ul className="flex flex-col gap-y-5 pt-5">
         {data?.chats.length ? (
           data.chats.map((chat: IChat) => (
             <ChatElement key={chat.id} chat={chat} />
           ))
         ) : (
-          <p className="text-center">Вступите в чат чтобы они появились тут</p>
+          <p className="pt-10 text-center">Вступите в чат чтобы они появились тут</p>
         )}
       </ul>
     </Container>

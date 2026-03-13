@@ -6,6 +6,7 @@ import { SearchInput } from "@/features/search";
 import { ChangeEvent, useState } from "react";
 import { BurgerMenu } from "./burger/BurgerMenu";
 import { BURGER_ITEMS } from "../model/burger-items";
+import { Container } from "@/shared/ui";
 
 export const Header = () => {
   const { isOpen, handleOpen } = useBurgerStore();
@@ -16,14 +17,14 @@ export const Header = () => {
   };
 
   return (
-    <header className="p-5 w-[min(100%,760px)] bg-primary-bg border-b-2 border-border-color">
-      <div className="flex items-center justify-between gap-x-5">
+    <header className="py-5 w-[min(100%,760px)] bg-primary-bg border-b-2 border-border-color">
+      <Container className="flex items-center justify-between gap-x-5">
         <div>
           <BurgerButton isOpen={isOpen} handleOpen={handleOpen} />
           <BurgerMenu items={BURGER_ITEMS} isOpen={isOpen} handleOpen={handleOpen} />
         </div>
         <SearchInput id="test" value={value} handleInput={handleInput} />
-      </div>
+      </Container>
     </header>
   );
 };

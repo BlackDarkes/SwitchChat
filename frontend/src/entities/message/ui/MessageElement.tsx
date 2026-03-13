@@ -9,16 +9,15 @@ interface IMessageElementProps {
 export const MessageElement = ({ message, userId }: IMessageElementProps) => {
   const isOwnerMessage = message.userId === userId;
 
-  console.log("message", message.userId, "userId", userId);
-
   return (
-    <>
+    <li>
+      
       <p className={cn(
         ``,
         {
           "text-right text-accent-color": isOwnerMessage
         }
       )}>{message.text}</p>
-    </>
+    </li>
   );
 }

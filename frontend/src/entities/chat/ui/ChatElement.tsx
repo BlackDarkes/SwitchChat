@@ -2,9 +2,9 @@
 
 import { cn } from "@/shared/lib/utils";
 import { IChat } from "@/shared/types/chat.interface";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { ChatAvatar } from "./ChatAvatar";
 
 interface IChatElementProps {
   chat: IChat;
@@ -28,13 +28,7 @@ export const ChatElement = ({ chat }: IChatElementProps) => {
         }
       )}>
         <div className="flex gap-x-3.75">
-          {chat.avatar ? (
-            <Image src={chat.avatar} alt="avatar" width={60} height={60} />
-          ) : (
-            <div className="flex justify-center items-center w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full">
-              {chat.name[0]}
-            </div>
-          )}
+          <ChatAvatar chatAvatar={chat.avatar} chatName={chat.name} size="big" />
 
           <div className="flex flex-col justify-between h-full">
             <h3 className="text-[clamp(18px,1.5vw,22px)] font-semibold">{chat.name}</h3>

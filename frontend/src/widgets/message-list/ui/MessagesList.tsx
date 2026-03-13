@@ -14,9 +14,8 @@ export const MessagesList = ({ messages }: IMessagesListProps) => {
   return (
     <ul>
       { messages?.map((message) => (
-        <li key={message.id}>
-          <MessageElement message={message} userId={user?.id} />
-        </li>
+        <MessageElement key={message.id} message={message} userId={user?.id} />
+        
       )) }
     </ul>
   );
