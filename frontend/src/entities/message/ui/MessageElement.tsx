@@ -11,16 +11,23 @@ export const MessageElement = ({ message, userId }: IMessageElementProps) => {
   const isOwnerMessage = message.userId === userId;
 
   return (
-    <li>
-      <UserAvatar userAvatar={message.user.avatar} userName={message.user.name} />
+    <li
+      className={cn(`flex items-start gap-x-3.75`, {
+        "self-end": isOwnerMessage,
+      })}
+    >
+      <UserAvatar
+        userAvatar={message.user.avatar}
+        userName={message.user.name}
+      />
 
-      <p
-        className={cn(``, {
-          "text-right text-accent-color": isOwnerMessage,
-        })}
+      <div
+        className={cn(
+          `p-[10px_25px_23px_15px] w-[clamp(300px,35vw,600px)] bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_24px] shadow-box`,
+        )}
       >
         {message.text}
-      </p>
+      </div>
     </li>
   );
 };

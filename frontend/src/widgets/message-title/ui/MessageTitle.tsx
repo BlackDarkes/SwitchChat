@@ -11,7 +11,7 @@ interface IMessageTitleProps {
 export const MessageTitle = ({ chat }: IMessageTitleProps) => {
   return (
     <header className="py-4.25 bg-primary-bg border-b-2 border-border-color">
-      <Container className="flex justify-between">
+      <Container className="flex justify-between" mod="default">
         <div className="flex items-center gap-x-10">
           <Link href={"/"}>
             <ArrowLeft width={35} height={35} />
