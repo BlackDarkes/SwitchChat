@@ -15,9 +15,21 @@ export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
   const param = useParams<{ id: string }>();
 
   const lastReadMessageId = chat.chatMembers?.at(-1)?.lastReadMessageId;
-  const lastMessageId = chat.messages?.at(-1)?.id;
 
-  const countMessage = lastMessageId !== lastReadMessageId ? 1 : 0;
+  const unreadCount =
+    chat.messages?.filter((message) => {
+      if (!lastReadMessageId) return true;
+
+      const lastReadMessage = chat.messages?.find(
+        (m) => m.id === lastReadMessageId,
+      );
+      
+      if (!lastReadMessage) return true;
+
+      return new Date(message.createdAt) > new Date(lastReadMessage.createdAt);
+    }).length ?? 0;
+
+  const displayCount = unreadCount > 99 ? "99+" : unreadCount;
 
   return (
     <li>
@@ -53,10 +65,15 @@ export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
             {chat.messages.at(-1)?.createdAt.split("T")[0]}
           </span>
 
-          {countMessage && (
-            <p className="flex items-center justify-center self-end w-[clamp(20px,1.5vw,25px)] h-[clamp(20px,1.5vw,25px)] bg-secondary-bg text-not-read text-[clamp(12px,1.1vw,14px)] rounded-full">
-              {countMessage}
-            </p>
+          {unreadCount > 0 && (
+            <span
+              className={cn(
+                "flex items-center justify-center self-end min-w-[clamp(20px,1.5vw,25px)] h-[clamp(20px,1.5vw,25px)] px-1.5 bg-red-500 text-white text-[clamp(11px,1.1vw,13px)] font-bold rounded-full",
+                unreadCount > 9 && "px-1", 
+              )}
+            >
+              {displayCount}
+            </span>
           )}
         </div>
       </Link>
