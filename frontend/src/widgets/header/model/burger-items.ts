@@ -15,8 +15,7 @@ const BURGER_ITEMS: IBurgerItems[] = [
   {
     id: 2,
     title: "Настройки",
-    link: "/settings",
-    isLink: true,
+    isLink: false,
   },
   {
     id: 3,

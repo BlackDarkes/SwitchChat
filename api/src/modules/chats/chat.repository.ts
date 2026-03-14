@@ -40,6 +40,24 @@ export class ChatRepository {
 		});
 	}
 
+	async getFavoriteChats(userId: string): Promise<Chat | null> {
+		return this.prismaService.client.chat.findFirst({
+			where: { chatMembers: { some: { userId, isFavorite: true } } },
+		})
+	}
+
+	async getSelfChats(userId: string): Promise<Chat[] | null> {
+		return this.prismaService.client.chat.findMany({
+			where: { chatMembers: { some: { userId } }, type: "SELF" },
+		});
+	}
+
+	async getChannelChats(userId: string): Promise<Chat[] | null> {
+		return this.prismaService.client.chat.findMany({
+			where: { chatMembers: { some: { userId } }, type: { in: ["CHANNEL", "GROUP"] } },
+		});
+	}
+
 	async searchChats(userId: string, search: string): Promise<Chat[] | null> {
 		return this.prismaService.client.chat.findMany({
 			where: {
@@ -68,8 +86,8 @@ export class ChatRepository {
 				type: "DIRECT",
 				AND: [
 					{ chatMembers: { some: { userId: user1Id } } },
-					{ chatMembers: { some: { userId: user2Id } }},
-				]
+					{ chatMembers: { some: { userId: user2Id } } },
+				],
 			},
 		});
 	}

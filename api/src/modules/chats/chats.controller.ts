@@ -46,6 +46,42 @@ export class ChatsController {
     return chat;
   }
 
+  @Get("/favorite")
+  @HttpCode(200)
+  async getFavoriteChats(
+    @CurrentUser("id") userId: string
+  ) {
+    const chat = await this.chatRepository.getFavoriteChats(userId);
+
+    console.log("ISFAVORITE", chat)
+
+    return chat || [];
+  }
+
+  @Get("/self")
+  @HttpCode(200)
+  async getSelfChats(
+    @CurrentUser("id") userId: string
+  ) {
+    const chats = await this.chatRepository.getSelfChats(userId);
+
+    return {
+      chats,
+    }
+  }
+
+  @Get("/channel")
+  @HttpCode(200)
+  async getChannelChats(
+    @CurrentUser("id") userId: string
+  ) {
+    const chats = await this.chatRepository.getChannelChats(userId);
+
+    return {
+      chats,
+    }
+  }
+
   @Post("")
   @HttpCode(201)
   async create(
