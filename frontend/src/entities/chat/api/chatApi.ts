@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { apiClient } from "@/libs/api/clients";
 import { IChat } from "@/shared/types/chat.interface";
@@ -12,4 +12,13 @@ export const chatApi = {
 
   getChatById: async (id: string): Promise<IChat> =>
     extractData(apiClient.chat.getChatById(id)),
+
+  getSelfChat: async (): Promise<IChat> =>
+    extractData(apiClient.chat.getSelfChat()),
+
+  getDirectChats: async (): Promise<IChat[]> =>
+    extractData(apiClient.chat.getDirectChats()),
+
+  getGroupChats: async (): Promise<IChat[]> =>
+    extractData(apiClient.chat.getGroupChats()),
 };

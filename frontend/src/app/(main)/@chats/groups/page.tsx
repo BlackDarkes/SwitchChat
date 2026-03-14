@@ -1,7 +1,14 @@
+"use client";
+
+import { useGroupChats } from "@/entities/chat";
+import { ChatList } from "@/widgets/chat-list";
+
 export default function Page() {
+  const { data, isPending } = useGroupChats();
+
   return (
     <>
-      <p className="mt-5">ЭТО ГРУППЫ</p>
+      <ChatList chats={data} isPending={isPending} />
     </>
   );
 }

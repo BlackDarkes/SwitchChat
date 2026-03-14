@@ -14,8 +14,8 @@ interface IChatElementProps {
 export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
   const param = useParams<{ id: string }>();
 
-  const lastReadMessageId = chat.chatMembers.at(-1)?.lastReadMessageId;
-  const lastMessageId = chat.messages.at(-1)?.id;
+  const lastReadMessageId = chat.chatMembers?.at(-1)?.lastReadMessageId;
+  const lastMessageId = chat.messages?.at(-1)?.id;
 
   const countMessage = lastMessageId !== lastReadMessageId ? 1 : 0;
 
@@ -43,7 +43,7 @@ export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
               {chat.name}
             </h3>
             <p className="text-[clamp(14px,1.5vw,16px)] text-secondary-color">
-              {chat.messages.at(-1)?.text}
+              {chat.messages?.at(-1)?.text}
             </p>
           </div>
         </div>
@@ -52,9 +52,12 @@ export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
           <span className="text-[clamp(12px,1.5vw,14px)]">
             {chat.messages.at(-1)?.createdAt.split("T")[0]}
           </span>
-          <p className="flex items-center justify-center self-end w-[clamp(20px,1.5vw,25px)] h-[clamp(20px,1.5vw,25px)] bg-secondary-bg text-not-read text-[clamp(12px,1.1vw,14px)] rounded-full">
-            {countMessage}
-          </p>
+
+          {countMessage && (
+            <p className="flex items-center justify-center self-end w-[clamp(20px,1.5vw,25px)] h-[clamp(20px,1.5vw,25px)] bg-secondary-bg text-not-read text-[clamp(12px,1.1vw,14px)] rounded-full">
+              {countMessage}
+            </p>
+          )}
         </div>
       </Link>
     </li>

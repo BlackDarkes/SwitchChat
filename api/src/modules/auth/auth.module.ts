@@ -9,6 +9,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './common/strategy/jwt.strategy';
 import { JwtGuard } from './common/guard/jwt.guard';
 import { SessionModule } from '../session/session.module';
+import { ChatsModule } from '../chats/chats.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SessionModule } from '../session/session.module';
       inject: [ConfigService],
     }),
     UserModule,
+    ChatsModule,
     SessionModule,
   ],
   controllers: [AuthController],

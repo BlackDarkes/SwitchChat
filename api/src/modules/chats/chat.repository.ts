@@ -40,21 +40,40 @@ export class ChatRepository {
 		});
 	}
 
-	async getFavoriteChats(userId: string): Promise<Chat | null> {
-		return this.prismaService.client.chat.findFirst({
+	async getFavoriteChats(userId: string): Promise<Chat[] | null> {
+		return this.prismaService.client.chat.findMany({
 			where: { chatMembers: { some: { userId, isFavorite: true } } },
-		})
+		});
 	}
 
-	async getSelfChats(userId: string): Promise<Chat[] | null> {
-		return this.prismaService.client.chat.findMany({
+	async getSelfChats(userId: string): Promise<Chat | null> {
+		return this.prismaService.client.chat.findFirst({
 			where: { chatMembers: { some: { userId } }, type: "SELF" },
 		});
 	}
 
-	async getChannelChats(userId: string): Promise<Chat[] | null> {
+	async getDirectChats(userId: string): Promise<Chat[] | null> {
 		return this.prismaService.client.chat.findMany({
-			where: { chatMembers: { some: { userId } }, type: { in: ["CHANNEL", "GROUP"] } },
+			where: { chatMembers: { some: { userId } }, type: "DIRECT" },
+			include: {
+				messages: { take: 1, orderBy: { createdAt: "desc" } },
+				chatMembers: { include: { user: true } },
+			},
+			orderBy: { updatedAt: "desc" },
+		});
+	}
+
+	async getGroupChats(userId: string): Promise<Chat[] | null> {
+		return this.prismaService.client.chat.findMany({
+			where: {
+				chatMembers: { some: { userId } },
+				type: { in: ["CHANNEL", "GROUP"] },
+			},
+			include: {
+				messages: { take: 1, orderBy: { createdAt: "desc" } },
+				chatMembers: { include: { user: true } },
+			},
+			orderBy: { updatedAt: "desc" },
 		});
 	}
 

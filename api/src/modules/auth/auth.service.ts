@@ -10,6 +10,7 @@ import { UserService } from "../user/user.service";
 import { TypeLoginSchema } from "./common/dto/login.dto";
 import { IPayload } from "./types/payload.interface";
 import { SessionService } from "../session/session.service";
+import { ChatsService } from "../chats/chats.service";
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,7 @@ export class AuthService {
 	constructor(
 		private readonly configService: ConfigService,
 		private readonly userService: UserService,
+		private readonly chatsService: ChatsService,
 		private readonly sessionService: SessionService,
 		private readonly jwtService: JwtService,
 	) {
@@ -43,12 +45,14 @@ export class AuthService {
 		const id = uuid();
 		const username = this.createUsername(id);
 
-		await this.userService.create({
+		const user = await this.userService.create({
 			email,
 			name,
 			username,
 			password: await hash(password, 10),
 		});
+
+		await this.chatsService.create({ name: "Избранное", ownerId: user.id, type: "SELF" });
 	}
 
 	async login(res: Response, data: TypeLoginSchema, userAgent) {

@@ -67,6 +67,18 @@ export class ChatsService {
     const member = await this.prismaService.client.chatMember.findFirst({
       where: { chatId, userId },
     })
+    const chat = await this.prismaService.client.chat.findUnique({
+      where: { id: chatId },
+    })
+
+    if (chat?.type === "SELF") {
+      throw new Error("Нельзя присоединиться к личному чату"); 
+    }
+
+    if (!chat) {
+      throw new Error("Чат не найден");
+    }
+    
 
     if (member) {
       return member;
