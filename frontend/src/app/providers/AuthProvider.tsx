@@ -2,37 +2,48 @@
 
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const hasRun = useRef(false);
   const pathname = usePathname();
   const router = useRouter();
+  
+  const isAuth = useLoginStore((state) => state.isAuth);
+  
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (hasRun.current) return;
-    hasRun.current = true;
-
-    const initialize = async () => {
-      const store = useLoginStore.getState();
-
-      await store.fetchUser();
-
-      const { isAuth } = useLoginStore.getState();
-
-      if (isAuth) {
-        if (pathname !== "/login" && pathname !== "/register") {
-          router.push(pathname);
-        }
-      } else {
-        if (pathname !== '/login') {
-          router.push('/login');
-        }
+    const initAuth = async () => {
+      try {
+        await useLoginStore.getState().fetchUser();
+      } catch (error) {
+        console.error("Auth init error:", error);
+      } finally {
+        setIsInitialized(true);
       }
     };
 
-    initialize();
+    initAuth();
   }, []);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    const publicRoutes = ["/login", "/register"];
+    const isPublicRoute = publicRoutes.includes(pathname);
+
+    if (!isAuth) {
+      if (!isPublicRoute) {
+        router.push("/login");
+      }
+    } else {
+      if (isPublicRoute) {
+        router.push("/chats");
+      } else if (pathname === "/") {
+        router.push("/chats");
+      }
+    }
+  }, [isAuth, pathname, isInitialized, router]);
 
   return <>{children}</>;
 }

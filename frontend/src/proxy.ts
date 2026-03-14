@@ -11,8 +11,9 @@ export function proxy(request: NextRequest) {
 
   if (isAuthPage) {
     if (token) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/chats", request.url));
     }
+
     return NextResponse.next();
   }
 
