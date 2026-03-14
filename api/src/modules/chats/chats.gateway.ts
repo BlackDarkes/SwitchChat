@@ -8,13 +8,15 @@ import {
 import { Socket, Server } from "socket.io";
 import { ChatsService } from "./chats.service";
 import { ChatRepository } from "./chat.repository";
-import { Logger, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { IPayload } from "@/modules/auth/types/payload.interface";
- 
+import { parse } from "cookie";
+
 @WebSocketGateway({
 	namespace: "chats",
-	cors: { origin: "*" },
+	cors: {
+		origin: "*",
+		credentials: true,
+	},
 })
 export class ChatsGateway {
 	@WebSocketServer() server: Server;
@@ -27,22 +29,18 @@ export class ChatsGateway {
 
 	async handleConnection(client: Socket) {
 		try {
-			const token =
-				client.handshake.auth.token ||
-				client.handshake.headers.authorization?.split(" ")[1];
-			if (!token) throw new UnauthorizedException();
+			// ← Читаем и парсим куки
+			const cookies = parse(client.handshake.headers.cookie || "");
+			const token = cookies.accessToken; // ← Имя куки
 
-			const payload: IPayload = await this.jwtService.verifyAsync(token);
-			client.data.userId = payload.id;
+			if (!token) throw new Error("No token");
 
-			const userChats = await this.chatRepository.getAllByUserId(payload.id);
-			userChats?.forEach((chat) => {
-				client.join(chat.id);
+			const payload = await this.jwtService.verifyAsync(token, {
+				secret: process.env.JWT_SECRET,
 			});
 
-			console.log(
-				`User ${payload.id} connected and joined ${userChats?.length} rooms`,
-			);
+			client.data.userId = payload.id;
+			// ... остальная логика (join rooms)
 		} catch {
 			client.disconnect();
 		}
@@ -77,7 +75,7 @@ export class ChatsGateway {
 
 		// Logger.log(`Client ${client.id} left room ${chatId}`);
 
-    console.log(`Client ${client.id} left room ${chatId}`);
+		console.log(`Client ${client.id} left room ${chatId}`);
 
 		return {
 			status: "ok",
@@ -86,9 +84,9 @@ export class ChatsGateway {
 		};
 	}
 
-  emitNewMessage(chatId: string, message: any) {
-    this.server.to(chatId).emit("message_received", message);
-  }
+	emitNewMessage(chatId: string, message: any) {
+		this.server.to(chatId).emit("message_received", message);
+	}
 
 	emitMessageUpdated(chatId: string, message: any) {
 		this.server.to(chatId).emit("message_updated", message);
@@ -98,20 +96,23 @@ export class ChatsGateway {
 		this.server.to(chatId).emit("message_deleted", { messageId });
 	}
 
-	emitReactionUpdate(chatId: string, data: { messageId: string, emoji: string }) {
+	emitReactionUpdate(
+		chatId: string,
+		data: { messageId: string; emoji: string },
+	) {
 		this.server.to(chatId).emit("reaction_updated", data);
 	}
 
-  @SubscribeMessage("typing")
-  handleTyping(
-    @MessageBody() data: { chatId: string, isTyping: boolean },
-    @ConnectedSocket() client: Socket,
-  ) {
-    client.to(data.chatId).emit("user_typing", {
-      userId: client.data.userId,
-      isTyping: data.isTyping
-    })
-  }
+	@SubscribeMessage("typing")
+	handleTyping(
+		@MessageBody() data: { chatId: string; isTyping: boolean },
+		@ConnectedSocket() client: Socket,
+	) {
+		client.to(data.chatId).emit("user_typing", {
+			userId: client.data.userId,
+			isTyping: data.isTyping,
+		});
+	}
 
 	@SubscribeMessage("joinChat")
 	async handleJoinChat(client: Socket, data: { clientId: string }) {
