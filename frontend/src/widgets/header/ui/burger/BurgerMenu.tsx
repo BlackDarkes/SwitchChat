@@ -30,7 +30,7 @@ export const BurgerMenu = ({ items, isOpen, handleOpen }: IBurgerMenuProps) => {
         )}
       >
         {items.map((item) => (
-          <BurgerMenuItem key={item.id} item={item} />
+          <BurgerMenuItem key={item.id} item={item} handleOpen={handleOpen} />
         ))}
       </ul>
     </div>

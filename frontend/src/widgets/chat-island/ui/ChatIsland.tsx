@@ -6,7 +6,6 @@ import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
 import { Container } from "@/shared/ui";
 import { BookOpenText, PencilLine } from "lucide-react";
-import Link from "next/link";
 import { useEffect } from "react";
 
 export const ChatIsland = () => {
@@ -27,7 +26,7 @@ export const ChatIsland = () => {
     <section className="m-5 w-full">
       <Container>
         <div className="flex justify-between items-center p-[10px_25px] bg-accent-bg rounded-4xl shadow-box">
-          <Link href="/chats">
+          <button type="button">
             <PencilLine
               size={30}
               onClick={() => setType("CHATS")}
@@ -38,8 +37,8 @@ export const ChatIsland = () => {
                 }
               )}
             />
-          </Link>
-          <Link href="/groups">
+          </button>
+          <button type="button">
             <BookOpenText
               size={30}
               onClick={() => setType("GROUPS")}
@@ -50,7 +49,7 @@ export const ChatIsland = () => {
                 }
               )}
             />
-          </Link>
+          </button>
           <button>
             <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
           </button>

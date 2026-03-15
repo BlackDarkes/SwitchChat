@@ -6,11 +6,12 @@ import { useLoginStore } from "@/features/auth/model/login-store";
 
 interface IBurgerMenuItemProps {
   item: IBurgerItems;
+  handleOpen: () => void;
 }
 
 const emptySubscribe = () => () => {};
 
-export const BurgerMenuItem = ({ item }: IBurgerMenuItemProps) => {
+export const BurgerMenuItem = ({ item, handleOpen }: IBurgerMenuItemProps) => {
   const { theme, setTheme } = useTheme();
   const isMounted = useSyncExternalStore(
     emptySubscribe,
@@ -24,7 +25,7 @@ export const BurgerMenuItem = ({ item }: IBurgerMenuItemProps) => {
   return (
     <li>
       {item.isLink ? (
-        <Link href={item.link || ""}>{item.title}</Link>
+        <Link href={item.link || ""} onClick={handleOpen}>{item.title}</Link>
       ) : item.title === "Выход" ? (
         <button
           type="button"

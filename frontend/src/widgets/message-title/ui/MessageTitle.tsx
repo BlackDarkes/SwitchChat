@@ -18,7 +18,7 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
 
   const handleBack = () => {
     handleOpen();
-    router.back();
+    router.push("/");
   };
 
   return (

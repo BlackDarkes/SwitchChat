@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useDirectChats, useGroupChats } from "@/entities/chat";
@@ -7,7 +6,13 @@ import { ChatList } from "@/widgets/chat-list";
 
 export default function DefaultContent() {
   const { type } = useTypeChatStore();
-  const { data, isPending } = type === "CHATS" ? useDirectChats() : useGroupChats();
+
+  const directChats = useDirectChats();
+  const groupChats = useGroupChats();
+
+  const { data, isPending } = type === "CHATS" ? directChats : groupChats;
+
+  console.log("data", data, type);
 
   return (
     <>

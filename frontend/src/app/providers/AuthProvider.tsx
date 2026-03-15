@@ -44,9 +44,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } else {
       if (isPublicRoute) {
-        router.push("/chats");
+        router.push("/");
       } else if (pathname === "/") {
-        router.push("/chats");
+        router.push("/");
       }
     }
   }, [isAuth, pathname, isInitialized, router]);

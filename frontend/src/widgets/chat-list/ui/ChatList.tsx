@@ -1,9 +1,10 @@
 "use client";
 
-import { ChatElement, useChats } from "@/entities/chat";
+import { ChatElement } from "@/entities/chat";
 import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
 import { useMobileMessages } from "@/features/mobile-messages";
+import { ChatListSkeleton } from "./ChatListSkeleton";
 
 interface IChatListProps {
   chats: IChat[] | undefined;
@@ -13,7 +14,7 @@ interface IChatListProps {
 export const ChatList = ({ chats, isPending }: IChatListProps) => {
   const { handleOpen } = useMobileMessages();
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) return <ChatListSkeleton />;
 
   return (
     <Container>
