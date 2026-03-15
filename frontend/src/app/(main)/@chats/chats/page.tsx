@@ -1,10 +1,12 @@
 "use client";
 
 import { useDirectChats } from "@/entities/chat";
-import { ChatList } from "@/widgets/chat-list";
+import { ChatList, ChatListSkeleton } from "@/widgets/chat-list";
 
 export default function Page() {
   const { data, isPending } = useDirectChats();
+
+  if (isPending) return <ChatListSkeleton />;
   
   return (
     <>

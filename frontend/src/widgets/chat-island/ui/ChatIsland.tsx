@@ -26,7 +26,7 @@ export const ChatIsland = () => {
   return (
     <section className="m-5 w-full">
       <Container>
-        <div className="flex justify-between p-[10px_25px] bg-accent-bg rounded-4xl shadow-box">
+        <div className="flex justify-between items-center p-[10px_25px] bg-accent-bg rounded-4xl shadow-box">
           <Link href="/chats">
             <PencilLine
               size={30}

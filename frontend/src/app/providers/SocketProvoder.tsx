@@ -11,8 +11,6 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
   const initialized = useRef(false);
   const apiUrl = process.env.API_URL;
 
-  console.log(apiUrl);
-
   useEffect(() => {
     if (!apiUrl || initialized.current) return;
 

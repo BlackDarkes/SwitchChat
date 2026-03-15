@@ -29,9 +29,8 @@ export class ChatsGateway {
 
 	async handleConnection(client: Socket) {
 		try {
-			// ← Читаем и парсим куки
 			const cookies = parse(client.handshake.headers.cookie || "");
-			const token = cookies.accessToken; // ← Имя куки
+			const token = cookies.access_token;
 
 			if (!token) throw new Error("No token");
 
@@ -40,7 +39,6 @@ export class ChatsGateway {
 			});
 
 			client.data.userId = payload.id;
-			// ... остальная логика (join rooms)
 		} catch {
 			client.disconnect();
 		}
