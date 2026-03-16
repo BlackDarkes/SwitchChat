@@ -17,5 +17,9 @@ export const ENDPOINTS = {
   },
   message: {
     getHistory: "/messages/:id",
+    send: "/messages/:id",
+    update: "/messages/:id",
+    delete: "/messages/:id",
+    react: "/messages/:id/emoji/:emoji",
   }
 };
