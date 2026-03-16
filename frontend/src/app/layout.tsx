@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { AppProviders } from "./providers/AppProviders";
 import "./globals.css";
-import { QueryProvider } from "./providers/QueryProvider";
-import { ThemeProvider } from "./providers/ThemeProvider";
-import { AuthProvider } from "./providers/AuthProvider";
-import { SocketProvider } from "./providers/SocketProvoder";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,13 +30,7 @@ export default async function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
-        <SocketProvider>
-          <AuthProvider>
-            <ThemeProvider>
-              <QueryProvider>{children}</QueryProvider>
-            </ThemeProvider>
-          </AuthProvider>
-        </SocketProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );
