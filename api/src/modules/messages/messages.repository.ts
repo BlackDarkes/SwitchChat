@@ -17,7 +17,7 @@ export class MessagesRepository {
 			where: { chatId },
 			take: limit,
 			cursor: cursor ? { id: cursor } : undefined,
-			orderBy: { createdAt: "desc" },
+			orderBy: { createdAt: "asc" },
 			include: { user: true },
 		});
 	}

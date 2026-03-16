@@ -67,7 +67,7 @@ export const useChatMessages = (chatId: string) => {
           ...old,
           pages: old.pages.map((page, i: number) =>
             i === 0
-              ? { ...page, data: [optimisticMessage, ...(page.data || [])] }
+              ? { ...page, data: [...(page.data || []), optimisticMessage] }
               : page,
           ),
         };
@@ -85,9 +85,9 @@ export const useChatMessages = (chatId: string) => {
             ...old,
             pages: old.pages.map((page) => ({
               ...page,
-              data: (page.data || []).map((msg) =>
-                msg.id === tempId ? sent : msg,
-              ),
+              data: (page.data || [])
+                .filter((msg) => msg.id !== tempId)
+                .concat(sent),
             })),
           };
         },
