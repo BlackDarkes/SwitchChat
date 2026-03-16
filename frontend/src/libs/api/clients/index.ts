@@ -28,8 +28,19 @@ export const apiClient = {
     getGroupChats: () => baseClient.get(ENDPOINTS.chat.getGroupChats),
   },
   message: {
-    getHistory: (id: string) =>
-      baseClient.get(ENDPOINTS.message.getHistory.replace(":id", id)),
+    getHistory: (
+      id: string,
+      params?: { limit?: number; cursor?: string | null }
+    ) => {
+      const queryParams = new URLSearchParams();
+      if (params?.limit) queryParams.append('limit', params.limit.toString());
+      if (params?.cursor) queryParams.append('cursor', params.cursor);
+      
+      const qs = queryParams.toString();
+      const url = `${ENDPOINTS.message.getHistory.replace(":id", id)}${qs ? `?${qs}` : ''}`;
+      
+      return baseClient.get(url);
+    },
     send: (id: string, data: TypeSendMessageSchema) =>
       baseClient.post(ENDPOINTS.message.send.replace(":id", id), data),
     update: (id: string) =>

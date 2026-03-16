@@ -29,7 +29,7 @@ export default function Page() {
     <>
       <div>
         <MessageTitle chat={chat} />
-        <MessageList chat={chat} />
+        <MessageList messages={messages} />
       </div>
       <MessageField />
     </>

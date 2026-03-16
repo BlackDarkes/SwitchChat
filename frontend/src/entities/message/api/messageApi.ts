@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiClient } from "@/libs/api/clients";
 import { IMessage } from "@/shared/types/message.interface";
 import { TypeSendMessageSchema } from "../model/send-message-schema";
@@ -6,9 +7,25 @@ const extractData = <T>(promise: Promise<{ data: T }>) =>
   promise.then((res) => res.data);
 
 export const messageApi = {
-  getHistory: async (id: string): Promise<IMessage[]> =>
-    extractData(apiClient.message.getHistory(id)),
+  getHistory: async (
+    id: string,
+    params?: { cursor?: string | null; limit?: number }
+  ): Promise<{ data: IMessage[]; nextCursor: string | null }> => {
+    const response = await extractData(
+      apiClient.message.getHistory(id, params)
+    );
 
-  send: async (id: string, data: TypeSendMessageSchema): Promise<IMessage> =>
-    extractData(apiClient.message.send(id, data)),
+    return {
+      data: Array.isArray(response) ? response : (response as any).data || [],
+      nextCursor:
+        (response as any).nextCursor ||
+        (response as any).next_cursor ||
+        null,
+    };
+  },
+
+  send: async (
+    id: string,
+    data: TypeSendMessageSchema
+  ): Promise<IMessage> => extractData(apiClient.message.send(id, data)),
 };

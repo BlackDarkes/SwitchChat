@@ -5,8 +5,7 @@ import { useMobileMessages } from "@/features/mobile-messages";
 import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
 import { ArrowLeft, EllipsisVertical } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface IMessageTitleProps {
   chat: IChat | undefined;
