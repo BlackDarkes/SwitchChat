@@ -3,6 +3,7 @@ import { IBurgerItems } from "../../model/burger-items";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
 import { useLoginStore } from "@/features/auth/model/login-store";
+import { Moon, Sun } from "lucide-react";
 
 interface IBurgerMenuItemProps {
   item: IBurgerItems;
@@ -25,7 +26,9 @@ export const BurgerMenuItem = ({ item, handleOpen }: IBurgerMenuItemProps) => {
   return (
     <li>
       {item.isLink ? (
-        <Link href={item.link || ""} onClick={handleOpen}>{item.title}</Link>
+        <Link href={item.link || ""} onClick={handleOpen}>
+          {item.title}
+        </Link>
       ) : item.title === "Выход" ? (
         <button
           type="button"
@@ -36,11 +39,22 @@ export const BurgerMenuItem = ({ item, handleOpen }: IBurgerMenuItemProps) => {
         >
           {item.title}
         </button>
-      ) : (
+      ) : item.title === "Тема" ? (
         <button
           type="button"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="flex items-center gap-x-2"
         >
+          {item.title}
+
+          {theme === "light" ? (
+            <Sun suppressHydrationWarning />
+          ) : (
+            <Moon suppressHydrationWarning />
+          )}
+        </button>
+      ) : (
+        <button type="button" onClick={() => {}}>
           {item.title}
         </button>
       )}
