@@ -25,7 +25,7 @@ const BURGER_ITEMS: IBurgerItems[] = [
   {
     id: 4,
     title: "Друзья",
-    link: "/chats/friends",
+    link: "/chat/friends",
     isLink: true,
   },
   {

@@ -38,6 +38,11 @@ export const useChatMessages = (chatId: string) => {
   const sendMessage = async (
     data: TypeSendMessageSchema,
   ): Promise<IMessage> => {
+    if (!chatId) {
+      console.error("❌ Cannot send message: chatId is empty");
+      throw new Error("Chat ID is required");
+    }
+
     const tempId = `temp_${Date.now()}`;
 
     const optimisticMessage: IMessage = {

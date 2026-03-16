@@ -1,7 +1,47 @@
+"use client";
+
+import { chatApi } from "@/entities/chat";
+import { useChatMessages } from "@/entities/message/api/useChatMessages";
+import { IChat } from "@/shared/types/chat.interface";
+import { MessageField } from "@/widgets/message-field/ui/MessageField";
+import { MessageList } from "@/widgets/message-list";
+import { MessageTitle } from "@/widgets/message-title";
+import { useEffect, useState } from "react";
+
 export default function Page() {
+  const [chat, setChat] = useState<IChat | undefined>();
+  const [id, setId] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchChat = async () => {
+      const selfChat = await chatApi.getSelfChat();
+
+      setChat(selfChat);
+      setId(selfChat?.id);
+    };
+
+    fetchChat();
+  }, []);
+
+  const chatId = chat?.id ?? "";
+
+  const { messages } = useChatMessages(chatId);
+
+  if (!chatId) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p>Загрузка чата...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-center h-full text-inactive-color text-[clamp(18px,1.4vw,22px)]">
-      
-    </div>
+    <>
+      <div>
+        <MessageTitle chat={chat} />
+        <MessageList messages={messages} />
+      </div>
+      <MessageField />
+    </>
   );
 }

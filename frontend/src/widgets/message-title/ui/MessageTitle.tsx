@@ -35,10 +35,16 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
               size="middle"
             />
 
-            <div className="">
-              <h3>{chat?.name}</h3>
-              <p>{chat?.chatMembers.length} пользователей</p>
-            </div>
+            {chat?.type !== "SELF" ? (
+              <div className="">
+                <h3>{chat?.name}</h3>
+                <p>{chat?.chatMembers.length} пользователей</p>
+              </div>
+            ) : (
+              <div className="">
+                <h3>{chat?.name}</h3>
+              </div>
+            )}
           </div>
         </div>
 
