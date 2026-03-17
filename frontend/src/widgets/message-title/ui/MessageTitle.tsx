@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
+import { MessageInfoModal, useMessageInfoStore } from "@/features/message-info-modal";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
@@ -13,6 +14,7 @@ interface IMessageTitleProps {
 
 export const MessageTitle = ({ chat }: IMessageTitleProps) => {
   const { handleOpen } = useMobileMessages();
+  const { handleOpen: handleOpenModal, isOpen } = useMessageInfoStore();
   const router = useRouter();
 
   const handleBack = () => {
@@ -28,7 +30,7 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
             <ArrowLeft width={35} height={35} />
           </button>
 
-          <div className="flex gap-x-2.5 cursor-pointer">
+          <div onClick={handleOpenModal} className="flex gap-x-2.5 cursor-pointer">
             <ChatAvatar
               chatAvatar={chat?.avatar}
               chatName={chat?.name}
@@ -51,6 +53,8 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
         <button type="button">
           <EllipsisVertical width={35} height={35} />
         </button>
+
+        <MessageInfoModal chat={chat} isOpen={isOpen} handleOpen={handleOpenModal} />
       </Container>
     </header>
   );

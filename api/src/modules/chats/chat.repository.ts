@@ -30,7 +30,7 @@ export class ChatRepository {
 		return this.prismaService.client.chat.findUnique({
 			where: { id: chatId },
 			include: {
-				chatMembers: true,
+				chatMembers: { include: { user: true } },
 				messages: {
 					take: 1,
 					orderBy: { createdAt: "desc" },
