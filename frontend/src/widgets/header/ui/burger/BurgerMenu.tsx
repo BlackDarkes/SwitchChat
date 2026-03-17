@@ -6,9 +6,10 @@ interface IBurgerMenuProps {
   items: IBurgerItems[];
   isOpen: boolean;
   handleOpen: () => void;
+  handleSettingsOpen: () => void;
 }
 
-export const BurgerMenu = ({ items, isOpen, handleOpen }: IBurgerMenuProps) => {
+export const BurgerMenu = ({ items, isOpen, handleOpen, handleSettingsOpen }: IBurgerMenuProps) => {
   return (
     <div
       onClick={handleOpen}
@@ -30,7 +31,7 @@ export const BurgerMenu = ({ items, isOpen, handleOpen }: IBurgerMenuProps) => {
         )}
       >
         {items.map((item) => (
-          <BurgerMenuItem key={item.id} item={item} handleOpen={handleOpen} />
+          <BurgerMenuItem key={item.id} item={item} handleOpen={handleOpen} hadnleSettingsOpen={handleSettingsOpen} />
         ))}
       </ul>
     </div>

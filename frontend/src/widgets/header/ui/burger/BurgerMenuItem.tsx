@@ -8,11 +8,12 @@ import { Moon, Sun } from "lucide-react";
 interface IBurgerMenuItemProps {
   item: IBurgerItems;
   handleOpen: () => void;
+  hadnleSettingsOpen: () => void;
 }
 
 const emptySubscribe = () => () => {};
 
-export const BurgerMenuItem = ({ item, handleOpen }: IBurgerMenuItemProps) => {
+export const BurgerMenuItem = ({ item, handleOpen, hadnleSettingsOpen }: IBurgerMenuItemProps) => {
   const { theme, setTheme } = useTheme();
   const isMounted = useSyncExternalStore(
     emptySubscribe,
@@ -54,7 +55,13 @@ export const BurgerMenuItem = ({ item, handleOpen }: IBurgerMenuItemProps) => {
           )}
         </button>
       ) : (
-        <button type="button" onClick={() => {}}>
+        <button
+          type="button"
+          onClick={() => {
+            handleOpen();
+            hadnleSettingsOpen();
+          }}
+        >
           {item.title}
         </button>
       )}

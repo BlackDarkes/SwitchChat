@@ -7,9 +7,12 @@ import { ChangeEvent, useState } from "react";
 import { BurgerMenu } from "./burger/BurgerMenu";
 import { BURGER_ITEMS } from "../model/burger-items";
 import { Container } from "@/shared/ui";
+import { SettingsModal, useSettingsStore } from "@/features/settings";
 
 export const Header = () => {
   const { isOpen, handleOpen } = useBurgerStore();
+  const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } =
+    useSettingsStore();
   const [value, setValue] = useState("");
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +24,16 @@ export const Header = () => {
       <Container className="flex items-center justify-between gap-x-5">
         <div>
           <BurgerButton isOpen={isOpen} handleOpen={handleOpen} />
-          <BurgerMenu items={BURGER_ITEMS} isOpen={isOpen} handleOpen={handleOpen} />
+          <BurgerMenu
+            items={BURGER_ITEMS}
+            isOpen={isOpen}
+            handleOpen={handleOpen}
+            handleSettingsOpen={handleSettingsOpen}
+          />
         </div>
         <SearchInput id="test" value={value} handleInput={handleInput} />
+
+        <SettingsModal isOpen={isOpenSettings} handleOpen={handleSettingsOpen}/>
       </Container>
     </header>
   );

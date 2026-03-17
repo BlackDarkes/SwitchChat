@@ -1,17 +1,19 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-interface IProfileStore{
+interface IProfileStore {
   isOpen: boolean;
-  handleOpen: () => void;
+  handleOpen: () => void
 }
 
-export const useProfileStore = create<IProfileStore>()(
+export const useSettingsStore = create<IProfileStore>()(
   devtools(
     (set) => ({
       isOpen: false,
       handleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
     }),
-    { name: "profile" },
-  ),
+    {
+      name: "settings",
+    }
+  )
 );
