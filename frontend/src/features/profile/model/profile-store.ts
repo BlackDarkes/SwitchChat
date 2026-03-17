@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-interface IProfileStore{
+interface IProfileStore {
   isOpen: boolean;
   handleOpen: () => void;
 }

@@ -11,8 +11,8 @@ export const useBurgerStore = create<IBurgerStore>()(
     (set) => ({
       isOpen: false,
 
-      handleOpen: () => set((state) => ({ isOpen: !state.isOpen }))
+      handleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
     }),
-    { name: "burger-store" }
+    { name: "burger-store" },
   ),
-)
+);

@@ -38,7 +38,6 @@ export default function Page() {
   return (
     <>
       <div>
-        <MessageTitle chat={chat} />
         <MessageList messages={messages} />
       </div>
       <MessageField />

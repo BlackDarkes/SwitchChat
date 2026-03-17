@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware";
 
 interface IProfileStore {
   isOpen: boolean;
-  handleOpen: () => void
+  handleOpen: () => void;
 }
 
 export const useSettingsStore = create<IProfileStore>()(
@@ -14,6 +14,6 @@ export const useSettingsStore = create<IProfileStore>()(
     }),
     {
       name: "settings",
-    }
-  )
+    },
+  ),
 );

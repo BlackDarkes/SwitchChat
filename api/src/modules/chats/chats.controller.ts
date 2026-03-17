@@ -7,6 +7,7 @@ import {
 	Param,
 	Patch,
 	Post,
+	Query,
 	UseGuards,
 } from "@nestjs/common";
 import { ChatsService } from "./chats.service";
@@ -74,6 +75,15 @@ export class ChatsController {
 		const chats = await this.chatRepository.getGroupChats(userId);
 
 		return chats;
+	}
+
+	@Get("search")
+	@HttpCode(200)
+	async searchChats(
+		@CurrentUser("id") userId: string,
+		@Query("query") query: string,
+	) {
+		return this.chatRepository.searchChats(userId, query);
 	}
 
 	@Get(":id")

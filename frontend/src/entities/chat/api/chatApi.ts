@@ -21,4 +21,7 @@ export const chatApi = {
 
   getGroupChats: async (): Promise<IChat[]> =>
     extractData(apiClient.chat.getGroupChats()),
+
+  search: async (search: string): Promise<IChat[]> =>
+    extractData(apiClient.chat.search({ search })),
 };

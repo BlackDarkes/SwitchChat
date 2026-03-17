@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { Chat } from "@/app/generated/prisma/client";
+import { Chat, EnumChatTypes } from "@/app/generated/prisma/client";
+import { QueryMode } from "@/app/generated/prisma/internal/prismaNamespace";
 
 @Injectable()
 export class ChatRepository {
@@ -78,25 +79,49 @@ export class ChatRepository {
 	}
 
 	async searchChats(userId: string, search: string): Promise<Chat[] | null> {
-		return this.prismaService.client.chat.findMany({
+		const searchFilter = {
+			OR: [
+				{ name: { contains: search, mode: QueryMode.insensitive } },
+				{ username: { contains: search, mode: QueryMode.insensitive } },
+			],
+		};
+
+		const visibilityFilter = {
+			OR: [
+				{ type: EnumChatTypes.SELF, ownerId: userId },
+				{ type: EnumChatTypes.DIRECT, chatMembers: { some: { userId } } },
+				{ type: { in: [EnumChatTypes.GROUP, EnumChatTypes.CHANNEL] } },
+			],
+		};
+
+		const memberChats = await this.prismaService.client.chat.findMany({
 			where: {
 				AND: [
-					{
-						OR: [
-							{ name: { contains: search, mode: "insensitive" } },
-							{ username: { contains: search, mode: "insensitive" } },
-						],
-					},
-					{
-						OR: [
-							{ type: { in: ["DIRECT", "CHANNEL"] } },
-							{ chatMembers: { some: { userId } } },
-						],
-					},
+					searchFilter,
+					visibilityFilter,
+					{ chatMembers: { some: { userId } } },
 				],
 			},
 			take: 20,
 		});
+
+		const nonMemberChats = await this.prismaService.client.chat.findMany({
+			where: {
+				AND: [
+					searchFilter,
+					{ type: { in: [EnumChatTypes.GROUP, EnumChatTypes.CHANNEL] } }, 
+					{ chatMembers: { none: { userId } } }, 
+				],
+			},
+			take: 20,
+		});
+
+		const combined = [...memberChats, ...nonMemberChats];
+		const unique = Array.from(
+			new Map(combined.map((chat) => [chat.id, chat])).values(),
+		);
+
+		return unique.slice(0, 20);
 	}
 
 	async findDirectChat(user1Id: string, user2Id: string): Promise<Chat | null> {

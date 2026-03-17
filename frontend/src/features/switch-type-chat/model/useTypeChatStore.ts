@@ -7,8 +7,13 @@ interface ITypeChatStore {
 }
 
 export const useTypeChatStore = create<ITypeChatStore>()(
-  devtools((set) => ({
-    type: "CHATS",
-    setType: (type) => set({ type }),
-  })),
+  devtools(
+    (set) => ({
+      type: "CHATS",
+      setType: (type) => set({ type }),
+    }),
+    {
+      name: "type-chat",
+    },
+  ),
 );
