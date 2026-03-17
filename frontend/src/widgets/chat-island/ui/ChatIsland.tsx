@@ -2,6 +2,7 @@
 
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
 import { useLoginStore } from "@/features/auth/model/login-store";
+import { ProfileModal, useProfileStore } from "@/features/profile";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
 import { Container } from "@/shared/ui";
@@ -11,6 +12,7 @@ import { useEffect } from "react";
 export const ChatIsland = () => {
   const { user } = useLoginStore();
   const { type, setType } = useTypeChatStore();
+  const { isOpen, handleOpen } = useProfileStore();
 
   useEffect(() => {
     const url = window.location.href;
@@ -50,9 +52,11 @@ export const ChatIsland = () => {
               )}
             />
           </button>
-          <button>
+          <button type="button" onClick={handleOpen}>
             <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
           </button>
+
+          <ProfileModal user={user} isOpen={isOpen} handleOpen={handleOpen} />
         </div>
       </Container>
     </section>

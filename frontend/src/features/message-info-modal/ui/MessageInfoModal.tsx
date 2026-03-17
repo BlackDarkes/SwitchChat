@@ -12,7 +12,7 @@ export const MessageInfoModal = ({ chat, isOpen, handleOpen }: IMessageInfoModal
 
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen} >
-      <div onClick={(e) => e.stopPropagation()}>
+      <div className="cursor-default" onClick={(e) => e.stopPropagation()}>
         <ChatAvatar chatAvatar={chat?.avatar} chatName={chat?.name} size="middle" />
         <h2>{chat?.name}</h2>
         <p>{chat?.username}</p>

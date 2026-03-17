@@ -1,0 +1,26 @@
+import { IUser } from "@/entities/user";
+import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { Modal } from "@/shared/ui";
+
+interface IProfileModalProps {
+  user: IUser | null;
+  isOpen: boolean;
+  handleOpen: () => void;
+}
+
+export const ProfileModal = ({ user, isOpen, handleOpen }: IProfileModalProps) => {
+  return (
+    <Modal isOpen={isOpen} handleOpen={handleOpen}>
+      <div className="cursor-default" onClick={(e) => e.stopPropagation()}>
+        <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
+        <h2>{user?.name}</h2>
+
+        <p>{user?.email}</p>
+        
+        <p>{user?.bio}</p>
+
+        <p>{user?.username}</p>
+      </div>
+    </Modal>
+  );
+};
