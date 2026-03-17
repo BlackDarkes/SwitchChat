@@ -1,4 +1,3 @@
-export type { IUser } from "./model/types/user.interface";
 export {
   type TypeLoginSchema,
   loginSchema,

@@ -1,5 +1,5 @@
-import { IUser } from "@/entities/user";
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { IUser } from "@/shared/types/user.interface";
 import { Modal } from "@/shared/ui";
 
 interface IProfileModalProps {

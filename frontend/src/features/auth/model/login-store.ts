@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type TypeLoginSchema, type TypeRegisterSchema, type IUser, userApi } from "@/entities/user";
+import { type TypeLoginSchema, type TypeRegisterSchema, userApi } from "@/entities/user";
 import { apiClient } from "@/libs/api/clients";
+import { IUser } from "@/shared/types/user.interface";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 

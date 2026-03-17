@@ -1,4 +1,4 @@
-import { IUser } from "@/entities/user";
+import { IUser } from "./user.interface";
 
 export interface IChatMember {
   id: string;

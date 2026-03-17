@@ -32,7 +32,10 @@ export default function Page() {
       chat?.type === "SELF",
   );
 
-  if (chat?.type === "SELF" && chat.chatMembers.some((member) => member.userId === user?.id)) {
+  if (
+    chat?.type === "SELF" &&
+    chat.chatMembers.some((member) => member.userId === user?.id)
+  ) {
     return redirect(`/chat/${id}/self`);
   }
 
@@ -44,6 +47,9 @@ export default function Page() {
       </div>
       {chat?.chatMembers.some((member) => member.userId === user?.id) ? (
         <MessageField />
+      ) : chat?.type === "CHANNEL" &&
+        chat?.chatMembers.some((member) => member.userId === user?.id) ? (
+        "УВЕДОМЛЕНИЯ"
       ) : (
         "ПРИСОЕДИНИТЬСЯ"
       )}

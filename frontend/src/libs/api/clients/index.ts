@@ -1,6 +1,5 @@
 "use client";
 
-import { TypeSendMessageSchema } from "@/entities/message/model/send-message-schema";
 import { ENDPOINTS } from "../constants/endpoints";
 import { baseClient } from "./base-client";
 
@@ -27,6 +26,7 @@ export const apiClient = {
     getDirectChats: () => baseClient.get(ENDPOINTS.chat.getDirectChats),
     getGroupChats: () => baseClient.get(ENDPOINTS.chat.getGroupChats),
     search: (params?: { search: string }) => baseClient.get(`${ENDPOINTS.chat.search}?query=${params?.search}`),
+    create: (data: { type: "DIRECT" | "GROUP" | "CHANNEL"; name: string; ownerId: string }) => baseClient.post(ENDPOINTS.chat.create, data),
   },
   message: {
     getHistory: (
@@ -42,7 +42,7 @@ export const apiClient = {
       
       return baseClient.get(url);
     },
-    send: (id: string, data: TypeSendMessageSchema) =>
+    send: (id: string, data: {  text: string }) =>
       baseClient.post(ENDPOINTS.message.send.replace(":id", id), data),
     update: (id: string) =>
       baseClient.put(ENDPOINTS.message.update.replace(":id", id)),

@@ -2,6 +2,7 @@
 
 import { apiClient } from "@/libs/api/clients";
 import { IChat } from "@/shared/types/chat.interface";
+import { TypeCreateChatSchema } from "../model/create-chat-schema";
 
 const extractData = <T>(promise: Promise<{ data: T }>) =>
   promise.then((res) => res.data);
@@ -24,4 +25,6 @@ export const chatApi = {
 
   search: async (search: string): Promise<IChat[]> =>
     extractData(apiClient.chat.search({ search })),
+
+  create: async (data: TypeCreateChatSchema): Promise<IChat> => extractData(apiClient.chat.create(data)),
 };

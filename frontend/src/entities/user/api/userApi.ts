@@ -1,7 +1,7 @@
 import { apiClient } from "@/libs/api/clients";
 import { TypeLoginSchema } from "../model/validate/login-schema";
-import { IUser } from "../model/types/user.interface";
 import { TypeRegisterSchema } from "../model/validate/register-schema";
+import { IUser } from "@/shared/types/user.interface";
 
 const extractData = <T>(promise: Promise<{ data: T }>): Promise<T> =>
   promise.then(({ data }) => data);
