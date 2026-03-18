@@ -12,7 +12,6 @@ export default function DefaultContent() {
 
   const { data, isPending } = type === "CHATS" ? directChats : groupChats;
 
-  console.log("data", data, type);
 
   return (
     <>

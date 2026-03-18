@@ -23,7 +23,6 @@ export const MessageSend = () => {
     } catch (error) {
       console.log(error);
     }
-    console.log(data.text);
     setValue("text", "");
   };
 

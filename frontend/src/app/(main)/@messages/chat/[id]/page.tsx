@@ -27,11 +27,6 @@ export default function Page() {
     }
   }, [id]);
 
-  console.log(
-    chat?.chatMembers.some((member) => member.userId === user?.id) &&
-      chat?.type === "SELF",
-  );
-
   if (
     chat?.type === "SELF" &&
     chat.chatMembers.some((member) => member.userId === user?.id)
