@@ -8,12 +8,13 @@ import { Moon, Sun } from "lucide-react";
 interface IBurgerMenuItemProps {
   item: IBurgerItems;
   handleOpen: () => void;
-  hadnleSettingsOpen: () => void;
+  handleSettingsOpen: () => void;
+  handleCreateChatOpen: () => void;
 }
 
 const emptySubscribe = () => () => {};
 
-export const BurgerMenuItem = ({ item, handleOpen, hadnleSettingsOpen }: IBurgerMenuItemProps) => {
+export const BurgerMenuItem = ({ item, handleOpen, handleSettingsOpen, handleCreateChatOpen }: IBurgerMenuItemProps) => {
   const { theme, setTheme } = useTheme();
   const isMounted = useSyncExternalStore(
     emptySubscribe,
@@ -54,12 +55,22 @@ export const BurgerMenuItem = ({ item, handleOpen, hadnleSettingsOpen }: IBurger
             <Moon suppressHydrationWarning />
           )}
         </button>
+      ) : item.title === "Создать чат" ? (
+        <button
+          type="button"
+          onClick={() => {
+            handleOpen();
+            handleCreateChatOpen();
+          }}
+        >
+          {item.title}
+        </button>
       ) : (
         <button
           type="button"
           onClick={() => {
             handleOpen();
-            hadnleSettingsOpen();
+            handleSettingsOpen();
           }}
         >
           {item.title}

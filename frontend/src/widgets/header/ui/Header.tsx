@@ -10,6 +10,7 @@ import { Container } from "@/shared/ui";
 import { SettingsModal, useSettingsStore } from "@/features/settings";
 import { useSearchStore } from "@/features/search/model/search-store";
 import { useSearch } from "@/entities/chat";
+import { ChatCreateModal, useChatCreateStore } from "@/features/chat-create";
 
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -17,6 +18,7 @@ export const Header = () => {
   const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } =
     useSettingsStore();
   const { setSearchResult, searchResult, isOpen: isOpenSearch, handleOpen: handleSearchOpen } = useSearchStore();
+  const { handleOpen: handleCreateChatOpen } = useChatCreateStore();
   const { data: search } = useSearch(searchInput);
 
   useEffect(() => {
@@ -45,11 +47,14 @@ export const Header = () => {
             isOpen={isOpen}
             handleOpen={handleOpen}
             handleSettingsOpen={handleSettingsOpen}
+            handleCreateChatOpen={handleCreateChatOpen}
           />
         </div>
         <SearchInput id="test" value={searchInput} handleInput={handleInput} handleOpen={handleSearchOpen} />
 
         <SearchModal chats={searchResult || []} isOpen={isOpenSearch} handleOpen={handleSearchOpen} setSearchInput={setSearchInput} />
+        
+        <ChatCreateModal />
       </Container>
       <SettingsModal isOpen={isOpenSettings} handleOpen={handleSettingsOpen} />
     </header>

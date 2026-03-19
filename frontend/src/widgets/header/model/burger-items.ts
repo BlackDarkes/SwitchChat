@@ -30,6 +30,11 @@ const BURGER_ITEMS: IBurgerItems[] = [
   },
   {
     id: 5,
+    title: "Создать чат",
+    isLink: false,
+  },
+  {
+    id: 6,
     title: "Выход",
     isLink: false,
   }
