@@ -27,6 +27,7 @@
   /* Shadow */
 
   --shadow-box: 4px 4px 12px #00000026;
+  --shadow-box-2: 4px 4px 12px #00000026;
 
   /* Border-color */
 
@@ -59,11 +60,11 @@
   --color-not-read: var(--not-read);
 
   --color-opacity-color: var(--opacity-color); /* Время последнего сообщения */
-  --color-placeholder-color: var(--placeholder-color);
 
   /* Shadow */
 
   --shadow-box: var(--shadow-box);
+  --shadow-box-2: var(--shadow-box-2);
 
   /* Border-color */
 
@@ -101,6 +102,7 @@
   /* Shadow */
 
   --shadow-box: 4px 4px 10px #ffffff26;
+  --shadow-box-2: 4px 4px 12px #ffffff26;
 
   /* Border-color */
 
@@ -132,6 +134,7 @@
     /* Shadow */
 
     --shadow-box: 4px 4px 12px #ffffff26;
+    --shadow-box-2: 4px 4px 10px 2px #ffffff26;
 
     /* Border-color */
 
@@ -153,7 +156,7 @@ button {
   cursor: pointer;
 }
 
-input {
+input:not(.border) {
   border: 0;
   outline: 0;
 }

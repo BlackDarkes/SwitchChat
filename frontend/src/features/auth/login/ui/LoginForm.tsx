@@ -16,6 +16,7 @@ export const LoginForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<TypeLoginSchema>({
     mode: "onSubmit",
     resolver: zodResolver(loginSchema),
@@ -55,20 +56,29 @@ export const LoginForm = () => {
     >
       <ThemeToggle />
 
-      <div className="flex flex-col gap-y-2.5 items-center">
-        <h2 className="text-[clamp(24px,2.4vw,28px)]">Войти</h2>
-        <p className="text-[clamp(12px,1.4vw,14px)]">
-          Войдите в свою учетную запись
+      <div className="flex flex-col gap-y-2.5 pb-5 items-center relative rounded-xl">
+        <div
+          className="absolute inset-x-2 bottom-0 h-0.5 pointer-events-none opacity-40"
+          style={{
+            background:
+              "linear-gradient(to right, transparent, var(--primary-color), transparent)",
+          }}
+        />
+
+        <h2 className="text-[clamp(24px,2.4vw,28px)] relative z-10">Войти</h2>
+        <p className="text-[clamp(12px,1.4vw,14px)] relative z-10">
+          Введите свои данные
         </p>
       </div>
 
-      <div className="flex flex-col gap-y-[clamp(30px,3vh,40px)]">
+      <div className="flex flex-col gap-y-[calc(clamp(30px,3vh,40px)+24px)] pt-5">
         <FieldAuth
           type="email"
           register={register("email")}
           placeholder="Email"
           error={errors}
           name="email"
+          watch={watch}
         />
 
         <FieldAuth
@@ -77,10 +87,11 @@ export const LoginForm = () => {
           placeholder="Password"
           error={errors}
           name="password"
+          watch={watch}
         />
       </div>
 
-      <p>
+      <p className="ml-auto">
         Нет аккаунта?
         <a href="/register" className="text-primary">
           {" "}
