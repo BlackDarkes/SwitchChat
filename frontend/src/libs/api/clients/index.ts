@@ -27,6 +27,7 @@ export const apiClient = {
     getGroupChats: () => baseClient.get(ENDPOINTS.chat.getGroupChats),
     search: (params?: { search: string }) => baseClient.get(`${ENDPOINTS.chat.search}?query=${params?.search}`),
     create: (data: { type: "DIRECT" | "GROUP" | "CHANNEL"; name: string }) => baseClient.post(ENDPOINTS.chat.create, data),
+    leave: (id: string) => baseClient.delete(ENDPOINTS.chat.leave.replace(":id", id)),
   },
   message: {
     getHistory: (
