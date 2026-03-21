@@ -31,11 +31,11 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
   }, [uniqueMessages.length]);
 
   return (
-    <section className="">
-      <Container mod="default" className="px-6.25 py-[50px_20px]">
+    <section className="overflow-y-auto custom-scroll">
+      <Container mod="default" className="px-6.25 ">
         <div
           ref={containerRef}
-          className="flex flex-col gap-y-6.75 max-h-[60vh] overflow-y-auto"
+          className="flex flex-col gap-y-6.75 max-h-[calc(100vh-200px)] "
         >
           {uniqueMessages.length === 0 ? (
             <p className="pt-10">Нет сообщений</p>

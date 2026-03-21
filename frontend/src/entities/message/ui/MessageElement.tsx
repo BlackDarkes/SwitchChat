@@ -26,7 +26,12 @@ export const MessageElement = ({ message, userId }: IMessageElementProps) => {
           `p-[10px_25px_23px_15px] w-[clamp(300px,35vw,600px)] bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_18px] shadow-box`,
         )}
       >
+        <p className="mb-2.5">{message.user.name}</p>
         {message.text}
+
+        <div className="text-opacity-color text-xs mt-2.5">
+          {message.createdAt.split("T")[1].split(".")[0]}
+        </div>
       </div>
     </li>
   );
