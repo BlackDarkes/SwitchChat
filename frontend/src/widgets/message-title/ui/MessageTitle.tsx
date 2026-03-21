@@ -72,8 +72,11 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
           handleOpen={handleOpenModal}
         />
       </Container>
-      
-      <ChatActionMenu isOpen={isOpenChatAction} />
+
+      <ChatActionMenu
+        isOpen={isOpenChatAction}
+        handleOpen={handleOpenChatAction}
+      />
     </header>
   );
 };

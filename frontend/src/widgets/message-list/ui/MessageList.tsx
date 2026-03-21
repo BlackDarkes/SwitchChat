@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { MessageElement } from '@/entities/message';
-import { useLoginStore } from '@/features/auth/model/login-store';
-import { IMessage } from '@/shared/types/message.interface';
-import { Container } from '@/shared/ui';
-import { useEffect, useRef, useMemo } from 'react';
+import { MessageElement } from "@/entities/message";
+import { useLoginStore } from "@/features/auth/model/login-store";
+import { IMessage } from "@/shared/types/message.interface";
+import { Container } from "@/shared/ui";
+import { useEffect, useRef, useMemo } from "react";
 
 interface IMessagesListProps {
   messages: IMessage[] | undefined;
@@ -26,17 +26,17 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [uniqueMessages.length]);
 
   return (
-    <section className="overflow-y-auto custom-scroll">
+    <section ref={containerRef} className="overflow-y-auto custom-scroll">
       <Container mod="default" className="px-6.25 ">
-        <div
-          ref={containerRef}
-          className="flex flex-col gap-y-6.75 max-h-[calc(100vh-200px)] "
-        >
+        <ul className="flex flex-col gap-y-6.75 max-h-[calc(100vh-200px)] pt-6.25 after:block after:h-2.5 after:shrink-0">
           {uniqueMessages.length === 0 ? (
             <p className="pt-10">Нет сообщений</p>
           ) : (
@@ -48,7 +48,7 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
               />
             ))
           )}
-        </div>
+        </ul>
       </Container>
     </section>
   );
