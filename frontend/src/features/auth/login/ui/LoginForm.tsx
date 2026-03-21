@@ -92,12 +92,11 @@ export const LoginForm = () => {
       </div>
 
       <p className="ml-auto">
-        Нет аккаунта?
-        {" "}
+        Нет аккаунта?{" "}
         <LinkUnderline title="Зарегистрироваться" link="/register" />
       </p>
 
-      <ButtonAuth>{isLoading ? "Loading..." : "Войти"}</ButtonAuth>
+      <ButtonAuth>{isLoading ? "Авторизация..." : "Войти"}</ButtonAuth>
     </form>
   );
 };
