@@ -18,6 +18,13 @@ export const apiClient = {
   user: {
     me: () => baseClient.get(ENDPOINTS.user.me),
   },
+  contact: {
+    getContacts: () => baseClient.get(ENDPOINTS.contact.getContacts),
+    addContact: (data: { contactId: string }) =>
+      baseClient.post(ENDPOINTS.contact.addContact, data),
+    removeContact: (data: { contactId: string }) =>
+      baseClient.delete(ENDPOINTS.contact.removeContact, { data }),
+  },
   chat: {
     getUserChat: () => baseClient.get(ENDPOINTS.chat.getUserChat),
     getChatById: (id: string) =>

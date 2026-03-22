@@ -8,6 +8,11 @@ export const ENDPOINTS = {
   user: {
     me: "/user/me",
   },
+  contact: {
+    getContacts: "/contacts",
+    addContact: "/contacts",
+    removeContact: "/contacts",
+  },
   chat: {
     getUserChat: "/chats",
     getChatById: "/chats/:id",
@@ -26,5 +31,5 @@ export const ENDPOINTS = {
     update: "/messages/:id",
     delete: "/messages/:id",
     react: "/messages/:id/emoji/:emoji",
-  }
+  },
 };
