@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { type TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { v4 as uuid } from "uuid";
-import { ChatRepository } from "./chat.repository";
+import { ChatsRepository } from "./chat.repository";
 import { EnumRoleMember } from "@/app/generated/prisma/enums";
 
 @Injectable()
 export class ChatsService {
 	constructor(
     private readonly prismaService: PrismaService,
-    private  readonly chatRepository: ChatRepository
+    private  readonly chatRepository: ChatsRepository
   ) {}
 
   async getOnlineMembers(chatId: string) {

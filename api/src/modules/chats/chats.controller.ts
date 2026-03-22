@@ -11,7 +11,7 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { ChatsService } from "./chats.service";
-import { ChatRepository } from "./chat.repository";
+import { ChatsRepository } from "./chat.repository";
 import { TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { CurrentUser } from "@/app/common/decorators/current-user.decorator";
 import { EnumRoleMember } from "@/app/generated/prisma/enums";
@@ -22,7 +22,7 @@ import { JwtGuard } from "../auth/common/guard/jwt.guard";
 export class ChatsController {
 	constructor(
 		private readonly chatsService: ChatsService,
-		private readonly chatRepository: ChatRepository,
+		private readonly chatRepository: ChatsRepository,
 	) {}
 
 	@Get("all")

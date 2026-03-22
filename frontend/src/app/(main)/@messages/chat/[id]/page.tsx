@@ -8,6 +8,7 @@ import { IChat } from "@/shared/types/chat.interface";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitle } from "@/widgets/message-title";
+import Link from "next/link";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -33,7 +34,7 @@ export default function Page() {
     if (id) {
       await chatJoin(id);
     }
-  }
+  };
 
   if (
     chat?.type === "SELF" &&
@@ -44,19 +45,28 @@ export default function Page() {
 
   return (
     <>
-      <div>
-        <MessageTitle chat={chat} />
-        <MessageList messages={messages} />
-      </div>
-      {chat?.chatMembers.some((member) => member.userId === user?.id) ? (
-        <MessageField />
-      ) : chat?.type === "CHANNEL" &&
-        chat?.chatMembers.some((member) => member.userId === user?.id) ? (
-        "УВЕДОМЛЕНИЯ"
+      {chat?.type !== "DIRECT" ? (
+        <>
+          <div>
+            <MessageTitle chat={chat} />
+            <MessageList messages={messages} />
+          </div>
+          {chat?.chatMembers.some((member) => member.userId === user?.id) ? (
+            <MessageField />
+          ) : chat?.type === "CHANNEL" &&
+            chat?.chatMembers.some((member) => member.userId === user?.id) ? (
+            "УВЕДОМЛЕНИЯ"
+          ) : (
+            <button type="button" onClick={handleJoin}>
+              ПРИСОЕДИНИТЬСЯ
+            </button>
+          )}
+        </>
       ) : (
-        <button type="button" onClick={handleJoin}>
-          ПРИСОЕДИНИТЬСЯ
-        </button>
+        <>
+          <p>Chat</p>
+          <Link href={"/"}>home</Link>
+        </>
       )}
     </>
   );

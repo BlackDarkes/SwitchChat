@@ -4,7 +4,7 @@ import { Chat, EnumChatTypes } from "@/app/generated/prisma/client";
 import { QueryMode } from "@/app/generated/prisma/internal/prismaNamespace";
 
 @Injectable()
-export class ChatRepository {
+export class ChatsRepository {
 	constructor(private readonly prismaService: PrismaService) {}
 
 	async getAll(): Promise<Chat[] | null> {

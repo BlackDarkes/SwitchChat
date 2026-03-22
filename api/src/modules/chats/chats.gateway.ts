@@ -7,7 +7,7 @@ import {
 } from "@nestjs/websockets";
 import { Socket, Server } from "socket.io";
 import { ChatsService } from "./chats.service";
-import { ChatRepository } from "./chat.repository";
+import { ChatsRepository } from "./chat.repository";
 import { JwtService } from "@nestjs/jwt";
 import { parse } from "cookie";
 
@@ -23,7 +23,7 @@ export class ChatsGateway {
 
 	constructor(
 		private readonly chatsService: ChatsService,
-		private readonly chatRepository: ChatRepository,
+		private readonly chatRepository: ChatsRepository,
 		private readonly jwtService: JwtService,
 	) {}
 
