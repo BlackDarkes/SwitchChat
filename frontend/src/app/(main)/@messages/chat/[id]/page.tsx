@@ -1,6 +1,7 @@
 "use client";
 
 import { chatApi } from "@/entities/chat";
+import { useChatJoin } from "@/entities/chat/api/useChatJoin";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { IChat } from "@/shared/types/chat.interface";
@@ -15,6 +16,7 @@ export default function Page() {
   const [chat, setChat] = useState<IChat | undefined>();
   const { messages } = useChatMessages(id);
   const { user } = useLoginStore();
+  const { mutateAsync: chatJoin } = useChatJoin();
 
   useEffect(() => {
     const fetchChat = async () => {
@@ -26,6 +28,12 @@ export default function Page() {
       fetchChat();
     }
   }, [id]);
+
+  const handleJoin = async () => {
+    if (id) {
+      await chatJoin(id);
+    }
+  }
 
   if (
     chat?.type === "SELF" &&
@@ -46,7 +54,9 @@ export default function Page() {
         chat?.chatMembers.some((member) => member.userId === user?.id) ? (
         "УВЕДОМЛЕНИЯ"
       ) : (
-        "ПРИСОЕДИНИТЬСЯ"
+        <button type="button" onClick={handleJoin}>
+          ПРИСОЕДИНИТЬСЯ
+        </button>
       )}
     </>
   );

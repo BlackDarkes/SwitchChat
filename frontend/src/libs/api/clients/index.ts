@@ -25,31 +25,38 @@ export const apiClient = {
     getSelfChat: () => baseClient.get(ENDPOINTS.chat.getSelfChat),
     getDirectChats: () => baseClient.get(ENDPOINTS.chat.getDirectChats),
     getGroupChats: () => baseClient.get(ENDPOINTS.chat.getGroupChats),
-    search: (params?: { search: string }) => baseClient.get(`${ENDPOINTS.chat.search}?query=${params?.search}`),
-    create: (data: { type: "DIRECT" | "GROUP" | "CHANNEL"; name: string }) => baseClient.post(ENDPOINTS.chat.create, data),
-    leave: (id: string) => baseClient.delete(ENDPOINTS.chat.leave.replace(":id", id)),
+    search: (params?: { search: string }) =>
+      baseClient.get(`${ENDPOINTS.chat.search}?query=${params?.search}`),
+    create: (data: { type: "DIRECT" | "GROUP" | "CHANNEL"; name: string }) =>
+      baseClient.post(ENDPOINTS.chat.create, data),
+    join: (id: string) =>
+      baseClient.post(ENDPOINTS.chat.join.replace(":id", id)),
+    leave: (id: string) =>
+      baseClient.delete(ENDPOINTS.chat.leave.replace(":id", id)),
   },
   message: {
     getHistory: (
       id: string,
-      params?: { limit?: number; cursor?: string | null }
+      params?: { limit?: number; cursor?: string | null },
     ) => {
       const queryParams = new URLSearchParams();
-      if (params?.limit) queryParams.append('limit', params.limit.toString());
-      if (params?.cursor) queryParams.append('cursor', params.cursor);
-      
+      if (params?.limit) queryParams.append("limit", params.limit.toString());
+      if (params?.cursor) queryParams.append("cursor", params.cursor);
+
       const qs = queryParams.toString();
-      const url = `${ENDPOINTS.message.getHistory.replace(":id", id)}${qs ? `?${qs}` : ''}`;
-      
+      const url = `${ENDPOINTS.message.getHistory.replace(":id", id)}${qs ? `?${qs}` : ""}`;
+
       return baseClient.get(url);
     },
-    send: (id: string, data: {  text: string }) =>
+    send: (id: string, data: { text: string }) =>
       baseClient.post(ENDPOINTS.message.send.replace(":id", id), data),
     update: (id: string) =>
       baseClient.put(ENDPOINTS.message.update.replace(":id", id)),
     delete: (id: string) =>
       baseClient.delete(ENDPOINTS.message.delete.replace(":id", id)),
     react: (id: string, emoji: string) =>
-      baseClient.post(ENDPOINTS.message.react.replace(":id", id).replace(":emoji", emoji)),
+      baseClient.post(
+        ENDPOINTS.message.react.replace(":id", id).replace(":emoji", emoji),
+      ),
   },
 };

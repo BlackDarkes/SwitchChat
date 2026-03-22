@@ -16,6 +16,7 @@ export const ENDPOINTS = {
     getGroupChats: "/chats/group",
     search: "/chats/search",
     create: "/chats",
+    join: "/chats/:id/join",
     leave: "/chats/:id/leave",
   },
   message: {
