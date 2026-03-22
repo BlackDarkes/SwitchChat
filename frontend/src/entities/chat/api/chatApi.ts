@@ -23,8 +23,12 @@ export const chatApi = {
   getGroupChats: async (): Promise<IChat[]> =>
     extractData(apiClient.chat.getGroupChats()),
 
+  getFavoriteChats: async (): Promise<IChat[]> =>
+    extractData(apiClient.chat.getFavoriteChats()),
+
   search: async (search: string): Promise<IChat[]> =>
     extractData(apiClient.chat.search({ search })),
 
-  create: async (data: TypeCreateChatSchema): Promise<IChat> => extractData(apiClient.chat.create(data)),
+  create: async (data: TypeCreateChatSchema): Promise<IChat> =>
+    extractData(apiClient.chat.create(data)),
 };

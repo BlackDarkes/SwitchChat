@@ -18,7 +18,7 @@ export const SearchModal = ({
   return (
     <div
       className={cn(
-        `absolute top-24 w-full h-full bg-accent-bg`,
+        `fixed top-[clamp(83px,10vh,86px)] left-0 w-[min(100%,760px)] h-full bg-primary-bg`,
         isOpen ? "block" : "hidden",
       )}
     >

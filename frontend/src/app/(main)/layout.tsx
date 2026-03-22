@@ -1,5 +1,6 @@
 "use client";
 
+import { useChatFavorites } from "@/entities/chat/api/useChatFavorites";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { cn } from "@/shared/lib/utils";
 import { ChatIsland } from "@/widgets/chat-island";
@@ -8,20 +9,33 @@ export default function MainLayout({
   children,
   chats,
   messages,
+  favorites,
 }: {
   children: React.ReactNode;
   chats: React.ReactNode;
   messages: React.ReactNode;
+  favorites: React.ReactNode;
 }) {
   const { isOpen } = useMobileMessages();
+  const { data: chatFavorites } = useChatFavorites();
 
   return (
     <main className="flex max-h-screen h-screen max-w-screen w-screen overflow-hidden">
       <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
         {children}
-        <div className="flex flex-col items-center justify-between text-primary-color h-[calc(100%-clamp(83px,10vh,86px))]">
-          {chats}
-          <ChatIsland />
+        <div className="flex h-full">
+          <div className={cn(
+            `w-20 bg-accent-bg py-5`,
+            {
+              "hidden": !chatFavorites?.length
+            }
+          )}>
+            {favorites}
+          </div>
+          <div className="flex flex-col items-center justify-between text-primary-color h-[calc(100%-clamp(83px,10vh,86px))] w-full">
+            {chats}
+            <ChatIsland />
+          </div>
         </div>
       </section>
 

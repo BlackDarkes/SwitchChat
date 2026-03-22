@@ -14,6 +14,7 @@ export const ENDPOINTS = {
     getSelfChat: "/chats/self",
     getDirectChats: "/chats/direct",
     getGroupChats: "/chats/group",
+    getFavoriteChats: "/chats/favorite",
     search: "/chats/search",
     create: "/chats",
     join: "/chats/:id/join",

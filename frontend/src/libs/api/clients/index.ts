@@ -25,6 +25,7 @@ export const apiClient = {
     getSelfChat: () => baseClient.get(ENDPOINTS.chat.getSelfChat),
     getDirectChats: () => baseClient.get(ENDPOINTS.chat.getDirectChats),
     getGroupChats: () => baseClient.get(ENDPOINTS.chat.getGroupChats),
+    getFavoriteChats: () => baseClient.get(ENDPOINTS.chat.getFavoriteChats),
     search: (params?: { search: string }) =>
       baseClient.get(`${ENDPOINTS.chat.search}?query=${params?.search}`),
     create: (data: { type: "DIRECT" | "GROUP" | "CHANNEL"; name: string }) =>
