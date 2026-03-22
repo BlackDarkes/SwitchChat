@@ -1,19 +1,19 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-interface IMessageInfoStore {
+interface IChatInfoStore {
   isOpen: boolean;
   handleOpen: () => void;
 }
 
-export const useMessageInfoStore = create<IMessageInfoStore>()(
+export const useChatInfoStore = create<IChatInfoStore>()(
   devtools(
     (set) => ({
       isOpen: false,
       handleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
     }),
     {
-      name: "message-info-modal",
+      name: "Chat-info-modal",
     },
   ),
 );

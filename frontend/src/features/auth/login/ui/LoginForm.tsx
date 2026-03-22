@@ -4,11 +4,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, TypeLoginSchema } from "@/entities/user";
-import { ButtonAuth, FieldAuth, LinkUnderline } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
 import { ThemeToggle } from "../../../theme-toggle";
 import { useLoginStore } from "../../model/login-store";
 import { useRouter } from "next/navigation";
+import { LinkUnderline } from "@/shared/ui";
+import { ButtonAuth, FieldAuth } from "../../ui";
 
 export const LoginForm = () => {
   const {

@@ -2,13 +2,13 @@ import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
 import { IChat } from "@/shared/types/chat.interface";
 import { Modal } from "@/shared/ui";
 
-interface IMessageInfoModalProps {
+interface IChatInfoModalProps {
   chat: IChat | undefined;
   isOpen: boolean;
   handleOpen: () => void
 }
 
-export const MessageInfoModal = ({ chat, isOpen, handleOpen }: IMessageInfoModalProps) => {
+export const ChatInfoModal = ({ chat, isOpen, handleOpen }: IChatInfoModalProps) => {
 
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen} >

@@ -3,11 +3,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, TypeRegisterSchema } from "@/entities/user";
-import { ButtonAuth, FieldAuth, LinkUnderline } from "@/shared/ui";
+import { LinkUnderline } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
 import { ThemeToggle } from "../../../theme-toggle";
 import { useLoginStore } from "../../model/login-store";
 import { useRouter } from "next/navigation";
+import { ButtonAuth, FieldAuth } from "../../ui";
 
 export const RegisterForm = () => {
   const {

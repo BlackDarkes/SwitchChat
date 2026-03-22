@@ -5,10 +5,7 @@ import {
   ChatActionMenu,
   useChatActionMenuStore,
 } from "@/features/chat-action-menu";
-import {
-  MessageInfoModal,
-  useMessageInfoStore,
-} from "@/features/message-info-modal";
+import { ChatInfoModal, useChatInfoStore } from "@/features/chat-info-modal";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
@@ -21,7 +18,7 @@ interface IMessageTitleProps {
 
 export const MessageTitle = ({ chat }: IMessageTitleProps) => {
   const { handleOpen } = useMobileMessages();
-  const { handleOpen: handleOpenModal, isOpen } = useMessageInfoStore();
+  const { handleOpen: handleOpenModal, isOpen } = useChatInfoStore();
   const { isOpen: isOpenChatAction, handleOpen: handleOpenChatAction } =
     useChatActionMenuStore();
   const router = useRouter();
@@ -66,7 +63,7 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
           <EllipsisVertical width={35} height={35} />
         </button>
 
-        <MessageInfoModal
+        <ChatInfoModal
           chat={chat}
           isOpen={isOpen}
           handleOpen={handleOpenModal}
