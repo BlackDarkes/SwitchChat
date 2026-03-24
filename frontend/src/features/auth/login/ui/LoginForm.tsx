@@ -10,6 +10,7 @@ import { useLoginStore } from "../../model/login-store";
 import { useRouter } from "next/navigation";
 import { LinkUnderline } from "@/shared/ui";
 import { ButtonAuth, FieldAuth } from "../../ui";
+import { useToastStore } from "@/features/toast";
 
 export const LoginForm = () => {
   const {
@@ -27,6 +28,7 @@ export const LoginForm = () => {
     },
   });
   const { login, isLoading } = useLoginStore();
+  const { handleOpen, setMessage, setType } = useToastStore();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<TypeLoginSchema> = async (
@@ -35,7 +37,9 @@ export const LoginForm = () => {
     try {
       const serverMessage = await login(data);
 
-      alert(serverMessage);
+      setMessage(serverMessage!);
+      setType("success");
+      handleOpen();
 
       setValue("email", "");
       setValue("password", "");

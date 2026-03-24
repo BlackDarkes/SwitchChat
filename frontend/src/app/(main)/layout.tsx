@@ -2,6 +2,7 @@
 
 import { useChatFavorites } from "@/entities/chat/api/useChatFavorites";
 import { useMobileMessages } from "@/features/mobile-messages";
+import { Toast, useToastStore } from "@/features/toast";
 import { cn } from "@/shared/lib/utils";
 import { ChatIsland } from "@/widgets/chat-island";
 
@@ -18,18 +19,18 @@ export default function MainLayout({
 }) {
   const { isOpen } = useMobileMessages();
   const { data: chatFavorites } = useChatFavorites();
+  const { isOpen: toastIsOpen, message, type, handleClose } = useToastStore();
 
   return (
     <main className="flex max-h-screen h-screen max-w-screen w-screen overflow-hidden">
       <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
         {children}
         <div className="flex h-full">
-          <div className={cn(
-            `w-20 bg-accent-bg py-5`,
-            {
-              "hidden": !chatFavorites?.length
-            }
-          )}>
+          <div
+            className={cn(`w-20 bg-accent-bg py-5`, {
+              hidden: !chatFavorites?.length,
+            })}
+          >
             {favorites}
           </div>
           <div className="flex flex-col items-center justify-between text-primary-color h-[calc(100%-clamp(83px,10vh,86px))] w-full">
@@ -49,6 +50,13 @@ export default function MainLayout({
       >
         {messages}
       </aside>
+
+      <Toast
+        isOpen={toastIsOpen}
+        message={message}
+        type={type}
+        handleClose={handleClose}
+      />
     </main>
   );
 }
