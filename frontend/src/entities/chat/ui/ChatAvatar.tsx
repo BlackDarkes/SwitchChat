@@ -2,7 +2,7 @@ import { cn } from "@/shared/lib/utils";
 import Image from "next/image";
 
 interface IChatAvatarProps {
-  chatAvatar: string | undefined;
+  chatAvatar: string | undefined | null;
   chatName: string | undefined;
   size: "middle" | "big";
 }

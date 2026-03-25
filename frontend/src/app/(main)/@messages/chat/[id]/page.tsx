@@ -7,8 +7,7 @@ import { useLoginStore } from "@/features/auth/model/login-store";
 import { IChat } from "@/shared/types/chat.interface";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
-import { MessageTitle } from "@/widgets/message-title";
-import Link from "next/link";
+import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -65,10 +64,7 @@ export default function Page() {
       ) : (
         <>
           <div>
-            <div>
-              <p>Chat</p>
-              <Link href={"/"}>home</Link>
-            </div>
+            <MessageTitleDirect chat={chat} />
 
             <MessageList messages={messages} />
           </div>
