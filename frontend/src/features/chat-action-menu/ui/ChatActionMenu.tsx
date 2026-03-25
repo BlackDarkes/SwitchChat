@@ -23,7 +23,7 @@ export const ChatActionMenu = ({
   return (
     <section
       onClick={handleOpen}
-      className={cn(``, {
+      className={cn(`fixed`, {
         "fixed inset-0 opacity-100 pointer-events-auto select-auto": isOpen,
       })}
     >

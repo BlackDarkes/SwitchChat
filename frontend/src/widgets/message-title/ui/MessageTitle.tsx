@@ -1,6 +1,7 @@
 "use client";
 
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
+import { MessageTitleTemplate } from "@/entities/message";
 import {
   ChatActionMenu,
   useChatActionMenuStore,
@@ -29,51 +30,82 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
   };
 
   return (
-    <header className="py-4.25 bg-primary-bg border-b-2 border-border-color">
-      <Container className="flex justify-between" mod="default">
-        <div className="flex items-center gap-x-10">
-          <button type="button" onClick={() => handleBack()}>
-            <ArrowLeft width={35} height={35} />
-          </button>
+    // <header className="py-4.25 bg-primary-bg border-b-2 border-border-color">
+    //   <Container className="flex justify-between" mod="default">
+    //     <div className="flex items-center gap-x-10">
+    //       <button type="button" onClick={() => handleBack()}>
+    //         <ArrowLeft width={35} height={35} />
+    //       </button>
 
-          <div
-            onClick={handleOpenModal}
-            className="flex gap-x-2.5 cursor-pointer"
-          >
-            <ChatAvatar
-              chatAvatar={chat?.avatar}
-              chatName={chat?.name}
-              size="middle"
-            />
+    //       <div
+    //         onClick={handleOpenModal}
+    //         className="flex gap-x-2.5 cursor-pointer"
+    //       >
+    //         <ChatAvatar
+    //           chatAvatar={chat?.avatar}
+    //           chatName={chat?.name}
+    //           size="middle"
+    //         />
 
-            {chat?.type !== "SELF" ? (
-              <div className="">
-                <h3>{chat?.name}</h3>
-                <p>{chat?.chatMembers.length} пользователей</p>
-              </div>
-            ) : (
-              <div className="">
-                <h3>{chat?.name}</h3>
-              </div>
-            )}
-          </div>
-        </div>
+    //         {chat?.type !== "SELF" ? (
+    //           <div className="">
+    //             <h3>{chat?.name}</h3>
+    //             <p>{chat?.chatMembers.length} пользователей</p>
+    //           </div>
+    //         ) : (
+    //           <div className="">
+    //             <h3>{chat?.name}</h3>
+    //           </div>
+    //         )}
+    //       </div>
+    //     </div>
 
-        <button type="button" onClick={handleOpenChatAction}>
-          <EllipsisVertical width={35} height={35} />
-        </button>
+    //     <button type="button" onClick={handleOpenChatAction}>
+    //       <EllipsisVertical width={35} height={35} />
+    //     </button>
 
-        <ChatInfoModal
-          chat={chat}
-          isOpen={isOpen}
-          handleOpen={handleOpenModal}
+    //     <ChatInfoModal
+    //       chat={chat}
+    //       isOpen={isOpen}
+    //       handleOpen={handleOpenModal}
+    //     />
+    //   </Container>
+
+    //   <ChatActionMenu
+    //     isOpen={isOpenChatAction}
+    //     handleOpen={handleOpenChatAction}
+    //   />
+    // </header>
+
+    <MessageTitleTemplate handleBack={handleBack}>
+      <div onClick={handleOpenModal} className="flex gap-x-2.5 cursor-pointer">
+        <ChatAvatar
+          chatAvatar={chat?.avatar}
+          chatName={chat?.name}
+          size="middle"
         />
-      </Container>
 
+        {chat?.type !== "SELF" ? (
+          <div className="">
+            <h3>{chat?.name}</h3>
+            <p>{chat?.chatMembers.length} пользователей</p>
+          </div>
+        ) : (
+          <div className="">
+            <h3>{chat?.name}</h3>
+          </div>
+        )}
+      </div>
+
+      <button className="ml-auto" type="button" onClick={handleOpenChatAction}>
+        <EllipsisVertical width={35} height={35} />
+      </button>
+
+      <ChatInfoModal chat={chat} isOpen={isOpen} handleOpen={handleOpenModal} />
       <ChatActionMenu
         isOpen={isOpenChatAction}
         handleOpen={handleOpenChatAction}
       />
-    </header>
+    </MessageTitleTemplate>
   );
 };
