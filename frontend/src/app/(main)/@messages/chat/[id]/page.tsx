@@ -64,8 +64,16 @@ export default function Page() {
         </>
       ) : (
         <>
-          <p>Chat</p>
-          <Link href={"/"}>home</Link>
+          <div>
+            <div>
+              <p>Chat</p>
+              <Link href={"/"}>home</Link>
+            </div>
+
+            <MessageList messages={messages} />
+          </div>
+
+          <MessageField />
         </>
       )}
     </>

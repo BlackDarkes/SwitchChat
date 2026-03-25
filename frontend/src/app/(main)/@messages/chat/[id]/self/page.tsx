@@ -5,7 +5,7 @@ import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { IChat } from "@/shared/types/chat.interface";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
-import { MessageTitle } from "@/widgets/message-title";
+import { MessageTitleSelf } from "@/widgets/message-title";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -38,6 +38,7 @@ export default function Page() {
   return (
     <>
       <div>
+        <MessageTitleSelf />
         <MessageList messages={messages} />
       </div>
       <MessageField />

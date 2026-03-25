@@ -1,1 +1,2 @@
 export { MessageTitle } from "./ui/MessageTitle";
+export { MessageTitleSelf } from "./ui/MessageTitleSelf";

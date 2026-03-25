@@ -38,7 +38,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="py-5 w-[min(100%,760px)] bg-primary-bg border-b-2 border-border-color">
+    <header className="py-5 w-[min(100%,760px)] h-[clamp(83px,11vh,86px)] bg-primary-bg border-b-2 border-border-color">
       <Container className="relative flex items-center justify-between gap-x-5">
         <div>
           <BurgerButton isOpen={isOpen} handleOpen={handleOpen} />
