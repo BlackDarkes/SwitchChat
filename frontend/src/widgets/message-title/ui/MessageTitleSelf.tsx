@@ -1,4 +1,4 @@
-import { MessageTitleTemplate } from "@/entities/message";
+import { MessageTitleLayout } from "@/entities/message";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { useRouter } from "next/navigation";
 
@@ -12,10 +12,10 @@ export const MessageTitleSelf = () => {
   };
 
   return (
-    <MessageTitleTemplate handleBack={handleBack}>
+    <MessageTitleLayout handleBack={handleBack}>
       <div>
         <h3 className="text-[clamp(20px,2.5vw,24px)]">Избранное</h3>
       </div>
-    </MessageTitleTemplate>
+    </MessageTitleLayout>
   );
 };

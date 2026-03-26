@@ -2,12 +2,12 @@ import { Container } from "@/shared/ui";
 import { ArrowLeft } from "lucide-react";
 import { ReactNode } from "react";
 
-interface IMessageTitleTemplateProps {
+interface IMessageTitleLayoutProps {
   children: ReactNode;
   handleBack: () => void;
 }
   
-export const  MessageTitleTemplate = ({ children, handleBack }: IMessageTitleTemplateProps) => {
+export const  MessageTitleLayout = ({ children, handleBack }: IMessageTitleLayoutProps) => {
   return (
     <header className="py-4.25 h-[clamp(83px,11vh,86px)] bg-primary-bg border-b-2 border-border-color">
       <Container className="flex items-center gap-x-10 h-full" mod="default">

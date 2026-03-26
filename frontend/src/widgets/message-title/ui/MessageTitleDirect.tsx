@@ -1,4 +1,4 @@
-import { MessageTitleTemplate } from "@/entities/message";
+import { MessageTitleLayout } from "@/entities/message";
 import { IChat } from "@/shared/types/chat.interface";
 import { useHandleBack } from "../model/handle-back";
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
@@ -18,7 +18,7 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
     useChatActionMenuStore();
 
   return (
-    <MessageTitleTemplate handleBack={handleBack}>
+    <MessageTitleLayout handleBack={handleBack}>
       <div onClick={() => {}} className="flex items-center gap-x-2.5 cursor-pointer">
         <ChatAvatar
           chatAvatar={chat?.chatMembers[1].user.avatar}
@@ -39,6 +39,6 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
         isOpen={isOpenChatAction}
         handleOpen={handleOpenChatAction}
       />
-    </MessageTitleTemplate>
+    </MessageTitleLayout>
   );
 };

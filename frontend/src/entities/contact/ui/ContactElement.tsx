@@ -7,10 +7,11 @@ import Link from "next/link";
 interface IContactElementProps {
   contact: IContact;
   user: IUser | null;
+  setType: (type: "CHATS" | "GROUPS") => void;
 }
 
 
-export const ContactElement = ({ contact, user }: IContactElementProps) => {
+export const ContactElement = ({ contact, user, setType }: IContactElementProps) => {
   const userContact = contact.ownerId === user?.id ? contact.owner : contact.contact;
 
   return (
@@ -19,7 +20,7 @@ export const ContactElement = ({ contact, user }: IContactElementProps) => {
 
       <span className="text-[12px]">{userContact.name}</span>
 
-      <Link href={`/chat/${contact.owner.chatMembers?.[0]?.chatId}`}>
+      <Link href={`/chat/${contact.owner.chatMembers?.[0]?.chatId}`} onClick={() => setType("CHATS")}>
         <PencilLine />
       </Link>
 

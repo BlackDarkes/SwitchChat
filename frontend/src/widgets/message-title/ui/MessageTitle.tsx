@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
-import { MessageTitleTemplate } from "@/entities/message";
+import { MessageTitleLayout } from "@/entities/message";
 import {
   ChatActionMenu,
   useChatActionMenuStore,
@@ -23,7 +23,7 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
 
 
   return (
-    <MessageTitleTemplate handleBack={handleBack}>
+    <MessageTitleLayout handleBack={handleBack}>
       <div onClick={handleOpenModal} className="flex gap-x-2.5 cursor-pointer">
         <ChatAvatar
           chatAvatar={chat?.avatar}
@@ -47,6 +47,6 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
         isOpen={isOpenChatAction}
         handleOpen={handleOpenChatAction}
       />
-    </MessageTitleTemplate>
+    </MessageTitleLayout>
   );
 };
