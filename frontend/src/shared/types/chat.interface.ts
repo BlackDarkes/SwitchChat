@@ -8,7 +8,7 @@ export interface IChat {
   username: string;
   description: string;
   avatar: string;
-  ownerId: number;
+  ownerId: string;
   createdAt: string;
   updatedAt: string;
   messages: IMessage[];

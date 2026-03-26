@@ -1,9 +1,7 @@
 import { IChat } from "@/shared/types/chat.interface";
-import { useHandleElement } from "../model/handle-element";
-import Link from "next/link";
-import { cn } from "@/shared/lib/utils";
 import { ChatAvatar } from "./ChatAvatar";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
+import { useLoginStore } from "@/features/auth/model/login-store";
 
 interface IChatElementDirectProps {
   chat: IChat;
@@ -11,8 +9,8 @@ interface IChatElementDirectProps {
 }
 
 export const ChatElementDirect = ({ chat, handleOpen }: IChatElementDirectProps) => {
-  const { displayCount, param, unreadCount } = useHandleElement({ chat });
-  const user = chat.chatMembers[1].user;
+  const { user: currentUser } = useLoginStore();
+  const user = chat.ownerId === currentUser?.id ? chat.chatMembers[1].user : chat.chatMembers[0].user;
 
   return (
     <ChatElementLayout chat={chat} handleOpen={handleOpen}>

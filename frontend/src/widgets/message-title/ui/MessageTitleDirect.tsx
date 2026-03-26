@@ -7,6 +7,7 @@ import {
   ChatActionMenu,
   useChatActionMenuStore,
 } from "@/features/chat-action-menu";
+import { useLoginStore } from "@/features/auth/model/login-store";
 
 interface IMessageTitleDirectProps {
   chat: IChat | undefined;
@@ -16,18 +17,20 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
   const { handleBack } = useHandleBack();
   const { isOpen: isOpenChatAction, handleOpen: handleOpenChatAction } =
     useChatActionMenuStore();
+  const { user } = useLoginStore();
+  const currentChatMember = chat?.chatMembers[0].user.id === user?.id ? chat?.chatMembers[1] : chat?.chatMembers[0];
 
   return (
     <MessageTitleLayout handleBack={handleBack}>
       <div onClick={() => {}} className="flex items-center gap-x-2.5 cursor-pointer">
         <ChatAvatar
-          chatAvatar={chat?.chatMembers[1].user.avatar}
-          chatName={chat?.chatMembers[1].user.name}
+          chatAvatar={currentChatMember?.user.avatar}
+          chatName={currentChatMember?.user.name}
           size="middle"
         />
 
         <div className="">
-          <h3>{chat?.chatMembers[1].user.name}</h3>
+          <h3>{currentChatMember?.user.name}</h3>
         </div>
       </div>
 
