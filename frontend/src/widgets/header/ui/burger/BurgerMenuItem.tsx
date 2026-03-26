@@ -10,11 +10,18 @@ interface IBurgerMenuItemProps {
   handleOpen: () => void;
   handleSettingsOpen: () => void;
   handleCreateChatOpen: () => void;
+  handleMobileMessagesOpen: () => void;
 }
 
 const emptySubscribe = () => () => {};
 
-export const BurgerMenuItem = ({ item, handleOpen, handleSettingsOpen, handleCreateChatOpen }: IBurgerMenuItemProps) => {
+export const BurgerMenuItem = ({
+  item,
+  handleOpen,
+  handleSettingsOpen,
+  handleCreateChatOpen,
+  handleMobileMessagesOpen,
+}: IBurgerMenuItemProps) => {
   const { theme, setTheme } = useTheme();
   const isMounted = useSyncExternalStore(
     emptySubscribe,
@@ -28,7 +35,13 @@ export const BurgerMenuItem = ({ item, handleOpen, handleSettingsOpen, handleCre
   return (
     <li>
       {item.isLink ? (
-        <Link href={item.link || ""} onClick={handleOpen}>
+        <Link
+          href={item.link || ""}
+          onClick={() => {
+            handleOpen();
+            handleMobileMessagesOpen();
+          }}
+        >
           {item.title}
         </Link>
       ) : item.title === "Выход" ? (

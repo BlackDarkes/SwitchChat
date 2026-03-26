@@ -11,14 +11,21 @@ import { SettingsModal, useSettingsStore } from "@/features/settings";
 import { useSearchStore } from "@/features/search/model/search-store";
 import { useSearch } from "@/entities/chat";
 import { ChatCreateModal, useChatCreateStore } from "@/features/chat-create";
+import { useMobileMessages } from "@/features/mobile-messages";
 
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { isOpen, handleOpen } = useBurgerStore();
   const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } =
     useSettingsStore();
-  const { setSearchResult, searchResult, isOpen: isOpenSearch, handleOpen: handleSearchOpen } = useSearchStore();
+  const {
+    setSearchResult,
+    searchResult,
+    isOpen: isOpenSearch,
+    handleOpen: handleSearchOpen,
+  } = useSearchStore();
   const { handleOpen: handleCreateChatOpen } = useChatCreateStore();
+  const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const { data: search } = useSearch(searchInput);
 
   useEffect(() => {
@@ -48,12 +55,23 @@ export const Header = () => {
             handleOpen={handleOpen}
             handleSettingsOpen={handleSettingsOpen}
             handleCreateChatOpen={handleCreateChatOpen}
+            handleMobileMessagesOpen={handleMobileMessagesOpen}
           />
         </div>
-        <SearchInput id="test" value={searchInput} handleInput={handleInput} handleOpen={handleSearchOpen} />
+        <SearchInput
+          id="test"
+          value={searchInput}
+          handleInput={handleInput}
+          handleOpen={handleSearchOpen}
+        />
 
-        <SearchModal chats={searchResult || []} isOpen={isOpenSearch} handleOpen={handleSearchOpen} setSearchInput={setSearchInput} />
-        
+        <SearchModal
+          chats={searchResult || []}
+          isOpen={isOpenSearch}
+          handleOpen={handleSearchOpen}
+          setSearchInput={setSearchInput}
+        />
+
         <ChatCreateModal />
       </Container>
       <SettingsModal isOpen={isOpenSettings} handleOpen={handleSettingsOpen} />

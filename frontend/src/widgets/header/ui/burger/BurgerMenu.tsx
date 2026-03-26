@@ -8,9 +8,17 @@ interface IBurgerMenuProps {
   handleOpen: () => void;
   handleSettingsOpen: () => void;
   handleCreateChatOpen: () => void;
+  handleMobileMessagesOpen: () => void;
 }
 
-export const BurgerMenu = ({ items, isOpen, handleOpen, handleSettingsOpen, handleCreateChatOpen }: IBurgerMenuProps) => {
+export const BurgerMenu = ({
+  items,
+  isOpen,
+  handleOpen,
+  handleSettingsOpen,
+  handleCreateChatOpen,
+  handleMobileMessagesOpen,
+}: IBurgerMenuProps) => {
   return (
     <div
       onClick={handleOpen}
@@ -28,11 +36,18 @@ export const BurgerMenu = ({ items, isOpen, handleOpen, handleSettingsOpen, hand
         className={cn(
           `
             flex flex-col gap-y-10 pt-[clamp(90px,10vh,100px)] px-5 w-[min(100%,450px)] h-full bg-search-bg rounded-[0_0_24px_0] text-[clamp(18px,1.4vw,20px)] shadow-box cursor-default
-          `
+          `,
         )}
       >
         {items.map((item) => (
-          <BurgerMenuItem key={item.id} item={item} handleOpen={handleOpen} handleSettingsOpen={handleSettingsOpen} handleCreateChatOpen={handleCreateChatOpen} />
+          <BurgerMenuItem
+            key={item.id}
+            item={item}
+            handleOpen={handleOpen}
+            handleSettingsOpen={handleSettingsOpen}
+            handleCreateChatOpen={handleCreateChatOpen}
+            handleMobileMessagesOpen={handleMobileMessagesOpen}
+          />
         ))}
       </ul>
     </div>
