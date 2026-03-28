@@ -10,7 +10,7 @@ interface IBurgerMenuItemProps {
   handleOpen: () => void;
   handleSettingsOpen: () => void;
   handleCreateChatOpen: () => void;
-  handleMobileMessagesOpen: () => void;
+  handleMobileMessagesOpen: (open: boolean) => void;
 }
 
 const emptySubscribe = () => () => {};
@@ -39,7 +39,7 @@ export const BurgerMenuItem = ({
           href={item.link || ""}
           onClick={() => {
             handleOpen();
-            handleMobileMessagesOpen();
+            handleMobileMessagesOpen(true);
           }}
         >
           {item.title}

@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 interface IChatElementLayoutProps {
   chat: IChat;
-  handleOpen: () => void;
+  handleOpen: (open: boolean) => void;
   children: ReactNode;
 }
   
@@ -17,7 +17,7 @@ export const ChatElementLayout = ({ chat, handleOpen, children }: IChatElementLa
     <li>
       <Link
         href={`/chat/${chat.id}`}
-        onClick={handleOpen}
+        onClick={() => handleOpen(false)}
         className={cn(
           `flex justify-between w-full bg-chat-bg p-[10px_15px] rounded-xl shadow-box`,
           {

@@ -3,14 +3,14 @@ import { devtools } from "zustand/middleware";
 
 interface IMobileMessages {
   isOpen: boolean;
-  handleOpen: () => void;
+  handleOpen: (open: boolean) => void;
 }
 
 export const useMobileMessages = create<IMobileMessages>()(
   devtools(
     (set) => ({
       isOpen: false,
-      handleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
+      handleOpen: (open: boolean) => set({ isOpen: open }),
     }),
     { name: "mobile-messages" },
   ),

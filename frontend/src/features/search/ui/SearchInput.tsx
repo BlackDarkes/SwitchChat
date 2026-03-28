@@ -10,7 +10,12 @@ interface ISearchInputProps {
   handleOpen: (open: boolean) => void;
 }
 
-export const SearchInput = ({ value, handleInput, id, handleOpen }: ISearchInputProps) => {
+export const SearchInput = ({
+  value,
+  handleInput,
+  id,
+  handleOpen,
+}: ISearchInputProps) => {
   return (
     <input
       type="search"
@@ -18,7 +23,10 @@ export const SearchInput = ({ value, handleInput, id, handleOpen }: ISearchInput
       value={value}
       onFocus={() => handleOpen(true)}
       onBlur={() => !value && handleOpen(false)}
-      onChange={handleInput}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+        handleInput(e);
+        handleOpen(true);
+      }}
       placeholder="Поиск...."
       className={cn(
         `

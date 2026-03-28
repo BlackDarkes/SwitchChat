@@ -8,7 +8,7 @@ interface IBurgerMenuProps {
   handleOpen: () => void;
   handleSettingsOpen: () => void;
   handleCreateChatOpen: () => void;
-  handleMobileMessagesOpen: () => void;
+  handleMobileMessagesOpen: (open: boolean) => void;
 }
 
 export const BurgerMenu = ({

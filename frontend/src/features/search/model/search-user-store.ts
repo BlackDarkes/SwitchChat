@@ -1,21 +1,21 @@
-import { IUser } from "@/shared/types/user.interface";
+import { IContact } from "@/shared/types/contact.interface";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 interface ISearchUserStore {
   isOpen: boolean;
-  handleOpen: () => void;
-  searchResult: IUser[] | undefined;
-  setSearchResult: (searchResult: IUser[] | undefined) => void;
+  handleOpen: (open: boolean) => void;
+  searchResult: IContact[] | undefined;
+  setSearchResult: (searchResult: IContact[] | undefined) => void;
 }
 
 export const useSearchUserStore = create<ISearchUserStore>()(
   devtools(
-    (set, get) => ({
+    (set) => ({
       isOpen: false,
-      handleOpen: () => set({ isOpen: !get().isOpen }),
+      handleOpen: (open: boolean) => set({ isOpen: open }),
       searchResult: undefined,
-      setSearchResult: (searchResult: IUser[] | undefined) =>
+      setSearchResult: (searchResult: IContact[] | undefined) =>
         set({ searchResult }),
     }),
     { name: "search-user-store" },

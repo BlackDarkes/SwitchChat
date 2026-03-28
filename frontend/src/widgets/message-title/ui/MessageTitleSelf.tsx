@@ -1,15 +1,8 @@
 import { MessageTitleLayout } from "@/entities/message";
-import { useMobileMessages } from "@/features/mobile-messages";
-import { useRouter } from "next/navigation";
+import { useHandleBack } from "../model/handle-back";
 
 export const MessageTitleSelf = () => {
-  const { handleOpen } = useMobileMessages();
-  const router = useRouter();
-
-  const handleBack = () => {
-    handleOpen();
-    router.push("/");
-  };
+  const { handleBack } = useHandleBack();
 
   return (
     <MessageTitleLayout handleBack={handleBack}>

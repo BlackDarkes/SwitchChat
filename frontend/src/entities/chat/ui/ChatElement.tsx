@@ -6,7 +6,7 @@ import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
 
 interface IChatElementProps {
   chat: IChat;
-  handleOpen: () => void;
+  handleOpen: (open: boolean) => void;
 }
 
 export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {

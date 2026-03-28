@@ -5,7 +5,7 @@ import { useLoginStore } from "@/features/auth/model/login-store";
 
 interface IChatElementDirectProps {
   chat: IChat;
-  handleOpen: () => void;
+  handleOpen: (open: boolean) => void;
 }
 
 export const ChatElementDirect = ({ chat, handleOpen }: IChatElementDirectProps) => {
