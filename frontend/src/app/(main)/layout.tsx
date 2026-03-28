@@ -42,7 +42,9 @@ export default function MainLayout({
 
       <aside
         className={cn(
-          `flex flex-col justify-between w-[max(100%,1160px)] max-h-screen bg-accent-bg max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:h-full max-md:-translate-x-[105%]`,
+          "flex flex-col justify-between",
+          "w-[max(100%,1160px)] max-h-screen bg-accent-bg",
+          "max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:h-full max-md:-translate-x-[105%]",
           {
             "max-md:translate-x-0 max-md:z-600": isOpen,
           },

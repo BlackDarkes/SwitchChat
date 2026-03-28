@@ -8,7 +8,7 @@ import { BurgerMenu } from "./burger/BurgerMenu";
 import { BURGER_ITEMS } from "../model/burger-items";
 import { Container } from "@/shared/ui";
 import { SettingsModal, useSettingsStore } from "@/features/settings";
-import { useSearchStore } from "@/features/search/model/search-store";
+import { useSearchChatStore } from "@/features/search/model/search-chat-store";
 import { useSearch } from "@/entities/chat";
 import { ChatCreateModal, useChatCreateStore } from "@/features/chat-create";
 import { useMobileMessages } from "@/features/mobile-messages";
@@ -23,7 +23,7 @@ export const Header = () => {
     searchResult,
     isOpen: isOpenSearch,
     handleOpen: handleSearchOpen,
-  } = useSearchStore();
+  } = useSearchChatStore();
   const { handleOpen: handleCreateChatOpen } = useChatCreateStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const { data: search } = useSearch(searchInput);

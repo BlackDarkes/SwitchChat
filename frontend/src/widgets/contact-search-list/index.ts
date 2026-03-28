@@ -1,0 +1,1 @@
+export { ContactSearchList } from "./ui/ContactSearchList"

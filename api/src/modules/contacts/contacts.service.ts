@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { ChatsService } from "../chats/chats.service";
 import { ChatsRepository } from "../chats/chat.repository";
@@ -14,7 +14,7 @@ export class ContactsService {
 	async addContact(userId: string, contactId: string) {
 		const chat = await this.chatsRepository.findDirectChat(userId, contactId);
 
-		if (chat) return null;
+		if (chat) throw new BadRequestException("Чат уже существует");
 
 		const directChat = await this.chatsService.create({
 			name: "",
@@ -22,9 +22,7 @@ export class ContactsService {
 			ownerId: userId,
 		});
 
-		console.log(directChat);
-
-		if (!directChat) return null;
+		if (!directChat) throw new NotFoundException("Чат не найден");
 
 		await this.chatsService.joinChat(directChat.id, contactId);
 
