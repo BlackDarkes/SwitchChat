@@ -11,6 +11,7 @@ import { TypeLoginSchema } from "./common/dto/login.dto";
 import { IPayload } from "./types/payload.interface";
 import { SessionService } from "../session/session.service";
 import { ChatsService } from "../chats/chats.service";
+import { UserRepository } from "../user/user.repository";
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,7 @@ export class AuthService {
 	constructor(
 		private readonly configService: ConfigService,
 		private readonly userService: UserService,
+		private readonly userRepository: UserRepository,
 		private readonly chatsService: ChatsService,
 		private readonly sessionService: SessionService,
 		private readonly jwtService: JwtService,
@@ -34,7 +36,7 @@ export class AuthService {
 
 	async register(data: TypeRegisterSchema) {
 		const { email, name, password } = data;
-		const existingUser = await this.userService.getByEmail(email);
+		const existingUser = await this.userRepository.getByEmail(email);
 
 		if (existingUser) {
 			throw new UnauthorizedException(
@@ -57,7 +59,7 @@ export class AuthService {
 
 	async login(res: Response, data: TypeLoginSchema, userAgent) {
 		const { email, password } = data;
-		const user = await this.userService.getByEmail(email);
+		const user = await this.userRepository.getByEmail(email);
 
 		if (!user || !(await compare(password, user.password))) {
 			throw new UnauthorizedException("Неверный логин или пароль");
@@ -70,7 +72,7 @@ export class AuthService {
 	validate(payload: IPayload) {
 		const { id } = payload;
 
-		const user = this.userService.getById(id);
+		const user = this.userRepository.getById(id);
 
 		if (!user) {
 			throw new UnauthorizedException("Пользователь не найден");
@@ -98,7 +100,7 @@ export class AuthService {
 
 		try {
 			const payload: IPayload = this.jwtService.verify(refreshToken);
-			const user = await this.userService.getById(payload.id);
+			const user = await this.userRepository.getById(payload.id);
 
 			if (!user) {
 				throw new UnauthorizedException("Пользователь не найден");
