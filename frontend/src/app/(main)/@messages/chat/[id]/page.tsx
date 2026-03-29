@@ -50,11 +50,20 @@ export default function Page() {
             <MessageTitle chat={chat} />
             <MessageList messages={messages} />
           </div>
-          {chat?.chatMembers.some((member) => member.userId === user?.id) ? (
+          {(chat?.type === "CHANNEL" &&
+            chat?.chatMembers.some(
+              (member) =>
+                member.userId === user?.id &&
+                (member.role === "OWNER" || member.role === "ADMIN"),
+            )) ||
+          chat?.ownerId === user?.id ? (
             <MessageField />
           ) : chat?.type === "CHANNEL" &&
-            chat?.chatMembers.some((member) => member.userId === user?.id) ? (
-            "УВЕДОМЛЕНИЯ"
+            chat?.chatMembers.some(
+              (member) =>
+                member.userId === user?.id && member.role === "MEMBER",
+            ) ? (
+            <p>Вы подписаны на канал</p>
           ) : (
             <button type="button" onClick={handleJoin}>
               ПРИСОЕДИНИТЬСЯ

@@ -8,6 +8,8 @@ import { useSearchUserStore } from "@/features/search";
 import { ContactSearchList } from "@/widgets/contact-search-list";
 import { useEffect, useRef } from "react";
 import { useMobileMessages } from "@/features/mobile-messages";
+import { Container } from "@/shared/ui";
+import { cn } from "@/shared/lib/utils";
 
 export default function Page() {
   const { data: contacts } = useContact();
@@ -24,17 +26,19 @@ export default function Page() {
     return () => {
       searchRef.current = false;
     };
-  })
+  });
 
   return (
     <div>
       <MessageTitleContacts />
 
-      {isOpen ? (
-        <ContactSearchList contacts={searchResult || []} user={user} />
-      ) : (
-        <ContactList contacts={contacts || []} user={user} />
-      )}
+      <Container mod="default" className={cn("pt-5 w-full")}>
+        {isOpen ? (
+          <ContactSearchList contacts={searchResult || []} user={user} />
+        ) : (
+          <ContactList contacts={contacts || []} user={user} />
+        )}
+      </Container>
     </div>
   );
 }
