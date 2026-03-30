@@ -1,4 +1,4 @@
-import { ContactElement } from "@/entities/contact";
+import { ContactElement, ContactSearchElement } from "@/entities/contact";
 import { useSearchUser } from "@/entities/user";
 import { SearchInput, useSearchUserStore } from "@/features/search";
 import { useTypeChatStore } from "@/features/switch-type-chat";
@@ -10,9 +10,7 @@ interface IContactSearchListProps {
   user: IUser | null;
 }
 
-export const ContactSearchList = ({
-  user,
-}: IContactSearchListProps) => {
+export const ContactSearchList = ({ user }: IContactSearchListProps) => {
   const { setType } = useTypeChatStore();
   const { handleOpen } = useSearchUserStore();
   const [search, setSearch] = useState<string>("");
@@ -31,14 +29,20 @@ export const ContactSearchList = ({
       />
 
       <ul>
-        {contacts?.map((contact) => (
-          <ContactElement
-            key={contact.id}
-            contact={contact}
-            user={user}
-            setType={setType}
-          />
-        ))}
+        {contacts?.map((contact) => {
+          if (contact.addedAt) {
+            return (
+              <ContactElement
+                key={contact.id}
+                contact={contact}
+                user={user}
+                setType={setType}
+              />
+            );
+          } else {
+            return <ContactSearchElement key={contact.id} contact={contact} />;
+          }
+        })}
       </ul>
     </Container>
   );
