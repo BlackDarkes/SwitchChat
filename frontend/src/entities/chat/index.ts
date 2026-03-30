@@ -10,3 +10,4 @@ export { useCreateChat } from "./api/useCreateChat";
 export { ChatElement } from "./ui/ChatElement";
 export { ChatFavoriteElement } from "./ui/ChatFavoriteElement";
 export {  } from "./ui/ChatElementDirect"
+export { useChatById } from "./api/useChatById";

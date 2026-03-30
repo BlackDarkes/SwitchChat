@@ -12,6 +12,9 @@ export const useChatJoin = () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });
       queryClient.invalidateQueries({ queryKey: ["directChats"] });
       queryClient.invalidateQueries({ queryKey: ["groupChats"] });
+      queryClient.invalidateQueries({ queryKey: ["messages"] });
+      queryClient.invalidateQueries({ queryKey: ["chatMembers"] });
+      queryClient.invalidateQueries({ queryKey: ["chatById"] })
     },
   })
 }

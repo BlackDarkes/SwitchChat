@@ -12,6 +12,7 @@ export const useChatLeave = () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });
       queryClient.invalidateQueries({ queryKey: ["directChats"] });
       queryClient.invalidateQueries({ queryKey: ["groupChats"] });
+      queryClient.invalidateQueries({ queryKey: ["chatById"] });
     },
   })
 }

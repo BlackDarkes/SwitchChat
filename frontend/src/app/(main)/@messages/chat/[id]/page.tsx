@@ -1,33 +1,20 @@
 "use client";
 
-import { chatApi } from "@/entities/chat";
+import { useChatById } from "@/entities/chat";
 import { useChatJoin } from "@/entities/chat/api/useChatJoin";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useLoginStore } from "@/features/auth/model/login-store";
-import { IChat } from "@/shared/types/chat.interface";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
 import { redirect, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function Page() {
   const { id } = useParams<{ id: string }>();
-  const [chat, setChat] = useState<IChat | undefined>();
   const { messages } = useChatMessages(id);
   const { user } = useLoginStore();
   const { mutateAsync: chatJoin } = useChatJoin();
-
-  useEffect(() => {
-    const fetchChat = async () => {
-      const chat = await chatApi.getChatById(id);
-      setChat(chat);
-    };
-
-    if (id) {
-      fetchChat();
-    }
-  }, [id]);
+  const { data: chat } = useChatById(id);
 
   const handleJoin = async () => {
     if (id) {
