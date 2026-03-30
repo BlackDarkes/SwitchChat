@@ -17,6 +17,9 @@ export const apiClient = {
   },
   user: {
     me: () => baseClient.get(ENDPOINTS.user.me),
+
+    search: (params?: { search: string }) =>
+      baseClient.get(`${ENDPOINTS.user.search}?query=${params?.search}`),
   },
   contact: {
     getContacts: () => baseClient.get(ENDPOINTS.contact.getContacts),
@@ -24,6 +27,9 @@ export const apiClient = {
       baseClient.post(ENDPOINTS.contact.addContact, data),
     removeContact: (data: { contactId: string }) =>
       baseClient.delete(ENDPOINTS.contact.removeContact, { data }),
+
+    search: (params?: { search: string }) =>
+      baseClient.get(`${ENDPOINTS.contact.search}?query=${params?.search}`),
   },
   chat: {
     getUserChat: () => baseClient.get(ENDPOINTS.chat.getUserChat),

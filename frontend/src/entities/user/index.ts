@@ -7,3 +7,4 @@ export {
   registerSchema,
 } from "./model/validate/register-schema";
 export { userApi } from "./api/userApi";
+export { useSearchUser } from "./api/useSearchUser";

@@ -2,6 +2,7 @@ import { apiClient } from "@/libs/api/clients";
 import { TypeLoginSchema } from "../model/validate/login-schema";
 import { TypeRegisterSchema } from "../model/validate/register-schema";
 import { IUser } from "@/shared/types/user.interface";
+import { IContact } from "@/shared/types/contact.interface";
 
 const extractData = <T>(promise: Promise<{ data: T }>): Promise<T> =>
   promise.then(({ data }) => data);
@@ -19,4 +20,7 @@ export const userApi = {
     extractData(apiClient.auth.logout()),
 
   me: async (): Promise<IUser> => extractData(apiClient.user.me()),
+
+  search: async (search: string): Promise<IContact[]> =>
+    extractData(apiClient.user.search({ search })),
 };

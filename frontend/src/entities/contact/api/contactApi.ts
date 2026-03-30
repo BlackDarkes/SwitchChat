@@ -8,6 +8,9 @@ export const contactApi = {
   getContacts: async (): Promise<IContact[]> =>
     extractData(apiClient.contact.getContacts()),
 
+  search: async (search: string): Promise<IContact[]> =>
+    extractData(apiClient.contact.search({ search })),
+
   addContact: async (data: { contactId: string }) =>
     extractData(apiClient.contact.addContact(data)),
 

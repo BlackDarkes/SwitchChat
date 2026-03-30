@@ -7,9 +7,11 @@ export const ENDPOINTS = {
   },
   user: {
     me: "/user/me",
+    search: "/user/search",
   },
   contact: {
     getContacts: "/contacts",
+    search: "/contacts/search",
     addContact: "/contacts",
     removeContact: "/contacts",
   },

@@ -15,7 +15,7 @@ export default function Page() {
   const { data: contacts } = useContact();
   const { user } = useLoginStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
-  const { isOpen, searchResult } = useSearchUserStore();
+  const { isOpen } = useSearchUserStore();
   const searchRef = useRef(true);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Page() {
 
       <Container mod="default" className={cn("pt-5 w-full")}>
         {isOpen ? (
-          <ContactSearchList contacts={searchResult || []} user={user} />
+          <ContactSearchList user={user} />
         ) : (
           <ContactList contacts={contacts || []} user={user} />
         )}
