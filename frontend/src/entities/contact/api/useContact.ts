@@ -3,7 +3,7 @@ import { contactApi } from "./contactApi"
 
 export const useContact = () => {
   return useQuery({
-    queryKey: ["contact"],
+    queryKey: ["contacts"],
     queryFn: () => contactApi.getContacts()
   })
 }

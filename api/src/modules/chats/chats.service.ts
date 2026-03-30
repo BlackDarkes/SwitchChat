@@ -8,16 +8,16 @@ import { EnumRoleMember } from "@/app/generated/prisma/enums";
 @Injectable()
 export class ChatsService {
 	constructor(
-    private readonly prismaService: PrismaService,
-    private  readonly chatRepository: ChatsRepository
-  ) {}
+		private readonly prismaService: PrismaService,
+		private readonly chatRepository: ChatsRepository,
+	) {}
 
-  async getOnlineMembers(chatId: string) {
-    return this.prismaService.client.chatMember.findMany({
-      where: { chatId, user: {  isOnline: true } },
-      include: { user: true },
-    })
-  }
+	async getOnlineMembers(chatId: string) {
+		return this.prismaService.client.chatMember.findMany({
+			where: { chatId, user: { isOnline: true } },
+			include: { user: true },
+		});
+	}
 
 	async create(data: TypeCreateChatSchema) {
 		const { name, type, ownerId } = data;
@@ -35,94 +35,101 @@ export class ChatsService {
 		});
 	}
 
-  async updateMemberRole(chatId: string, userId: string, role: EnumRoleMember) {
-    return this.prismaService.client.chatMember.updateMany({
-      where: { chatId, userId },
-      data: { role },
-    })
-  }
+	async updateMemberRole(chatId: string, userId: string, role: EnumRoleMember) {
+		return this.prismaService.client.chatMember.updateMany({
+			where: { chatId, userId },
+			data: { role },
+		});
+	}
 
-  async updateLastSeenMessage(chatId: string, userId: string, messageId: string) {
-    return this.prismaService.client.chatMember.updateMany({
-      where: { chatId, userId },
-      data: { lastReadMessageId: messageId },
-    })
-  }
+	async updateLastSeenMessage(
+		chatId: string,
+		userId: string,
+		messageId: string,
+	) {
+		return this.prismaService.client.chatMember.updateMany({
+			where: { chatId, userId },
+			data: { lastReadMessageId: messageId },
+		});
+	}
 
-  async kikMember(chatId: string, userId: string, adminId: string) {
-    const admin = await this.prismaService.client.chatMember.findFirst({
-      where: { chatId, userId: adminId },
-    })
+	async kikMember(chatId: string, userId: string, adminId: string) {
+		const admin = await this.prismaService.client.chatMember.findFirst({
+			where: { chatId, userId: adminId },
+		});
 
-    if (!admin || admin.role !== "OWNER") {
-      throw new Error("У вас недостаточно прав");
-    }
-    
-    return this.prismaService.client.chatMember.deleteMany({
-      where: { chatId, userId },
-    })
-  }
+		if (!admin || admin.role !== "OWNER") {
+			throw new Error("У вас недостаточно прав");
+		}
+
+		return this.prismaService.client.chatMember.deleteMany({
+			where: { chatId, userId },
+		});
+	}
 
 	async joinChat(chatId: string, userId: string) {
-    const member = await this.prismaService.client.chatMember.findFirst({
-      where: { chatId, userId },
-    })
-    const chat = await this.prismaService.client.chat.findUnique({
-      where: { id: chatId },
-    })
+		const member = await this.prismaService.client.chatMember.findFirst({
+			where: { chatId, userId },
+		});
+		const chat = await this.prismaService.client.chat.findUnique({
+			where: { id: chatId },
+		});
 
-    if (chat?.type === "SELF") {
-      throw new Error("Нельзя присоединиться к личному чату"); 
-    }
+		if (chat?.type === "SELF") {
+			throw new Error("Нельзя присоединиться к личному чату");
+		}
 
-    if (!chat) {
-      throw new Error("Чат не найден");
-    }
-    
+		if (!chat) {
+			throw new Error("Чат не найден");
+		}
 
-    if (member) {
-      return member;
-    }
+		if (member) {
+			return member;
+		}
 
 		return this.prismaService.client.chat.update({
 			where: { id: chatId },
-			data: { chatMembers: { create: { userId, role: "MEMBER" } }, },
+			data: { chatMembers: { create: { userId, role: "MEMBER" } } },
 		});
 	}
 
 	async leaveChat(chatId: string, userId: string) {
 		return this.prismaService.client.chatMember.deleteMany({
-      where: { chatId, userId },
-    })
+			where: { chatId, userId },
+		});
 	}
 
-  async changeOwner(chatId: string, newOwnerId: string) {
-    const chat = await this.prismaService.client.chat.findUnique({
-      where: { id: chatId },
-      select: {  ownerId: true },
-    })
+	async changeOwner(chatId: string, newOwnerId: string) {
+		const chat = await this.prismaService.client.chat.findUnique({
+			where: { id: chatId },
+			select: { ownerId: true },
+		});
 
-    if (!chat || chat?.ownerId === newOwnerId) {
-      return;
-    }
+		if (!chat || chat?.ownerId === newOwnerId) {
+			return;
+		}
 
-    return this.prismaService.client.$transaction(async (tx) => {
-      await tx.chat.update({
-        where: { id: chatId },
-        data: { ownerId: newOwnerId },
-      });
+		return this.prismaService.client.$transaction(async (tx) => {
+			await tx.chat.update({
+				where: { id: chatId },
+				data: { ownerId: newOwnerId },
+			});
 
-      await tx.chatMember.updateMany({
-        where: { chatId, userId: chat.ownerId },
-        data: { role: "ADMIN" },
-      });
+			await tx.chatMember.updateMany({
+				where: { chatId, userId: chat.ownerId },
+				data: { role: "ADMIN" },
+			});
 
-      await tx.chatMember.updateMany({
-        where: { chatId, userId: newOwnerId },
-        data: { role: "OWNER" },
-      })
-    })
-  }
+			await tx.chatMember.updateMany({
+				where: { chatId, userId: newOwnerId },
+				data: { role: "OWNER" },
+			});
+		});
+	}
+
+	async removeChat(chatId: string) {
+		return this.prismaService.client.chat.deleteMany({ where: { id: chatId } });
+	}
 
 	private createUsername(id: string) {
 		return `chat_${id.split("-")[0]}`;

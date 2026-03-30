@@ -2,7 +2,6 @@ import { UserAvatar } from "@/entities/user/ui/UserAvatar";
 import { ButtonContactAdd } from "@/features/contact-add";
 import { cn } from "@/shared/lib/utils";
 import { IContact } from "@/shared/types/contact.interface";
-import { CirclePlus } from "lucide-react";
 
 interface IContactSearchElementProps {
   contact: IContact;

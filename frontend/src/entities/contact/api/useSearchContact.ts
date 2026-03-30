@@ -4,7 +4,7 @@ import { contactApi } from "./contactApi"
 
 export const useSearchContact = (search: string) => {
   return useQuery<IContact[]>({
-    queryKey: ["search", search],
+    queryKey: ["searchContact", search],
     queryFn: async () => {
       if (!search.trim()) {
         return []

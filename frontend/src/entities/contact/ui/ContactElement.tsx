@@ -1,8 +1,9 @@
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { ButtonContactRemove } from "@/features/contact-remove";
 import { cn } from "@/shared/lib/utils";
 import { IContact } from "@/shared/types/contact.interface";
 import { IUser } from "@/shared/types/user.interface";
-import { MessageCircle, Trash2 } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 
 interface IContactElementProps {
@@ -38,9 +39,7 @@ export const ContactElement = ({
           <MessageCircle />
         </Link>
 
-        <button type="button">
-          <Trash2 />
-        </button>
+        <ButtonContactRemove id={contact.contact.id}/>
       </div>
     </li>
   );

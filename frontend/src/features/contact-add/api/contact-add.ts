@@ -10,6 +10,8 @@ export const useContactAdd = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contacts"] });
+      queryClient.invalidateQueries({ queryKey: ["searchContacts"] });
+      queryClient.invalidateQueries({ queryKey: ["directChats"] });
     },
   })
 }

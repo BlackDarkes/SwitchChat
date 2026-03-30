@@ -23,13 +23,15 @@ export const apiClient = {
   },
   contact: {
     getContacts: () => baseClient.get(ENDPOINTS.contact.getContacts),
-    addContact: (data: { contactId: string }) =>
-      baseClient.post(ENDPOINTS.contact.addContact, data),
-    removeContact: (data: { contactId: string }) =>
-      baseClient.delete(ENDPOINTS.contact.removeContact, { data }),
 
     search: (params?: { search: string }) =>
       baseClient.get(`${ENDPOINTS.contact.search}?query=${params?.search}`),
+    
+    addContact: (data: { contactId: string }) =>
+      baseClient.post(ENDPOINTS.contact.addContact, data),
+    
+    removeContact: (data: { contactId: string }) =>
+      baseClient.delete(ENDPOINTS.contact.removeContact, { data: data }),
   },
   chat: {
     getUserChat: () => baseClient.get(ENDPOINTS.chat.getUserChat),

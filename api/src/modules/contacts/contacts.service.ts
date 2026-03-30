@@ -32,6 +32,12 @@ export class ContactsService {
 	}
 
 	async removeContact(userId: string, contactId: string) {
+		const chat = await this.chatsRepository.findDirectChat(userId, contactId);
+
+		if (!chat) throw new NotFoundException("Чат не найден");
+
+		await this.chatsService.removeChat(chat.id);
+
 		return this.prismaService.client.contact.deleteMany({
 			where: { ownerId: userId, contactId: contactId },
 		});
