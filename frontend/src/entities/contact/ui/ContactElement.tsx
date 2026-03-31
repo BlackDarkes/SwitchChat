@@ -33,13 +33,13 @@ export const ContactElement = ({
 
       <div className={cn("flex items-center gap-x-5")}>
         <Link
-          href={`/chat/${contact.owner.chatMembers?.[0]?.chatId}`}
+          href={`/chat/${contact.contact.chatMembers?.at(-1)?.chatId}`}
           onClick={() => setType("CHATS")}
         >
           <MessageCircle />
         </Link>
 
-        <ButtonContactRemove id={contact.contact.id}/>
+        <ButtonContactRemove id={contact.contact.id} />
       </div>
     </li>
   );

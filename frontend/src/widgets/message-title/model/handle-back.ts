@@ -6,7 +6,7 @@ export const useHandleBack = () => {
   const router = useRouter();
 
   const handleBack = () => {
-    handleOpen();
+    handleOpen(false);
     router.push("/");
   };
 
