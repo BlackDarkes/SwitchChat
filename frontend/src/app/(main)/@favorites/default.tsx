@@ -1,6 +1,6 @@
 "use client";
 
-import { useChatFavorites } from "@/entities/chat/api/useChatFavorites";
+import { useChatFavorites } from "@/entities/chat";
 import { ChatFavorites } from "@/widgets/chat-favorites";
 
 export default function Page() {

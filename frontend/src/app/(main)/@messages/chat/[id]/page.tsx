@@ -1,9 +1,9 @@
 "use client";
 
 import { useChatById } from "@/entities/chat";
-import { useChatJoin } from "@/entities/chat/api/useChatJoin";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useLoginStore } from "@/features/auth/model/login-store";
+import { ButtonChatJoin } from "@/features/chat-join";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
@@ -13,14 +13,7 @@ export default function Page() {
   const { id } = useParams<{ id: string }>();
   const { messages } = useChatMessages(id);
   const { user } = useLoginStore();
-  const { mutateAsync: chatJoin } = useChatJoin();
   const { data: chat } = useChatById(id);
-
-  const handleJoin = async () => {
-    if (id) {
-      await chatJoin(id);
-    }
-  };
 
   if (
     chat?.type === "SELF" &&
@@ -52,9 +45,7 @@ export default function Page() {
             ) ? (
             <p>Вы подписаны на канал</p>
           ) : (
-            <button type="button" onClick={handleJoin}>
-              ПРИСОЕДИНИТЬСЯ
-            </button>
+            <ButtonChatJoin id={id} />
           )}
         </>
       ) : (

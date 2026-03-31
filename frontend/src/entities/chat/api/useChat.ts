@@ -12,6 +12,15 @@ export const useChats = () => {
   })
 }
 
+export const useChatById = (id: string) => {
+  return useQuery({
+    queryKey: ["chatById", id],
+    queryFn: async () => {
+      return chatApi.getChatById(id);
+    }
+  })
+}
+
 export const useSelfChat = () => {
   return useQuery({
     queryKey: ["selfChat"],
@@ -33,5 +42,14 @@ export const useGroupChats = () => {
     queryKey: ["groupChats"],
     queryFn: () => chatApi.getGroupChats() as Promise<IChat[]>,
     placeholderData: (prevData) => prevData // placeholder что бы не моргало
+  })
+}
+
+export const useChatFavorites = () => {
+  return useQuery({
+    queryKey: ["chatFavorite"],
+    queryFn: () => {
+      return chatApi.getFavoriteChats();
+    }
   })
 }

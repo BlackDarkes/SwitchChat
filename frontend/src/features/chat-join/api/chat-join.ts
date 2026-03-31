@@ -1,12 +1,12 @@
-import { apiClient } from "@/libs/api/clients";
+import { chatApi } from "@/entities/chat";
 import { queryClient } from "@/libs/query/query-client";
-import { useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query";
 
 export const useChatJoin = () => {
   return useMutation({
     mutationKey: ["joinChat"],
     mutationFn: async (id: string) => {
-      await apiClient.chat.join(id)
+      await chatApi.join(id)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });

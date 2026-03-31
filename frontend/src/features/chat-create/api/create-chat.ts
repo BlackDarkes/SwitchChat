@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { TypeCreateChatSchema } from "../model/create-chat-schema";
 import { apiClient } from "@/libs/api/clients";
 import { queryClient } from "@/libs/query/query-client";
 import { IChat } from "@/shared/types/chat.interface";
+import { TypeCreateChatSchema } from "@/entities/chat";
 
 export const useCreateChat = () => {
   return useMutation<IChat, Error, TypeCreateChatSchema>({

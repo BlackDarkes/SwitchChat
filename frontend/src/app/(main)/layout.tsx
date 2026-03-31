@@ -1,6 +1,6 @@
 "use client";
 
-import { useChatFavorites } from "@/entities/chat/api/useChatFavorites";
+import { useChatFavorites } from "@/entities/chat";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { Toast, useToastStore } from "@/features/toast";
 import { cn } from "@/shared/lib/utils";

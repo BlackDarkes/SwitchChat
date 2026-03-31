@@ -1,6 +1,6 @@
-import { useChatLeave } from "@/entities/chat/api/useChatLeave";
+import { ButtonChatLeave } from "@/features/chat-leave";
 import { cn } from "@/shared/lib/utils";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 interface IChatActionMenuProps {
   isOpen: boolean;
@@ -11,16 +11,7 @@ export const ChatActionMenu = ({
   isOpen,
   handleOpen,
 }: IChatActionMenuProps) => {
-  const { mutateAsync: chatLeave } = useChatLeave();
   const { id } = useParams<{ id: string }>();
-  const route = useRouter();
-
-  const handleLeave = async () => {
-    if (id) {
-      await chatLeave(id);
-      route.push("/");
-    }
-  };
 
   return (
     <section
@@ -37,12 +28,7 @@ export const ChatActionMenu = ({
           },
         )}
       >
-        <button
-          onClick={handleLeave}
-          className="p-[8px_8px] w-full bg-primary-color text-primary-bg rounded-2xl transition duration-300 hover:bg-primary-color/80"
-        >
-          Выйти
-        </button>
+        <ButtonChatLeave id={id} />
       </div>
     </section>
   );

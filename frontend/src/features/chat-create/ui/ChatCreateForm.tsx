@@ -5,8 +5,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useChatCreateStore } from "../model/chat-create-store";
-import { useCreateChat } from "@/entities/chat";
 import { useRouter } from "next/navigation";
+import { useCreateChat } from "../api/create-chat";
 
 export const ChatCreateForm = () => {
   const {

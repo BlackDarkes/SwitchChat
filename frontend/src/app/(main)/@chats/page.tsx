@@ -12,8 +12,6 @@ export default function Page() {
 
   const { data, isPending } = type === "CHATS" ? directChats : groupChats;
 
-  console.log("data", data, type);
-
   return (
     <>
       <ChatList chats={data} isPending={isPending} />

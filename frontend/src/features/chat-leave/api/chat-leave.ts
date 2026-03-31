@@ -1,12 +1,12 @@
-import { apiClient } from "@/libs/api/clients";
+import { chatApi } from "@/entities/chat";
 import { queryClient } from "@/libs/query/query-client";
-import { useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query";
 
 export const useChatLeave = () => {
   return useMutation({
     mutationKey: ["leaveChat"],
     mutationFn: async (id: string) => {
-      await apiClient.chat.leave(id)
+      await chatApi.leave(id)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });

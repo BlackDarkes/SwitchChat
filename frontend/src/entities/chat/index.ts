@@ -1,13 +1,16 @@
+export { chatApi } from "./api/chatApi";
 export {
   useChats,
   useSelfChat,
   useGroupChats,
   useDirectChats,
+  useChatById,
+  useChatFavorites
 } from "./api/useChat";
-export { chatApi } from "./api/chatApi";
 export { useSearch } from "./api/useSearchChat";
-export { useCreateChat } from "./api/useCreateChat";
+
+export type { TypeCreateChatSchema } from "./model/create-chat-schema";
+
 export { ChatElement } from "./ui/ChatElement";
 export { ChatFavoriteElement } from "./ui/ChatFavoriteElement";
-export {  } from "./ui/ChatElementDirect"
-export { useChatById } from "./api/useChatById";
+export { ChatElementDirect } from "./ui/ChatElementDirect";
