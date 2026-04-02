@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { UserAvatar } from "@/entities/user";
 import { ButtonContactRemove } from "@/features/contact-remove";
 import { cn } from "@/shared/lib/utils";
 import { IContact } from "@/shared/types/contact.interface";

@@ -5,6 +5,7 @@ interface IUserAvatarProps {
   userAvatar: string | undefined | null;
   userName: string | undefined;
   isAvatar?: boolean;
+  size?: "middle" | "big";
 
   handleOpen?: () => void;
 }
@@ -13,6 +14,7 @@ export const UserAvatar = ({
   userAvatar,
   userName,
   isAvatar = false,
+  size = "middle",
   handleOpen,
 }: IUserAvatarProps) => {
   return (
@@ -24,9 +26,11 @@ export const UserAvatar = ({
           width={60}
           height={60}
           className={cn(
-            "w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] cursor-pointer",
+            "cursor-pointer",
             {
               "cursor-default": isAvatar,
+              "w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)]": size === "middle",
+              "w-[clamp(40px,4vw,50px)] h-[clamp(40px,4vw,50px)]": size === "big",
             },
           )}
           onClick={handleOpen}
@@ -35,10 +39,12 @@ export const UserAvatar = ({
         <div
           className={cn(
             "flex justify-center items-center",
-            "w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full",
+            "bg-primary-color text-primary-bg uppercase font-bold rounded-full",
             "cursor-pointer",
             {
               "cursor-default": isAvatar,
+              "w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)]": size === "middle",
+              "w-[clamp(40px,4vw,50px)] h-[clamp(40px,4vw,50px)]": size === "big",
             }
           )}
           onClick={handleOpen}

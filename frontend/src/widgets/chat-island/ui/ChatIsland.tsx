@@ -1,6 +1,6 @@
 "use client";
 
-import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { UserAvatar } from "@/entities/user";
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { useProfileStore } from "@/features/profile";
 import { useTypeChatStore } from "@/features/switch-type-chat";

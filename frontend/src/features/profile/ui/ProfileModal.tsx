@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { UserAvatar } from "@/entities/user";
 import { IUser } from "@/shared/types/user.interface";
 import { Modal } from "@/shared/ui";
 

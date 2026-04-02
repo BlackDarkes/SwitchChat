@@ -2,7 +2,9 @@
 
 import { MessageElement } from "@/entities/message";
 import { useLoginStore } from "@/features/auth/model/login-store";
+import { useProfileStore } from "@/features/profile";
 import { IMessage } from "@/shared/types/message.interface";
+import { IUser } from "@/shared/types/user.interface";
 import { Container } from "@/shared/ui";
 import { useEffect, useRef, useMemo } from "react";
 
@@ -12,6 +14,7 @@ interface IMessagesListProps {
 
 export const MessageList = ({ messages }: IMessagesListProps) => {
   const { user } = useLoginStore();
+  const { handleOpen, setUser } = useProfileStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const uniqueMessages = useMemo(() => {
@@ -33,6 +36,13 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
     }
   }, [uniqueMessages.length]);
 
+  const handleOpenProfile = (profile: IUser) => {
+    if (profile) {
+      setUser(profile);
+    }
+    handleOpen();
+  };
+
   return (
     <section ref={containerRef} className="overflow-y-auto custom-scroll">
       <Container mod="default" className="px-6.25 ">
@@ -45,6 +55,7 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
                 key={message.id}
                 message={message}
                 userId={user?.id}
+                handleOpen={() => handleOpenProfile(message.user)}
               />
             ))
           )}

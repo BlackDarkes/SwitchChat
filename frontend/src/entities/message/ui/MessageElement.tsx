@@ -1,13 +1,15 @@
-import { UserAvatar } from "@/entities/user/ui/UserAvatar";
+import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { IMessage } from "@/shared/types/message.interface";
 
 interface IMessageElementProps {
   message: IMessage;
   userId: string | undefined;
+
+  handleOpen: () => void;
 }
 
-export const MessageElement = ({ message, userId }: IMessageElementProps) => {
+export const MessageElement = ({ message, userId, handleOpen }: IMessageElementProps) => {
   const isOwnerMessage = message.userId === userId;
 
   return (
@@ -19,6 +21,7 @@ export const MessageElement = ({ message, userId }: IMessageElementProps) => {
       <UserAvatar
         userAvatar={message.user.avatar}
         userName={message.user.name}
+        handleOpen={handleOpen}
       />
 
       <div
