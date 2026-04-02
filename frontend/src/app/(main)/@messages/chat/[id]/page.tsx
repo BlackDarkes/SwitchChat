@@ -38,6 +38,8 @@ export default function Page() {
             )) ||
           chat?.ownerId === user?.id ? (
             <MessageField />
+          ) : chat?.type === "GROUP" && chat?.chatMembers.some((member) => member.userId === user?.id) ? (
+            <MessageField />
           ) : chat?.type === "CHANNEL" &&
             chat?.chatMembers.some(
               (member) =>

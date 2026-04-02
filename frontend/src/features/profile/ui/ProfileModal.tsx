@@ -3,7 +3,7 @@ import { IUser } from "@/shared/types/user.interface";
 import { Modal } from "@/shared/ui";
 
 interface IProfileModalProps {
-  user: IUser | null;
+  user: IUser | undefined;
   isOpen: boolean;
   handleOpen: () => void;
 }

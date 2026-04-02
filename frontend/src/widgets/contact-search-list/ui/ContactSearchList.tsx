@@ -7,7 +7,7 @@ import { Container } from "@/shared/ui";
 import { ChangeEvent, useState } from "react";
 
 interface IContactSearchListProps {
-  user: IUser | null;
+  user: IUser | undefined;
 }
 
 export const ContactSearchList = ({ user }: IContactSearchListProps) => {

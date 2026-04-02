@@ -7,9 +7,7 @@ export const ChatCreateModal = () => {
 
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <ChatCreateForm />
-      </div>
+      <ChatCreateForm />
     </Modal>
   );
-}
+};

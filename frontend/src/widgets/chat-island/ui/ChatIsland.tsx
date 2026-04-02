@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export const ChatIsland = () => {
   const { user } = useLoginStore();
   const { type, setType } = useTypeChatStore();
-  const { isOpen, handleOpen } = useProfileStore();
+  const { isOpen, user: profileUser, handleOpen, setUser } = useProfileStore();
 
   useEffect(() => {
     const url = window.location.href;
@@ -23,6 +23,10 @@ export const ChatIsland = () => {
       setType("GROUPS");
     }
   }, [])
+
+  useEffect(() => {
+    setUser(user);
+  }, [user, setUser]);
 
   return (
     <section className="m-5 w-full">
@@ -56,7 +60,7 @@ export const ChatIsland = () => {
             <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
           </button>
 
-          <ProfileModal user={user} isOpen={isOpen} handleOpen={handleOpen} />
+          <ProfileModal user={profileUser} isOpen={isOpen} handleOpen={handleOpen} />
         </div>
       </Container>
     </section>

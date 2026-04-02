@@ -6,7 +6,7 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 interface ILoginStore {
-  user: IUser | null;
+  user: IUser | undefined;
   isAuth: boolean;
   isLoading: boolean;
   error: string;
@@ -22,7 +22,7 @@ interface ILoginStore {
 export const useLoginStore = create<ILoginStore>()(
   devtools(
     (set) => ({
-      user: null,
+      user: undefined,
       isAuth: false,
       isLoading: false,
       error: "",
@@ -59,7 +59,7 @@ export const useLoginStore = create<ILoginStore>()(
         try {
           await apiClient.auth.logout();
         } finally {
-          set({  user: null, isAuth: false });
+          set({  user: undefined, isAuth: false });
         }
       },
 

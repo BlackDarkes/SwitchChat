@@ -6,7 +6,7 @@ import { IUser } from "@/shared/types/user.interface";
 
 interface IContactListProps {
   contacts: IContact[];
-  user: IUser | null;
+  user: IUser | undefined;
 }
 
 export const ContactList = ({ contacts, user }: IContactListProps) => {

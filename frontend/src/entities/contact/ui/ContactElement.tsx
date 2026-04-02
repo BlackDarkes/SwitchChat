@@ -8,7 +8,7 @@ import Link from "next/link";
 
 interface IContactElementProps {
   contact: IContact;
-  user: IUser | null;
+  user: IUser | undefined;
   setType: (type: "CHATS" | "GROUPS") => void;
 }
 

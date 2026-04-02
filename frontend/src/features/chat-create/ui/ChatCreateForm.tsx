@@ -41,7 +41,7 @@ export const ChatCreateForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-accent-bg">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <input type="text" {...register("name")} />
         {errors.name && <span>{errors.name.message}</span>}
