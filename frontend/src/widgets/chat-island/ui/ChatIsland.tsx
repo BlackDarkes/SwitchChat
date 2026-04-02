@@ -2,7 +2,7 @@
 
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
 import { useLoginStore } from "@/features/auth/model/login-store";
-import { ProfileModal, useProfileStore } from "@/features/profile";
+import { useProfileStore } from "@/features/profile";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
 import { Container } from "@/shared/ui";
@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export const ChatIsland = () => {
   const { user } = useLoginStore();
   const { type, setType } = useTypeChatStore();
-  const { isOpen, user: profileUser, handleOpen, setUser } = useProfileStore();
+  const { handleOpen, setUser } = useProfileStore();
 
   useEffect(() => {
     const url = window.location.href;
@@ -22,11 +22,14 @@ export const ChatIsland = () => {
     } else if (url.includes("groups")) {
       setType("GROUPS");
     }
-  }, [])
+  }, []);
 
-  useEffect(() => {
-    setUser(user);
-  }, [user, setUser]);
+  const handleOpenProfile = () => {
+    if (user) {
+      setUser(user); 
+    }
+    handleOpen(); 
+  };
 
   return (
     <section className="m-5 w-full">
@@ -40,7 +43,7 @@ export const ChatIsland = () => {
                 `duration-400 transition hover:stroke-accent-color`,
                 {
                   "stroke-accent-color": type === "CHATS",
-                }
+                },
               )}
             />
           </button>
@@ -52,15 +55,13 @@ export const ChatIsland = () => {
                 `duration-400 transition hover:stroke-accent-color`,
                 {
                   "stroke-accent-color": type === "GROUPS",
-                }
+                },
               )}
             />
           </button>
-          <button type="button" onClick={handleOpen}>
+          <button type="button" onClick={handleOpenProfile}>
             <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
           </button>
-
-          <ProfileModal user={profileUser} isOpen={isOpen} handleOpen={handleOpen} />
         </div>
       </Container>
     </section>

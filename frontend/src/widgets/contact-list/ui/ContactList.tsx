@@ -1,8 +1,10 @@
 import { ContactElement } from "@/entities/contact";
+import { useProfileStore } from "@/features/profile";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
 import { IContact } from "@/shared/types/contact.interface";
 import { IUser } from "@/shared/types/user.interface";
+import { useEffect } from "react";
 
 interface IContactListProps {
   contacts: IContact[];
@@ -11,6 +13,14 @@ interface IContactListProps {
 
 export const ContactList = ({ contacts, user }: IContactListProps) => {
   const { setType } = useTypeChatStore();
+  const { setUser, handleOpen: handleOpenProfile } = useProfileStore();
+
+  useEffect(() => setUser(user), [user, setUser]);
+
+  const handleContactClick = (targetUser: IUser) => {
+    setUser(targetUser);
+    handleOpenProfile();
+  };
 
   return (
     <ul
@@ -19,14 +29,20 @@ export const ContactList = ({ contacts, user }: IContactListProps) => {
       )}
     >
       {contacts.length ? (
-        contacts.map((contact) => (
-          <ContactElement
-            key={contact.id}
-            contact={contact}
-            user={user}
-            setType={setType}
-          />
-        ))
+        contacts.map((contact) => {
+          const userContact: IUser =
+            contact.ownerId === user?.id ? contact.contact : contact.owner;
+
+          return (
+            <ContactElement
+              key={contact.id}
+              contact={contact}
+              user={userContact}
+              setType={setType}
+              handleOpen={() => handleContactClick(userContact)}
+            />
+          );
+        })
       ) : (
         <li className={cn("text-center")}>Контакты не найдены</li>
       )}

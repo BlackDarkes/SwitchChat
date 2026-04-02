@@ -20,6 +20,6 @@ export const useProfileStore = create<IProfileStore>()(
 
       setUser: (user: IUser | undefined) => set({ user }),
     }),
-    { name: "profile" },
+    { name: "profile-store" },
   ),
 );

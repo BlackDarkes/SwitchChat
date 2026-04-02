@@ -12,7 +12,7 @@ export const ProfileModal = ({ user, isOpen, handleOpen }: IProfileModalProps) =
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
       <div className="cursor-default" onClick={(e) => e.stopPropagation()}>
-        <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
+        <UserAvatar userAvatar={user?.avatar} userName={user?.name} isAvatar={true} />
         <h2>{user?.name}</h2>
 
         <p>{user?.email}</p>

@@ -1,5 +1,6 @@
 import { ContactElement, ContactSearchElement } from "@/entities/contact";
 import { useSearchUser } from "@/entities/user";
+import { useProfileStore } from "@/features/profile";
 import { SearchInput, useSearchUserStore } from "@/features/search";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { IUser } from "@/shared/types/user.interface";
@@ -12,12 +13,18 @@ interface IContactSearchListProps {
 
 export const ContactSearchList = ({ user }: IContactSearchListProps) => {
   const { setType } = useTypeChatStore();
+  const { setUser, handleOpen: handleOpenProfile } = useProfileStore();
   const { handleOpen } = useSearchUserStore();
   const [search, setSearch] = useState<string>("");
   const { data: contacts } = useSearchUser(search);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
+
+  const handleContactClick = (targetUser: IUser) => {
+    setUser(targetUser);
+    handleOpenProfile();
+  };
 
   return (
     <Container mod="default">
@@ -31,12 +38,16 @@ export const ContactSearchList = ({ user }: IContactSearchListProps) => {
       <ul>
         {contacts?.map((contact) => {
           if (contact.addedAt) {
+            const userContact: IUser =
+              contact.ownerId === user?.id ? contact.contact : contact.owner;
+
             return (
               <ContactElement
                 key={contact.id}
                 contact={contact}
-                user={user}
+                user={userContact}
                 setType={setType}
+                handleOpen={() => handleContactClick(userContact)}
               />
             );
           } else {

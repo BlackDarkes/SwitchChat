@@ -10,25 +10,26 @@ interface IContactElementProps {
   contact: IContact;
   user: IUser | undefined;
   setType: (type: "CHATS" | "GROUPS") => void;
+
+  handleOpen: () => void;
 }
 
 export const ContactElement = ({
   contact,
   user,
   setType,
+  handleOpen,
 }: IContactElementProps) => {
-  const userContact =
-    contact.ownerId === user?.id ? contact.contact : contact.owner;
-
   return (
     <li className={cn("flex justify-between items-center gap-x-2.5")}>
       <div className={cn("flex items-center gap-x-2.5")}>
         <UserAvatar
-          userAvatar={userContact.avatar}
-          userName={userContact.name}
+          userAvatar={user?.avatar}
+          userName={user?.name}
+          handleOpen={handleOpen}
         />
 
-        <h3 className="text-[18px]">{userContact.name}</h3>
+        <h3 className="text-[18px]">{user?.name}</h3>
       </div>
 
       <div className={cn("flex items-center gap-x-5")}>
