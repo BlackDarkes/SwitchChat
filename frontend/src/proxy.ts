@@ -1,13 +1,14 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
   const normalizedPath = pathname.replace(/\/$/, "");
-  
+
   const token = request.cookies.get("access_token")?.value;
-  
-  const isAuthPage = normalizedPath === "/login" || normalizedPath === "/register";
+
+  const isAuthPage =
+    normalizedPath === "/login" || normalizedPath === "/register";
 
   if (isAuthPage) {
     if (token) {
@@ -18,7 +19,25 @@ export function proxy(request: NextRequest) {
   }
 
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const refreshRes = await fetch(`${process.env.API_URL}/auth/refresh`, {
+      method: "POST",
+      headers: {
+        cookie: request.headers.get("cookie") || "",
+      },
+    });
+
+    if (!refreshRes.ok) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    const response = NextResponse.next();
+    refreshRes.headers.forEach((value, key) => {
+      if (key.toLowerCase() === "set-cookie") {
+        response.headers.append("set-cookie", value);
+      }
+    });
+
+    return response;
   }
 
   return NextResponse.next();
