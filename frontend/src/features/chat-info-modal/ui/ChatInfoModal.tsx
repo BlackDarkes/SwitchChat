@@ -19,46 +19,45 @@ export const ChatInfoModal = ({
 
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
-      <div
-        className="relative w-[min(100%,350px)] p-5 bg-primary-bg rounded-xl cursor-default"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <CloseButton handleClose={handleOpen} />
+      <CloseButton handleClose={handleOpen} />
 
-        <header className="flex flex-col items-center gap-y-2.5">
-          <ChatAvatar
-            chatAvatar={chat?.avatar}
-            chatName={chat?.name}
-            size="big"
-          />
-          <h2 className="text-[clamp(20px,4vw,24px)]">{chat?.name}</h2>
+      <header className="flex flex-col items-center gap-y-2.5">
+        <ChatAvatar
+          chatAvatar={chat?.avatar}
+          chatName={chat?.name}
+          size="big"
+        />
+        <h2 className="text-[clamp(20px,4vw,24px)]">{chat?.name}</h2>
 
-          <section className="flex flex-col gap-y-5 w-[min(100%,250px)]">
-            <div>
-              <p onClick={copyName} className="cursor-pointer">
-                {chat?.username}
-              </p>
-              <span className="text-[14px] text-secondary-color select-none">Тег</span>
-            </div>
-            <div>
-              <p>{chat?.description}</p>
-              <span className="text-[14px] text-secondary-color select-none">Описание</span>
-            </div>
-          </section>
-        </header>
-
-        <div className="w-full mt-10">
-          <div className="flex gap-x-1.25">
-            <h3 className="text-secondary-color">Участники</h3>
-            <p>{chat?.chatMembers.length}</p>
+        <section className="flex flex-col gap-y-5 w-[min(100%,250px)]">
+          <div>
+            <p onClick={copyName} className="cursor-pointer">
+              {chat?.username}
+            </p>
+            <span className="text-[14px] text-secondary-color select-none">
+              Тег
+            </span>
           </div>
+          <div>
+            <p>{chat?.description}</p>
+            <span className="text-[14px] text-secondary-color select-none">
+              Описание
+            </span>
+          </div>
+        </section>
+      </header>
 
-          <ul className="mt-5">
-            {chat?.chatMembers.map((member) => (
-              <li key={member.id}>{member?.user.name}</li>
-            ))}
-          </ul>
+      <div className="w-full mt-10">
+        <div className="flex gap-x-1.25">
+          <h3 className="text-secondary-color">Участники</h3>
+          <p>{chat?.chatMembers.length}</p>
         </div>
+
+        <ul className="mt-5">
+          {chat?.chatMembers.map((member) => (
+            <li key={member.id}>{member?.user.name}</li>
+          ))}
+        </ul>
       </div>
     </Modal>
   );
