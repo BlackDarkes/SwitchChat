@@ -10,6 +10,9 @@ export const useRemoveFavorite = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chatFavorite"] });
+      queryClient.invalidateQueries({ queryKey: ["chats"] });
+      queryClient.invalidateQueries({ queryKey: ["directChats"] });
+      queryClient.invalidateQueries({ queryKey: ["groupChats"] });
     },
   })
 }
