@@ -140,4 +140,13 @@ export class ChatsController {
 	) {
 		return this.chatsService.updateMemberRole(chatId, userId, role);
 	}
+
+	@Patch(":id/add-favorite")
+	@HttpCode(200)
+	async addFavorite(
+		@Param("id") chatId: string,
+		@CurrentUser("id") userId: string,
+	) {
+		return this.chatsService.addFavorite(chatId, userId);
+	}
 }

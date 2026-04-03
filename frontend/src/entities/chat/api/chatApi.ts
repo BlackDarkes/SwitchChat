@@ -32,7 +32,12 @@ export const chatApi = {
   create: async (data: TypeCreateChatSchema): Promise<IChat> =>
     extractData(apiClient.chat.create(data)),
 
-  join: async (id: string): Promise<IChat> => extractData(apiClient.chat.join(id)),
+  join: async (id: string): Promise<IChat> =>
+    extractData(apiClient.chat.join(id)),
 
-  leave: async (id: string): Promise<IChat> => extractData(apiClient.chat.leave(id)),
+  leave: async (id: string): Promise<IChat> =>
+    extractData(apiClient.chat.leave(id)),
+
+  addFavorite: async (id: string): Promise<IChat> =>
+    extractData(apiClient.chat.addFavorite(id)),
 };

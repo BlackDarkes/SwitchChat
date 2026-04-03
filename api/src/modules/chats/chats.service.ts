@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { type TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { v4 as uuid } from "uuid";
@@ -124,6 +124,25 @@ export class ChatsService {
 				where: { chatId, userId: newOwnerId },
 				data: { role: "OWNER" },
 			});
+		});
+	}
+
+	async addFavorite(chatId: string, userId: string) {
+		const chat = await this.prismaService.client.chat.findUnique({
+			where: { id: chatId },
+		});
+
+		if (!chat) {
+			throw new BadRequestException("Чат не найден");
+		}
+
+		return this.prismaService.client.chat.update({
+			where: { id: chatId },
+			data: {
+				chatMembers: {
+					updateMany: { where: { userId }, data: { isFavorite: true } },
+				},
+			},
 		});
 	}
 

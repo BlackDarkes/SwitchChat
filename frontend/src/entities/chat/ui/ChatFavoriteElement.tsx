@@ -8,6 +8,8 @@ interface IChatFavoriteElementProps {
 }
 
 export const ChatFavoriteElement = ({ chat }: IChatFavoriteElementProps) => {
+  console.log(chat)
+
   return (
     <li>
       <Link
