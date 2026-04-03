@@ -51,6 +51,8 @@ export const apiClient = {
       baseClient.delete(ENDPOINTS.chat.leave.replace(":id", id)),
     addFavorite: (id: string) =>
       baseClient.patch(ENDPOINTS.chat.addFavorite.replace(":id", id)),
+    removeFavorite: (id: string) =>
+      baseClient.patch(ENDPOINTS.chat.removeFavorite.replace(":id", id)),
   },
   message: {
     getHistory: (

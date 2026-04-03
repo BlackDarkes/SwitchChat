@@ -146,6 +146,25 @@ export class ChatsService {
 		});
 	}
 
+	async removeFavorite(chatId: string, userId: string) {
+		const chat = await this.prismaService.client.chat.findUnique({
+			where: { id: chatId },
+		});
+
+		if (!chat) {
+			throw new BadRequestException("Чат не найден");
+		}
+
+		return this.prismaService.client.chat.update({
+			where: { id: chatId },
+			data: {
+				chatMembers: {
+					updateMany: { where: { userId }, data: { isFavorite: false } },
+				},
+			},
+		});
+	}
+
 	async removeChat(chatId: string) {
 		return this.prismaService.client.chat.deleteMany({ where: { id: chatId } });
 	}

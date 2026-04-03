@@ -149,4 +149,13 @@ export class ChatsController {
 	) {
 		return this.chatsService.addFavorite(chatId, userId);
 	}
+
+	@Patch(":id/remove-favorite")
+	@HttpCode(200)
+	async removeFavorite(
+		@Param("id") chatId: string,
+		@CurrentUser("id") userId: string,
+	) {
+		return this.chatsService.removeFavorite(chatId, userId);
+	}
 }

@@ -27,6 +27,7 @@ export const ENDPOINTS = {
     join: "/chats/:id/join",
     leave: "/chats/:id/leave",
     addFavorite: "/chats/:id/add-favorite",
+    removeFavorite: "/chats/:id/remove-favorite",
   },
   message: {
     getHistory: "/messages/:id",

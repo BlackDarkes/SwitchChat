@@ -5,6 +5,7 @@ import { cn } from "@/shared/lib/utils";
 import { ReactNode } from "react";
 import { ContextMenu } from "radix-ui";
 import { ButtonAddFavorite } from "@/features/chat-add-favorite";
+import { ButtonRemoveFavorite } from "@/features/chat-remote-favorite";
 
 interface IChatElementLayoutProps {
   chat: IChat;
@@ -59,7 +60,11 @@ export const ChatElementLayout = ({
             className={cn("p-2 min-w-50 bg-accent-bg rounded-xl")}
           >
             <ContextMenu.Item>
-              <ButtonAddFavorite chatId={chat.id} />
+              { chat.chatMembers.some((member) => member.isFavorite) ? (
+                <ButtonRemoveFavorite chatId={chat.id} />
+              ) : (
+                <ButtonAddFavorite chatId={chat.id} />
+              ) }
             </ContextMenu.Item>
           </ContextMenu.Content>
         </ContextMenu.Portal>

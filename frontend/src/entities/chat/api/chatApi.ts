@@ -40,4 +40,7 @@ export const chatApi = {
 
   addFavorite: async (id: string): Promise<IChat> =>
     extractData(apiClient.chat.addFavorite(id)),
+
+  removeFavorite: async (id: string): Promise<IChat> =>
+    extractData(apiClient.chat.removeFavorite(id)),
 };
