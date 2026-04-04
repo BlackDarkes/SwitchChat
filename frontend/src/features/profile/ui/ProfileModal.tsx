@@ -1,4 +1,5 @@
 import { UserAvatar } from "@/entities/user";
+import { cn } from "@/shared/lib/utils";
 import { IUser } from "@/shared/types/user.interface";
 import { Modal } from "@/shared/ui";
 
@@ -8,18 +9,44 @@ interface IProfileModalProps {
   handleOpen: () => void;
 }
 
-export const ProfileModal = ({ user, isOpen, handleOpen }: IProfileModalProps) => {
+export const ProfileModal = ({
+  user,
+  isOpen,
+  handleOpen,
+}: IProfileModalProps) => {
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
-      <div className="cursor-default" onClick={(e) => e.stopPropagation()}>
-        <UserAvatar userAvatar={user?.avatar} userName={user?.name} isAvatar={true} />
-        <h2>{user?.name}</h2>
+      <div
+        className={cn("flex flex-col items-center gap-y-2.5")}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <UserAvatar
+          userAvatar={user?.avatar}
+          userName={user?.name}
+          isAvatar={true}
+          size="big"
+        />
 
-        <p>{user?.email}</p>
-        
-        <p>{user?.bio}</p>
+        <h3 className={cn("text-[clamp(20px,1.5vw,24px)]")}>{user?.name}</h3>
 
-        <p>{user?.username}</p>
+        <div className={cn("flex flex-col gap-y-5 w-[min(100%,250px)]")}>
+          <div>
+            <p>{user?.email}</p>
+            <span className="text-[14px] text-secondary-color select-none">Почта</span>
+          </div>
+
+          {user?.bio && (
+            <div>
+              <p>{user?.bio}</p>
+              <span className="text-[14px] text-secondary-color select-none">Описание</span>
+            </div>
+          )}
+
+          <div>
+            <p>{user?.username}</p>
+            <span className="text-[14px] text-secondary-color select-none">Тег</span>
+          </div>
+        </div>
       </div>
     </Modal>
   );
