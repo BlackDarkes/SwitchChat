@@ -21,17 +21,18 @@ export const ChatElementLayout = ({
   const { displayCount, param, unreadCount } = useHandleElement({ chat });
 
   return (
-    <li>
+    <li
+      className={cn("rounded-xl shadow-box transition-all duration-400", {
+        "shadow-none opacity-80": param.id === chat.id,
+      })}
+    >
       <ContextMenu.Root>
         <ContextMenu.Trigger>
           <Link
             href={`/chat/${chat.id}`}
             onClick={() => handleOpen(false)}
             className={cn(
-              `flex justify-between w-full bg-chat-bg p-[10px_15px] rounded-xl shadow-box`,
-              {
-                "shadow-none": param.id === chat.id,
-              },
+              "flex justify-between w-full bg-chat-bg p-[10px_15px] rounded-xl",
             )}
           >
             {children}
@@ -60,11 +61,11 @@ export const ChatElementLayout = ({
             className={cn("p-2 min-w-50 bg-accent-bg rounded-xl")}
           >
             <ContextMenu.Item>
-              { chat.chatMembers.some((member) => member.isFavorite) ? (
+              {chat.chatMembers.some((member) => member.isFavorite) ? (
                 <ButtonRemoveFavorite chatId={chat.id} />
               ) : (
                 <ButtonAddFavorite chatId={chat.id} />
-              ) }
+              )}
             </ContextMenu.Item>
           </ContextMenu.Content>
         </ContextMenu.Portal>

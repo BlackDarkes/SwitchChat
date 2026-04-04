@@ -4,16 +4,27 @@ import { useChatById } from "@/entities/chat";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { ButtonChatJoin } from "@/features/chat-join";
+import { useTypeChatStore } from "@/features/switch-type-chat";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
 import { redirect, useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
   const { id } = useParams<{ id: string }>();
   const { messages } = useChatMessages(id);
   const { user } = useLoginStore();
   const { data: chat } = useChatById(id);
+  const { setType } = useTypeChatStore();
+
+  useEffect(() => {
+    if (chat?.type === "DIRECT") {
+      setType("CHATS");
+    } else if (chat?.type === "GROUP") {
+      setType("GROUPS");
+    }
+  }, [chat?.type]);
 
   if (
     chat?.type === "SELF" &&
