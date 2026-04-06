@@ -30,7 +30,7 @@ export const ChatElementLayout = ({
         <ContextMenu.Trigger>
           <Link
             href={`/chat/${chat.id}`}
-            onClick={() => handleOpen(false)}
+            onClick={() => handleOpen(true)}
             className={cn(
               "flex justify-between w-full bg-chat-bg p-[10px_15px] rounded-xl",
             )}
@@ -58,7 +58,7 @@ export const ChatElementLayout = ({
 
         <ContextMenu.Portal>
           <ContextMenu.Content
-            className={cn("p-2 min-w-50 bg-accent-bg rounded-xl")}
+            className={cn("p-2 min-w-50 bg-accent-bg rounded-xl z-200")}
           >
             <ContextMenu.Item>
               {chat.chatMembers.some((member) => member.isFavorite) ? (

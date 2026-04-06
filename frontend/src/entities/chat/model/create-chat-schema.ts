@@ -2,7 +2,7 @@ import { type infer as zInfer, object, string, enum as zEnum } from "zod";
 
 const createChatSchema = object({
   type: zEnum(["DIRECT", "GROUP", "CHANNEL"]),
-  name: string(),
+  name: string().min(1, "Минимум 1 символ"),
 })
 
 

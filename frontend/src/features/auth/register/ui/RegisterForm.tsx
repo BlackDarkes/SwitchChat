@@ -3,12 +3,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, TypeRegisterSchema } from "@/entities/user";
-import { LinkUnderline } from "@/shared/ui";
+import { InputField, LinkUnderline } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
 import { ThemeToggle } from "../../../theme-toggle";
 import { useLoginStore } from "../../model/login-store";
 import { useRouter } from "next/navigation";
-import { ButtonAuth, FieldAuth } from "../../ui";
+import { ButtonAuth } from "../../ui";
 
 export const RegisterForm = () => {
   const {
@@ -55,37 +55,37 @@ export const RegisterForm = () => {
           }}
         />
 
-        <h2 className="text-[clamp(24px,2.4vw,28px)] relative z-10">
+        <h2 className="text-[clamp(28px,2.4vw,32px)] relative z-10">
           Регистрация
         </h2>
-        <p className="text-[clamp(12px,1.4vw,14px)] relative z-10">
+        <p className="text-[clamp(14px,1.4vw,16px)] relative z-10">
           Введите свои данные
         </p>
       </div>
 
       <div className="flex flex-col gap-y-[calc(clamp(30px,3vh,40px)+24px)] pt-5">
-        <FieldAuth
+        <InputField
           type="email"
           register={register("email")}
-          placeholder="Email"
+          placeholder="Почта"
           error={errors}
           name="email"
           watch={watch}
         />
 
-        <FieldAuth
+        <InputField
           type="text"
           register={register("name")}
-          placeholder="Name"
+          placeholder="Имя"
           error={errors}
           name="name"
           watch={watch}
         />
 
-        <FieldAuth
+        <InputField
           type="password"
           register={register("password")}
-          placeholder="Password"
+          placeholder="Пароль"
           error={errors}
           name="password"
           watch={watch}

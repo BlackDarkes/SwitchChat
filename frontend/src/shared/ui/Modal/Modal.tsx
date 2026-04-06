@@ -20,7 +20,7 @@ export const Modal = ({ children, isOpen, handleOpen }: IModalProps) => {
       )}
     >
       <div
-        className="relative w-[min(100%,350px)] p-5 bg-primary-bg rounded-xl cursor-default"
+        className="relative w-[min(100%,350px)] p-5 mx-2.5 bg-primary-bg rounded-xl cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         <CloseButton handleClose={handleOpen} />
