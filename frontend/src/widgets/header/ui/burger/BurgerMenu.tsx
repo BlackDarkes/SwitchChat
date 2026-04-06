@@ -24,7 +24,7 @@ export const BurgerMenu = ({
       onClick={handleOpen}
       className={cn(
         `
-          fixed top-0 left-0 w-full h-full bg-opacity-bg -translate-x-[105%] transition duration-500 cursor-pointer
+          fixed top-0 left-0 w-full h-full bg-opacity-bg -translate-x-[105%] transition duration-500 cursor-pointer z-400
         `,
         {
           "translate-x-0": isOpen,

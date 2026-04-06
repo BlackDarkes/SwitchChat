@@ -23,7 +23,12 @@ export const ChatList = ({ chats, isPending }: IChatListProps) => {
           {chats?.length ? (
             chats?.map((chat: IChat) => {
               if (chat.type === "DIRECT") {
-                return <ChatElementDirect key={chat.id} chat={chat} handleOpen={handleOpen} />;
+                return (
+                  <div key={chat.id}>
+                    
+                    <ChatElementDirect chat={chat} handleOpen={handleOpen} />
+                  </div>
+                );
               } else {
                 return <ChatElement key={chat.id} chat={chat} handleOpen={handleOpen} />;
               }

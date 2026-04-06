@@ -22,7 +22,7 @@ export const ChatElementLayout = ({
 
   return (
     <li
-      className={cn("rounded-xl shadow-box transition-all duration-400", {
+      className={cn("rounded-xl shadow-box transition-all duration-400 z-100", {
         "shadow-none opacity-80": param.id === chat.id,
       })}
     >
