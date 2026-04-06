@@ -36,12 +36,14 @@ export const ProfileModal = ({
             <span className="text-[14px] text-secondary-color select-none">Почта</span>
           </div>
 
-          {user?.bio && (
-            <div>
+          <div>
+            { user?.bio ? (
               <p>{user?.bio}</p>
-              <span className="text-[14px] text-secondary-color select-none">Описание</span>
-            </div>
-          )}
+            ) : (
+              <p className="text-primary-color/60 select-none">Нет описания</p>
+            ) }
+            <span className="text-[14px] text-secondary-color select-none">Описание</span>
+          </div>
 
           <div>
             <p className={cn("cursor-pointer")} onClick={() => copyName(user?.username)}>{user?.username}</p>

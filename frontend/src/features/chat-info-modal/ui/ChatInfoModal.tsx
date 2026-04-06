@@ -36,7 +36,11 @@ export const ChatInfoModal = ({
             </span>
           </div>
           <div>
-            <p>{chat?.description}</p>
+            { chat?.description  ? (
+              <p>{chat?.description}</p>
+            ) : (
+              <p className="text-primary-color/60 select-none">Нет описания</p>
+            )}
             <span className="text-[14px] text-secondary-color select-none">
               Описание
             </span>
