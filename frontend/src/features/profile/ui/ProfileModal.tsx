@@ -1,5 +1,6 @@
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
+import { copyName } from "@/shared/model/copy-name";
 import { IUser } from "@/shared/types/user.interface";
 import { Modal } from "@/shared/ui";
 
@@ -43,7 +44,7 @@ export const ProfileModal = ({
           )}
 
           <div>
-            <p>{user?.username}</p>
+            <p className={cn("cursor-pointer")} onClick={() => copyName(user?.username)}>{user?.username}</p>
             <span className="text-[14px] text-secondary-color select-none">Тег</span>
           </div>
         </div>

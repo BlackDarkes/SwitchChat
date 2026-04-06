@@ -1,4 +1,5 @@
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
+import { copyName } from "@/shared/model/copy-name";
 import { IChat } from "@/shared/types/chat.interface";
 import { CloseButton, Modal } from "@/shared/ui";
 
@@ -13,10 +14,6 @@ export const ChatInfoModal = ({
   isOpen,
   handleOpen,
 }: IChatInfoModalProps) => {
-  const copyName = () => {
-    navigator.clipboard.writeText(chat?.username || "");
-  };
-
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
       <CloseButton handleClose={handleOpen} />
@@ -31,7 +28,7 @@ export const ChatInfoModal = ({
 
         <section className="flex flex-col gap-y-5 w-[min(100%,250px)]">
           <div>
-            <p onClick={copyName} className="cursor-pointer">
+            <p onClick={() => copyName(chat?.username)} className="cursor-pointer">
               {chat?.username}
             </p>
             <span className="text-[14px] text-secondary-color select-none">
