@@ -11,7 +11,7 @@ interface IChatFavoriteElementProps {
 }
 
 export const ChatFavoriteElement = ({ chat, user: currentUser }: IChatFavoriteElementProps) => {
-  const user = chat.ownerId === currentUser?.id ? chat.chatMembers?.[1]?.user : chat.chatMembers?.[0]?.user;
+  const user = chat.chatMembers?.[0]?.userId === currentUser?.id ? chat.chatMembers?.[1]?.user : chat.chatMembers?.[0]?.user;
 
   return (
     <li className={cn("px-2")}>

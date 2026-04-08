@@ -10,7 +10,7 @@ interface IChatElementDirectProps {
 
 export const ChatElementDirect = ({ chat, handleOpen }: IChatElementDirectProps) => {
   const { user: currentUser } = useLoginStore();
-  const user = chat.ownerId === currentUser?.id ? chat.chatMembers[1].user : chat.chatMembers[0].user;
+  const user = chat.chatMembers?.[0]?.userId === currentUser?.id ? chat.chatMembers?.[1]?.user : chat.chatMembers?.[0]?.user;
 
   return (
     <ChatElementLayout chat={chat} handleOpen={handleOpen}>
