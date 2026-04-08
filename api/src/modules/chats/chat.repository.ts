@@ -44,6 +44,9 @@ export class ChatsRepository {
 	async getFavoriteChats(userId: string): Promise<Chat[] | null> {
 		return this.prismaService.client.chat.findMany({
 			where: { chatMembers: { some: { userId, isFavorite: true } } },
+			include: {
+				chatMembers: { include: { user: true } },
+			}
 		});
 	}
 
@@ -109,8 +112,8 @@ export class ChatsRepository {
 			where: {
 				AND: [
 					searchFilter,
-					{ type: { in: [EnumChatTypes.GROUP, EnumChatTypes.CHANNEL] } }, 
-					{ chatMembers: { none: { userId } } }, 
+					{ type: { in: [EnumChatTypes.GROUP, EnumChatTypes.CHANNEL] } },
+					{ chatMembers: { none: { userId } } },
 				],
 			},
 			take: 20,

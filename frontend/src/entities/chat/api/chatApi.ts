@@ -3,6 +3,7 @@
 import { apiClient } from "@/libs/api/clients";
 import { IChat } from "@/shared/types/chat.interface";
 import { TypeCreateChatSchema } from "../model/create-chat-schema";
+import { IChatMember } from "@/shared/types/chat-member.interface";
 
 const extractData = <T>(promise: Promise<{ data: T }>) =>
   promise.then((res) => res.data);
@@ -23,7 +24,7 @@ export const chatApi = {
   getGroupChats: async (): Promise<IChat[]> =>
     extractData(apiClient.chat.getGroupChats()),
 
-  getFavoriteChats: async (): Promise<IChat[]> =>
+  getFavoriteChats: async (): Promise<IChat[] & IChatMember[]> =>
     extractData(apiClient.chat.getFavoriteChats()),
 
   search: async (search: string): Promise<IChat[]> =>
