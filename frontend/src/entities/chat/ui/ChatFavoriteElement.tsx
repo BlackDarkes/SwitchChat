@@ -17,7 +17,7 @@ export const ChatFavoriteElement = ({ chat, user: currentUser }: IChatFavoriteEl
     <li className={cn("px-2")}>
       <Link
         href={`/chat/${chat.id}`}
-        className={cn(`flex flex-col items-center gap-y-1.25`)}
+        className={cn("flex flex-col items-center gap-y-1.25")}
       >
         {chat.type === "DIRECT" ? (
           <>
@@ -26,7 +26,7 @@ export const ChatFavoriteElement = ({ chat, user: currentUser }: IChatFavoriteEl
               userName={user?.name}
               size="big"
             />
-            <span className={cn(`max-w-full max-h-5 text-[12px] truncate`)}>
+            <span className={cn("max-w-full max-h-5 text-[12px] truncate")}>
               {user?.name}
             </span>
           </>
@@ -37,7 +37,7 @@ export const ChatFavoriteElement = ({ chat, user: currentUser }: IChatFavoriteEl
               chatName={chat?.name}
               size="middle"
             />
-            <span className={cn(`max-w-full max-h-5 text-[12px] truncate`)}>
+            <span className={cn("max-w-full max-h-5 text-[12px] truncate")}>
               {chat?.name}
             </span>
           </>

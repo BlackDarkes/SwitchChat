@@ -14,7 +14,7 @@ export const MessageElement = ({ message, userId, handleOpen }: IMessageElementP
 
   return (
     <li
-      className={cn(`flex items-start gap-x-3.75`, {
+      className={cn("flex items-start gap-x-3.75", {
         "self-end": isOwnerMessage,
       })}
     >
