@@ -24,18 +24,18 @@ export default function MainLayout({
   const { isOpen: profileIsOpen, user, handleOpen, } = useProfileStore();
 
   return (
-    <main className="flex max-h-screen h-screen max-w-screen w-screen overflow-hidden">
+    <main className="flex max-h-dvh h-dvh max-w-screen w-screen overflow-hidden">
       <section className="shrink-0 w-[clamp(400px,45vw,760px)] bg-primary-bg border-r-2 border-border-color max-md:w-full">
         {children}
-        <div className="flex h-full">
+        <div className={cn("flex h-full", "max-md:flex-col")}>
           <div
-            className={cn(`w-20 bg-accent-bg py-5`, {
+            className={cn(`w-20 bg-accent-bg py-5 max-md:w-screen max-md:py-2.5`, {
               hidden: !chatFavorites?.length,
             })}
           >
             {favorites}
           </div>
-          <div className="flex flex-col items-center justify-between text-primary-color h-[calc(100%-clamp(83px,10vh,86px))] w-full">
+          <div className="flex flex-col items-center justify-between text-primary-color h-[calc(100%-clamp(83px,10vh,86px))] w-full max-md:h-[calc(100%-170px)]">
             {chats}
             <ChatIsland />
           </div>
