@@ -39,7 +39,7 @@ export const ChatElementLayout = ({
 
             <div className="flex flex-col items-center justify-between">
               <span className="text-[clamp(12px,1.5vw,14px)]">
-                {chat.messages.at(-1)?.createdAt.split("T")[0]}
+                {chat.messages?.at(-1)?.createdAt.split("T")[0]}
               </span>
 
               {unreadCount > 0 && (
@@ -61,7 +61,7 @@ export const ChatElementLayout = ({
             className={cn("p-2 min-w-50 bg-accent-bg rounded-xl z-200")}
           >
             <ContextMenu.Item>
-              {chat.chatMembers.some((member) => member.isFavorite) ? (
+              {chat.chatMembers?.some((member) => member.isFavorite) ? (
                 <ButtonRemoveFavorite chatId={chat.id} />
               ) : (
                 <ButtonAddFavorite chatId={chat.id} />

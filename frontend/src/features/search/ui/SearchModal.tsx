@@ -1,6 +1,8 @@
+import { ChatElement } from "@/entities/chat";
+import { useMobileMessages } from "@/features/mobile-messages";
 import { cn } from "@/shared/lib/utils";
 import { IChat } from "@/shared/types/chat.interface";
-import Link from "next/link";
+import { Container } from "@/shared/ui";
 
 interface ISearchModalProps {
   chats: IChat[];
@@ -15,28 +17,38 @@ export const SearchModal = ({
   handleOpen,
   setSearchInput,
 }: ISearchModalProps) => {
+  const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
+
+  const handleChatOpen = () => {
+    handleOpen(false);
+    handleMobileMessagesOpen(false);
+    setSearchInput("");
+  };
+
   return (
     <div
       className={cn(
-        `fixed top-[clamp(83px,10vh,86px)] left-0 w-[min(100%,760px)] h-full bg-primary-bg`,
+        "fixed top-[clamp(83px,10vh,86px)] left-0 py-2.5",
+        "w-[clamp(400px,45vw,760px)] h-[calc(100dvh-86px)] bg-primary-bg border-r-2 border-border-color",
+        "overflow-y-auto custom-scroll z-300",
         isOpen ? "block" : "hidden",
       )}
     >
-      <ul>
-        {chats.map((chat) => (
-          <li key={chat.id}>
-            <Link
-              href={`/chat/${chat.id}`}
-              onClick={() => {
-                handleOpen(false);
-                setSearchInput("");
-              }}
-            >
-              {chat.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Container>
+        <ul
+          className={cn(
+            "flex flex-col gap-y-4 max-md:h-fit ",
+          )}
+        >
+          {chats.map((chat) => (
+            <ChatElement
+              key={chat.id}
+              chat={chat}
+              handleOpen={handleChatOpen}
+            />
+          ))}
+        </ul>
+      </Container>
     </div>
   );
 };

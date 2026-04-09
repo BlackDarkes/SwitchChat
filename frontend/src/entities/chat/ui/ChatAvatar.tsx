@@ -20,7 +20,7 @@ export const ChatAvatar = ({ chatAvatar, chatName, size }: IChatAvatarProps) => 
         )} />
       ) : (
         <div className={cn(
-          `flex justify-center items-center w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full`,
+          "flex justify-center items-center w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)] bg-primary-color text-primary-bg uppercase font-bold rounded-full",
           {
             "w-[clamp(40px,4vw,50px)] h-[clamp(40px,4vw,50px)]": size === "middle",
             "w-[clamp(50px,4vw,60px)] h-[clamp(50px,4vw,60px)]": size === "big",

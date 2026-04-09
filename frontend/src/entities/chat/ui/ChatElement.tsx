@@ -10,7 +10,6 @@ interface IChatElementProps {
 }
 
 export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
-
   return (
     <ChatElementLayout chat={chat} handleOpen={handleOpen}>
       <div className="flex gap-x-3.75">
