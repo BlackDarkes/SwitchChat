@@ -1,4 +1,4 @@
-import { IContact } from "@/shared/types/contact.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
 import { useQuery } from "@tanstack/react-query";
 import { userApi } from "./userApi";
 
@@ -7,10 +7,10 @@ export const useSearchUser = (search: string) => {
     queryKey: ["search", search],
     queryFn: async () => {
       if (!search.trim()) {
-        return []
+        return [];
       }
 
       return userApi.search(search);
-    }
-  })
-}
+    },
+  });
+};

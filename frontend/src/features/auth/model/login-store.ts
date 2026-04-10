@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type TypeLoginSchema, type TypeRegisterSchema, userApi } from "@/entities/user";
-import { apiClient } from "@/libs/api/clients";
-import { IUser } from "@/shared/types/user.interface";
+import {
+  type TypeLoginSchema,
+  type TypeRegisterSchema,
+  userApi,
+} from "@/entities/user";
+import { IUser } from "@/shared/types/user/user.interface";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
@@ -33,7 +36,7 @@ export const useLoginStore = create<ILoginStore>()(
           const { message, user } = await userApi.login(data);
           set({ user, isAuth: true, isLoading: false });
           return message;
-        } catch(error: any) {
+        } catch (error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });
           throw new Error(errorMessage);
@@ -45,9 +48,9 @@ export const useLoginStore = create<ILoginStore>()(
         set({ isLoading: true, error: "" });
         try {
           const { message } = await userApi.register(data);
-          set({  isLoading: false });
-          return message
-        } catch(error: any) {
+          set({ isLoading: false });
+          return message;
+        } catch (error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });
           throw new Error(errorMessage);
@@ -58,9 +61,9 @@ export const useLoginStore = create<ILoginStore>()(
 
       logout: async () => {
         try {
-          await apiClient.auth.logout();
+          await userApi.logout();
         } finally {
-          set({  user: undefined, isAuth: false });
+          set({ user: undefined, isAuth: false });
         }
       },
 
@@ -70,7 +73,7 @@ export const useLoginStore = create<ILoginStore>()(
           const user = await userApi.me();
           set({ user, isAuth: true, isLoading: false });
           return true;
-        } catch(error: any) {
+        } catch (error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });
           return false;

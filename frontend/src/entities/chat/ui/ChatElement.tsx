@@ -1,6 +1,6 @@
 "use client";
 
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { ChatAvatar } from "./ChatAvatar";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
 

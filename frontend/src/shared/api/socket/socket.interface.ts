@@ -1,4 +1,4 @@
-import { IMessage } from "@/shared/types/message.interface";
+import { IMessage } from "@/shared/types";
 
 interface IServerToClientEvents {
   message_received: (message: IMessage) => void;

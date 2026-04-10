@@ -1,15 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiClient } from "@/libs/api/clients";
 import { queryClient } from "@/libs/query/query-client";
-import { IChat } from "@/shared/types/chat.interface";
-import { TypeCreateChatSchema } from "@/entities/chat";
+import { chatApi, TypeCreateChatSchema } from "@/entities/chat";
+import { IChat } from "@/shared/types";
 
 export const useCreateChat = () => {
   return useMutation<IChat, Error, TypeCreateChatSchema>({
     mutationKey: ["createChat"],
     mutationFn: async (data: TypeCreateChatSchema) => {
-      const res = await apiClient.chat.create(data);
-      return res.data.chat;
+      const res = await chatApi.create(data);
+      return res;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chats"] });

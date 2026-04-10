@@ -1,7 +1,7 @@
 import { UserAvatar } from "@/entities/user";
 import { ButtonContactAdd } from "@/features/contact-add";
 import { cn } from "@/shared/lib/utils";
-import { IContact } from "@/shared/types/contact.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
 
 interface IContactSearchElementProps {
   contact: IContact;

@@ -7,7 +7,7 @@ import {
   useChatActionMenuStore,
 } from "@/features/chat-action-menu";
 import { ChatInfoModal, useChatInfoStore } from "@/features/chat-info-modal";
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { EllipsisVertical } from "lucide-react";
 import { useHandleBack } from "../model/handle-back";
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiClient } from "@/libs/api/clients";
-import { IMessage } from "@/shared/types/message.interface";
 import { TypeSendMessageSchema } from "../model/send-message-schema";
+import { IMessage } from "@/shared/types";
 
 const extractData = <T>(promise: Promise<{ data: T }>) =>
   promise.then((res) => res.data);

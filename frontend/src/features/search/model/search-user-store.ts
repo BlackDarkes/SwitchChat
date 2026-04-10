@@ -1,4 +1,4 @@
-import { IContact } from "@/shared/types/contact.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 

@@ -3,8 +3,8 @@
 import { MessageElement } from "@/entities/message";
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { useProfileStore } from "@/features/profile";
-import { IMessage } from "@/shared/types/message.interface";
-import { IUser } from "@/shared/types/user.interface";
+import { IMessage } from "@/shared/types";
+import { IUser } from "@/shared/types/user/user.interface";
 import { Container } from "@/shared/ui";
 import { useEffect, useRef, useMemo } from "react";
 
@@ -25,7 +25,7 @@ function formatDateHeader(date: Date): string {
   return new Intl.DateTimeFormat("ru-RU", {
     day: "numeric",
     month: "long",
-  }).format(date); 
+  }).format(date);
 }
 
 export const MessageList = ({ messages }: IMessagesListProps) => {
@@ -52,7 +52,8 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
       return dateA - dateB;
     });
 
-    const groups: { dateStr: string; date: Date; messages: typeof sorted }[] = [];
+    const groups: { dateStr: string; date: Date; messages: typeof sorted }[] =
+      [];
     let currentDateKey = "";
     let currentGroup: (typeof groups)[0] | null = null;
 

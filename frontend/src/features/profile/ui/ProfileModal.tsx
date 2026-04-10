@@ -1,7 +1,7 @@
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { copyName } from "@/shared/model/copy-name";
-import { IUser } from "@/shared/types/user.interface";
+import { IUser } from "@/shared/types/user/user.interface";
 import { Modal } from "@/shared/ui";
 
 interface IProfileModalProps {
@@ -33,21 +33,32 @@ export const ProfileModal = ({
         <div className={cn("flex flex-col gap-y-5 w-[min(100%,250px)]")}>
           <div>
             <p>{user?.email}</p>
-            <span className="text-[14px] text-secondary-color select-none">Почта</span>
+            <span className="text-[14px] text-secondary-color select-none">
+              Почта
+            </span>
           </div>
 
           <div>
-            { user?.bio ? (
+            {user?.bio ? (
               <p>{user?.bio}</p>
             ) : (
               <p className="text-primary-color/60 select-none">Нет описания</p>
-            ) }
-            <span className="text-[14px] text-secondary-color select-none">Описание</span>
+            )}
+            <span className="text-[14px] text-secondary-color select-none">
+              Описание
+            </span>
           </div>
 
           <div>
-            <p className={cn("cursor-pointer")} onClick={() => copyName(user?.username)}>{user?.username}</p>
-            <span className="text-[14px] text-secondary-color select-none">Тег</span>
+            <p
+              className={cn("cursor-pointer")}
+              onClick={() => copyName(user?.username)}
+            >
+              {user?.username}
+            </p>
+            <span className="text-[14px] text-secondary-color select-none">
+              Тег
+            </span>
           </div>
         </div>
       </div>

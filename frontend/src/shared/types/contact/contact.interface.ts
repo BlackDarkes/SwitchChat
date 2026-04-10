@@ -1,6 +1,7 @@
-import { IChatMember } from "./chat-member.interface";
-import { IChat } from "./chat.interface";
-import { IUser } from "./user.interface";
+
+import { IChatMember } from "../chat/chat-member.interface";
+import { IChat } from "../chat/chat.interface";
+import { IUser } from "../user/user.interface";
 
 interface IUserWithMembers extends IUser {
   chatMembers: Array<IChatMember & { chat?: IChat }>;

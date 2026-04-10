@@ -2,10 +2,10 @@
 
 import { getSocket } from "@/shared/api/socket";
 import { useSocketEvent } from "@/shared/lib/socket";
-import { IMessage } from "@/shared/types/message.interface";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useLoginStore } from "@/features/auth/model/login-store";
+import { IMessage } from "@/shared/types";
 
 interface MessagesPageData {
   data: IMessage[];

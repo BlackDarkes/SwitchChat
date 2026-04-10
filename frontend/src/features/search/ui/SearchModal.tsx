@@ -1,7 +1,7 @@
 import { ChatElement } from "@/entities/chat";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { cn } from "@/shared/lib/utils";
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { Container } from "@/shared/ui";
 
 interface ISearchModalProps {

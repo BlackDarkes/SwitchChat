@@ -3,7 +3,7 @@
 import { chatApi } from "@/entities/chat";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useMobileMessages } from "@/features/mobile-messages";
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitleSelf } from "@/widgets/message-title";

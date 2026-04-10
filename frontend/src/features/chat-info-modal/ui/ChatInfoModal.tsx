@@ -1,6 +1,6 @@
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
 import { copyName } from "@/shared/model/copy-name";
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { CloseButton, Modal } from "@/shared/ui";
 
 interface IChatInfoModalProps {

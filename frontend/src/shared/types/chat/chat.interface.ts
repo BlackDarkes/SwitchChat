@@ -1,5 +1,6 @@
+import { IMessage } from "../message/message.interface";
 import { IChatMember } from "./chat-member.interface";
-import { IMessage } from "./message.interface";
+
 
 export interface IChat {
   id: string;

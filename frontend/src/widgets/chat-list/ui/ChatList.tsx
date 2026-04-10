@@ -1,10 +1,10 @@
 "use client";
 
 import { ChatElement, ChatElementDirect } from "@/entities/chat";
-import { IChat } from "@/shared/types/chat.interface";
 import { Container } from "@/shared/ui";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { ChatListSkeleton } from "./ChatListSkeleton";
+import { IChat } from "@/shared/types";
 
 interface IChatListProps {
   chats: IChat[] | undefined;

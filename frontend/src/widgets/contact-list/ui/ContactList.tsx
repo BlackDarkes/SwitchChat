@@ -2,8 +2,8 @@ import { ContactElement } from "@/entities/contact";
 import { useProfileStore } from "@/features/profile";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
-import { IContact } from "@/shared/types/contact.interface";
-import { IUser } from "@/shared/types/user.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
+import { IUser } from "@/shared/types/user/user.interface";
 import { useEffect } from "react";
 
 interface IContactListProps {

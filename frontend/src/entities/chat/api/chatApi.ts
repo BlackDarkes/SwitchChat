@@ -1,9 +1,8 @@
 "use client";
 
 import { apiClient } from "@/libs/api/clients";
-import { IChat } from "@/shared/types/chat.interface";
 import { TypeCreateChatSchema } from "../model/create-chat-schema";
-import { IChatMember } from "@/shared/types/chat-member.interface";
+import { IChat, IChatMember } from "@/shared/types";
 
 const extractData = <T>(promise: Promise<{ data: T }>) =>
   promise.then((res) => res.data);

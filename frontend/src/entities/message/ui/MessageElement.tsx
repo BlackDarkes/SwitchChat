@@ -1,6 +1,6 @@
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
-import { IMessage } from "@/shared/types/message.interface";
+import { IMessage } from "@/shared/types";
 
 interface IMessageElementProps {
   message: IMessage;

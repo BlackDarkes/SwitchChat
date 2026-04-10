@@ -10,6 +10,7 @@ import { ChatsService } from "./chats.service";
 import { ChatsRepository } from "./chat.repository";
 import { JwtService } from "@nestjs/jwt";
 import { parse } from "cookie";
+import { BadGatewayException } from "@nestjs/common";
 
 @WebSocketGateway({
 	namespace: "chats",
@@ -19,7 +20,7 @@ import { parse } from "cookie";
 	},
 })
 export class ChatsGateway {
-	@WebSocketServer() server: Server;
+	@WebSocketServer() server: Server = new Server();
 
 	constructor(
 		private readonly chatsService: ChatsService,
@@ -32,7 +33,7 @@ export class ChatsGateway {
 			const cookies = parse(client.handshake.headers.cookie || "");
 			const token = cookies.access_token;
 
-			if (!token) throw new Error("No token");
+			if (!token) throw new BadGatewayException("No token");
 
 			const payload = await this.jwtService.verifyAsync(token, {
 				secret: process.env.JWT_SECRET,

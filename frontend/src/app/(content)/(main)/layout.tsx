@@ -3,7 +3,6 @@
 import { useChatFavorites } from "@/entities/chat";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { ProfileModal, useProfileStore } from "@/features/profile";
-import { Toast, useToastStore } from "@/features/toast";
 import { cn } from "@/shared/lib/utils";
 import { ChatIsland } from "@/widgets/chat-island";
 
@@ -20,7 +19,6 @@ export default function MainLayout({
 }) {
   const { isOpen } = useMobileMessages();
   const { data: chatFavorites } = useChatFavorites();
-  const { isOpen: toastIsOpen, message, type, handleClose } = useToastStore();
   const { isOpen: profileIsOpen, user, handleOpen, } = useProfileStore();
 
   return (
@@ -54,13 +52,6 @@ export default function MainLayout({
       >
         {messages}
       </aside>
-
-      <Toast
-        isOpen={toastIsOpen}
-        message={message}
-        type={type}
-        handleClose={handleClose}
-      />
 
       <ProfileModal user={user} isOpen={profileIsOpen} handleOpen={handleOpen} />
     </main>

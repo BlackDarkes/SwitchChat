@@ -1,5 +1,4 @@
 import { MessageTitleLayout } from "@/entities/message";
-import { IChat } from "@/shared/types/chat.interface";
 import { useHandleBack } from "../model/handle-back";
 import { EllipsisVertical } from "lucide-react";
 import {
@@ -9,6 +8,7 @@ import {
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
 import { useProfileStore } from "@/features/profile";
+import { IChat } from "@/shared/types";
 
 interface IMessageTitleDirectProps {
   chat: IChat | undefined;

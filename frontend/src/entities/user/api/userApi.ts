@@ -1,8 +1,8 @@
 import { apiClient } from "@/libs/api/clients";
 import { TypeLoginSchema } from "../model/validate/login-schema";
 import { TypeRegisterSchema } from "../model/validate/register-schema";
-import { IUser } from "@/shared/types/user.interface";
-import { IContact } from "@/shared/types/contact.interface";
+import { IUser } from "@/shared/types/user/user.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
 
 const extractData = <T>(promise: Promise<{ data: T }>): Promise<T> =>
   promise.then(({ data }) => data);

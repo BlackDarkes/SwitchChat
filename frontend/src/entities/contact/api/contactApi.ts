@@ -1,5 +1,5 @@
 import { apiClient } from "@/libs/api/clients";
-import { IContact } from "@/shared/types/contact.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
 
 const extractData = <T>(promise: Promise<{ data: T }>) =>
   promise.then((res) => res.data);

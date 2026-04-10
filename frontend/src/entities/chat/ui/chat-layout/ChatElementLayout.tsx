@@ -1,4 +1,4 @@
-import { IChat } from "@/shared/types/chat.interface";
+
 import { useHandleElement } from "../../model/handle-element";
 import Link from "next/link";
 import { cn } from "@/shared/lib/utils";
@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { ContextMenu } from "radix-ui";
 import { ButtonAddFavorite } from "@/features/chat-add-favorite";
 import { ButtonRemoveFavorite } from "@/features/chat-remote-favorite";
+import { IChat } from "@/shared/types";
 
 interface IChatElementLayoutProps {
   chat: IChat;

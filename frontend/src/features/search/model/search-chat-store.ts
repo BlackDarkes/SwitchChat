@@ -1,4 +1,5 @@
-import { IChat } from "@/shared/types/chat.interface";
+
+import { IChat } from "@/shared/types";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 

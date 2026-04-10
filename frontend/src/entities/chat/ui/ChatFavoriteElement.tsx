@@ -1,17 +1,23 @@
-import { IChat } from "@/shared/types/chat.interface";
-import { ChatAvatar } from "./ChatAvatar";
 import { cn } from "@/shared/lib/utils";
+import { ChatAvatar } from "./ChatAvatar";
 import Link from "next/link";
 import { UserAvatar } from "@/entities/user";
-import { IUser } from "@/shared/types/user.interface";
+import { IUser } from "@/shared/types/user/user.interface";
+import { IChat } from "@/shared/types";
 
 interface IChatFavoriteElementProps {
   user: IUser | undefined;
   chat: IChat;
 }
 
-export const ChatFavoriteElement = ({ chat, user: currentUser }: IChatFavoriteElementProps) => {
-  const user = chat.chatMembers?.[0]?.userId === currentUser?.id ? chat.chatMembers?.[1]?.user : chat.chatMembers?.[0]?.user;
+export const ChatFavoriteElement = ({
+  chat,
+  user: currentUser,
+}: IChatFavoriteElementProps) => {
+  const user =
+    chat.chatMembers?.[0]?.userId === currentUser?.id
+      ? chat.chatMembers?.[1]?.user
+      : chat.chatMembers?.[0]?.user;
 
   return (
     <li className={cn("px-2")}>

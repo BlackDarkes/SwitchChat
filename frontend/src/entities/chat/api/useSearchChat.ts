@@ -1,6 +1,6 @@
-import { IChat } from "@/shared/types/chat.interface";
 import { useQuery } from "@tanstack/react-query";
 import { chatApi } from "./chatApi";
+import { IChat } from "@/shared/types";
 
 export const useSearch = (search: string) => {
   return useQuery<IChat[]>({

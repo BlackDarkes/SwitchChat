@@ -1,4 +1,4 @@
-import { IUser } from "@/shared/types/user.interface";
+import { IUser } from "@/shared/types/user/user.interface";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 

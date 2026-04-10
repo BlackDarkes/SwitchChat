@@ -1,5 +1,4 @@
-import { IUser } from "./user.interface";
-
+import { IUser } from "../user/user.interface";
 
 export interface IMessage {
   id: string;

@@ -3,7 +3,7 @@ import { useSearchUser } from "@/entities/user";
 import { useProfileStore } from "@/features/profile";
 import { SearchInput, useSearchUserStore } from "@/features/search";
 import { useTypeChatStore } from "@/features/switch-type-chat";
-import { IUser } from "@/shared/types/user.interface";
+import { IUser } from "@/shared/types/user/user.interface";
 import { Container } from "@/shared/ui";
 import { ChangeEvent, useState } from "react";
 

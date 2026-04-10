@@ -1,8 +1,8 @@
 import { UserAvatar } from "@/entities/user";
 import { ButtonContactRemove } from "@/features/contact-remove";
 import { cn } from "@/shared/lib/utils";
-import { IContact } from "@/shared/types/contact.interface";
-import { IUser } from "@/shared/types/user.interface";
+import { IContact } from "@/shared/types/contact/contact.interface";
+import { IUser } from "@/shared/types/user/user.interface";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
 

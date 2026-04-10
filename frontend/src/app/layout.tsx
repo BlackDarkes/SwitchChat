@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Geist } from "next/font/google";
 import { AppProviders } from "./providers/AppProviders";
 import { cn } from "@/shared/lib/utils";
-
 import "./globals.css";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
