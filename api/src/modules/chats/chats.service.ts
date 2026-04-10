@@ -59,7 +59,7 @@ export class ChatsService {
 		});
 
 		if (!admin || admin.role !== "OWNER") {
-			throw new Error("У вас недостаточно прав");
+			throw new BadRequestException("У вас недостаточно прав");
 		}
 
 		return this.prismaService.client.chatMember.deleteMany({
@@ -76,11 +76,11 @@ export class ChatsService {
 		});
 
 		if (chat?.type === "SELF") {
-			throw new Error("Нельзя присоединиться к личному чату");
+			throw new BadRequestException("Нельзя присоединиться к личному чату");
 		}
 
 		if (!chat) {
-			throw new Error("Чат не найден");
+			throw new BadRequestException("Чат не найден");
 		}
 
 		if (member) {

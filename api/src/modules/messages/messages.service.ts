@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { MessagesRepository } from "./messages.repository";
 import { TypeCreateMessageSchema } from "./common/dto/create-message.dto";
@@ -25,7 +25,7 @@ export class MessagesService {
 		})
 
 		if (!member) {
-			throw new Error("Вы не являетесь участником этого чата");
+			throw new BadRequestException("Вы не являетесь участником этого чата");
 		}
 
 		const messageCreate = await this.prismaService.client.$transaction(
@@ -71,11 +71,11 @@ export class MessagesService {
 			await this.messagesRepository.getMessageWithDetails(messageId);
 
 		if (message?.userId !== userId) {
-			throw new Error("Вы не можете редактировать чужое сообщение");
+			throw new BadRequestException("Вы не можете редактировать чужое сообщение");
 		}
 
 		if (message.type === "SYSTEM" || message.type === "CALL_START") {
-			throw new Error("Вы не можете редактировать это сообщение");
+			throw new BadRequestException("Вы не можете редактировать это сообщение");
 		}
 
     const updated = await this.messagesRepository.update(messageId, data);
@@ -91,7 +91,7 @@ export class MessagesService {
 		});
 
 		if (!member) {
-			throw new Error("Вы не являетесь участником этого чата");
+			throw new BadRequestException("Вы не являетесь участником этого чата");
 		}
 
 		return this.prismaService.client.chatMember.update({
@@ -112,7 +112,7 @@ export class MessagesService {
 		});
 
 		if (message?.userId !== userId && member?.role !== "OWNER") {
-			throw new Error("Вы не можете удалять чужое сообщение");
+			throw new BadRequestException("Вы не можете удалять чужое сообщение");
 		}
 
 		this.chatsGateway.emitMessageDeleted(message.chatId, messageId);
