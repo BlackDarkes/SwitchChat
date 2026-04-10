@@ -20,7 +20,7 @@ export const ChatFavoriteElement = ({
       : chat.chatMembers?.[0]?.user;
 
   return (
-    <li className={cn("px-2")}>
+    <li className={cn("px-2 w-15.75")}>
       <Link
         href={`/chat/${chat.id}`}
         className={cn("flex flex-col items-center gap-y-1.25")}
