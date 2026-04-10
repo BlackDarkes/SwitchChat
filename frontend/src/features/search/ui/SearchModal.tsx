@@ -1,4 +1,4 @@
-import { ChatElement } from "@/entities/chat";
+import { ChatElement, ChatElementDirect } from "@/entities/chat";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { cn } from "@/shared/lib/utils";
 import { IChat } from "@/shared/types";
@@ -35,18 +35,22 @@ export const SearchModal = ({
       )}
     >
       <Container>
-        <ul
-          className={cn(
-            "flex flex-col gap-y-4 max-md:h-fit ",
-          )}
-        >
-          {chats.map((chat) => (
-            <ChatElement
-              key={chat.id}
-              chat={chat}
-              handleOpen={handleChatOpen}
-            />
-          ))}
+        <ul className={cn("flex flex-col gap-y-4 max-md:h-fit ")}>
+          {chats.map((chat) => {
+            return chat.type === "DIRECT" ? (
+              <ChatElementDirect
+                key={chat.id}
+                chat={chat}
+                handleOpen={handleChatOpen}
+              />
+            ) : (
+              <ChatElement
+                key={chat.id}
+                chat={chat}
+                handleOpen={handleChatOpen}
+              />
+            );
+          })}
         </ul>
       </Container>
     </div>

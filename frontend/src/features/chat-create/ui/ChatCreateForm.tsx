@@ -57,6 +57,7 @@ export const ChatCreateForm = () => {
         placeholder="Название чата"
         error={errors}
         watch={watch}
+        autocomplete="off"
       />
 
       <div className={cn("w-full")}>
@@ -66,6 +67,7 @@ export const ChatCreateForm = () => {
         <select
           {...register("type")}
           defaultValue="GROUP"
+          id="type"
           className={cn(
             "w-full text-primary-color py-2 px-3 bg-primary-bg rounded-md border border-primary-color",
           )}

@@ -77,6 +77,7 @@ export const RegisterForm = () => {
           error={errors}
           name="email"
           watch={watch}
+          autocomplete="email"
         />
 
         <InputField
@@ -86,6 +87,7 @@ export const RegisterForm = () => {
           error={errors}
           name="name"
           watch={watch}
+          autocomplete="name"
         />
 
         <InputField
@@ -95,6 +97,7 @@ export const RegisterForm = () => {
           error={errors}
           name="password"
           watch={watch}
+          autocomplete="current-password"
         />
       </div>
 

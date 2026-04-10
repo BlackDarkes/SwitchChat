@@ -32,7 +32,7 @@ export default function Page() {
     <div>
       <MessageTitleContacts />
 
-      <Container mod="default" className={cn("pt-5 w-full")}>
+      <Container mod="default" className={cn("pt-5 w-full h-[calc(100%-86px)]")}>
         {isOpen ? (
           <ContactSearchList user={user} />
         ) : (

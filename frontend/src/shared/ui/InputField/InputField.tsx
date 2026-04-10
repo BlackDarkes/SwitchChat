@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/utils";
-import { useState } from "react";
+import { HTMLInputAutoCompleteAttribute, useState } from "react";
 import {
   FieldErrors,
   UseFormRegisterReturn,
@@ -13,6 +13,7 @@ interface IInputFieldProps {
   error: FieldErrors;
   name: string;
   watch: WatchValue<string>;
+  autocomplete: HTMLInputAutoCompleteAttribute;
 }
 
 export const InputField = ({
@@ -22,6 +23,7 @@ export const InputField = ({
   error,
   name,
   watch,
+  autocomplete
 }: IInputFieldProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const message = error?.[name]?.message;
@@ -47,6 +49,7 @@ export const InputField = ({
         id={name}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        autoComplete={autocomplete}
         className={cn(
           `py-3 pl-2.5 w-full bg-transparent outline-none box-border z-0`,
           `border duration-400 transition-all`,

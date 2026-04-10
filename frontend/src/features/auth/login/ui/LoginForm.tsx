@@ -80,6 +80,7 @@ export const LoginForm = () => {
           error={errors}
           name="email"
           watch={watch}
+          autocomplete="email"
         />
 
         <InputField
@@ -89,6 +90,7 @@ export const LoginForm = () => {
           error={errors}
           name="password"
           watch={watch}
+          autocomplete="current-password"
         />
       </div>
 

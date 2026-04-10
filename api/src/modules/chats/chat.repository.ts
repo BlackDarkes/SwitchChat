@@ -105,6 +105,9 @@ export class ChatsRepository {
 					{ chatMembers: { some: { userId } } },
 				],
 			},
+			include: {
+				chatMembers: { include: { user: true } },
+			},
 			take: 20,
 		});
 
@@ -115,6 +118,9 @@ export class ChatsRepository {
 					{ type: { in: [EnumChatTypes.GROUP, EnumChatTypes.CHANNEL] } },
 					{ chatMembers: { none: { userId } } },
 				],
+			},
+			include: {
+				chatMembers: { include: { user: true } },
 			},
 			take: 20,
 		});
