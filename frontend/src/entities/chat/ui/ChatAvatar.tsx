@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 import Image from "next/image";
+import { memo } from "react";
 
 interface IChatAvatarProps {
   chatAvatar: string | undefined | null;
@@ -7,7 +8,7 @@ interface IChatAvatarProps {
   size: "middle" | "big";
 }
 
-export const ChatAvatar = ({ chatAvatar, chatName, size }: IChatAvatarProps) => {
+export const ChatAvatar = memo(({ chatAvatar, chatName, size }: IChatAvatarProps) => {
   return (
     <>
       {chatAvatar ? (
@@ -31,4 +32,6 @@ export const ChatAvatar = ({ chatAvatar, chatName, size }: IChatAvatarProps) => 
       )}
     </>
   );
-};
+});
+
+ChatAvatar.displayName = "ChatAvatar";

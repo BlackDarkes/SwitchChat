@@ -5,6 +5,7 @@ import { IContact } from "@/shared/types/contact/contact.interface";
 import { IUser } from "@/shared/types/user/user.interface";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { memo } from "react";
 
 interface IContactElementProps {
   contact: IContact;
@@ -14,7 +15,7 @@ interface IContactElementProps {
   handleOpen: () => void;
 }
 
-export const ContactElement = ({
+export const ContactElement = memo(({
   contact,
   user,
   setType,
@@ -44,4 +45,6 @@ export const ContactElement = ({
       </div>
     </li>
   );
-};
+});
+
+ContactElement.displayName = "ContactElement";

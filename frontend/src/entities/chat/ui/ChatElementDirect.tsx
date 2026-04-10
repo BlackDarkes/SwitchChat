@@ -1,14 +1,15 @@
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { ChatAvatar } from "./ChatAvatar";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
 import { useLoginStore } from "@/features/auth/model/login-store";
+import { memo } from "react";
 
 interface IChatElementDirectProps {
   chat: IChat;
   handleOpen: (open: boolean) => void;
 }
 
-export const ChatElementDirect = ({ chat, handleOpen }: IChatElementDirectProps) => {
+export const ChatElementDirect = memo(({ chat, handleOpen }: IChatElementDirectProps) => {
   const { user: currentUser } = useLoginStore();
   const user = chat.chatMembers?.[0]?.userId === currentUser?.id ? chat.chatMembers?.[1]?.user : chat.chatMembers?.[0]?.user;
 
@@ -28,4 +29,6 @@ export const ChatElementDirect = ({ chat, handleOpen }: IChatElementDirectProps)
       </div>
     </ChatElementLayout>
   );
-};
+});
+
+ChatElementDirect.displayName = "ChatElementDirect";

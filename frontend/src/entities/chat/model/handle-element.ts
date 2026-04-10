@@ -1,4 +1,4 @@
-import { IChat } from "@/shared/types/chat.interface";
+import { IChat } from "@/shared/types";
 import { useParams } from "next/navigation";
 
 interface IHandleElementProps {

@@ -2,12 +2,13 @@ import { UserAvatar } from "@/entities/user";
 import { ButtonContactAdd } from "@/features/contact-add";
 import { cn } from "@/shared/lib/utils";
 import { IContact } from "@/shared/types/contact/contact.interface";
+import { memo } from "react";
 
 interface IContactSearchElementProps {
   contact: IContact;
 }
 
-export const ContactSearchElement = ({
+export const ContactSearchElement = memo(({
   contact,
 }: IContactSearchElementProps) => {
   return (
@@ -24,4 +25,6 @@ export const ContactSearchElement = ({
       <ButtonContactAdd id={contact.contact.id} />
     </li>
   );
-};
+});
+
+ContactSearchElement.displayName = "ContactSearchElement";

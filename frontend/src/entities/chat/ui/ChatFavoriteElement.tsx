@@ -4,13 +4,14 @@ import Link from "next/link";
 import { UserAvatar } from "@/entities/user";
 import { IUser } from "@/shared/types/user/user.interface";
 import { IChat } from "@/shared/types";
+import { memo } from "react";
 
 interface IChatFavoriteElementProps {
   user: IUser | undefined;
   chat: IChat;
 }
 
-export const ChatFavoriteElement = ({
+export const ChatFavoriteElement = memo(({
   chat,
   user: currentUser,
 }: IChatFavoriteElementProps) => {
@@ -51,4 +52,6 @@ export const ChatFavoriteElement = ({
       </Link>
     </li>
   );
-};
+});
+
+ChatFavoriteElement.displayName = "ChatFavoriteElement";

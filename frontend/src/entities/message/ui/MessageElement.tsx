@@ -1,6 +1,7 @@
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { IMessage } from "@/shared/types";
+import { memo } from "react";
 
 interface IMessageElementProps {
   message: IMessage;
@@ -9,7 +10,7 @@ interface IMessageElementProps {
   handleOpen: () => void;
 }
 
-export const MessageElement = ({ message, userId, handleOpen }: IMessageElementProps) => {
+export const MessageElement = memo(({ message, userId, handleOpen }: IMessageElementProps) => {
   const isOwnerMessage = message.userId === userId;
 
   return (
@@ -40,4 +41,6 @@ export const MessageElement = ({ message, userId, handleOpen }: IMessageElementP
       </div>
     </li>
   );
-};
+});
+
+MessageElement.displayName = "MessageElement";

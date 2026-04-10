@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 import Image from "next/image";
+import { memo } from "react";
 
 interface IUserAvatarProps {
   userAvatar: string | undefined | null;
@@ -10,7 +11,7 @@ interface IUserAvatarProps {
   handleOpen?: () => void;
 }
 
-export const UserAvatar = ({
+export const UserAvatar = memo(({
   userAvatar,
   userName,
   isAvatar = false,
@@ -54,4 +55,6 @@ export const UserAvatar = ({
       )}
     </>
   );
-};
+});
+
+UserAvatar.displayName = "UserAvatar";

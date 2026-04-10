@@ -3,13 +3,14 @@
 import { IChat } from "@/shared/types";
 import { ChatAvatar } from "./ChatAvatar";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
+import { memo } from "react";
 
 interface IChatElementProps {
   chat: IChat;
   handleOpen: (open: boolean) => void;
 }
 
-export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
+export const ChatElement = memo(({ chat, handleOpen }: IChatElementProps) => {
   return (
     <ChatElementLayout chat={chat} handleOpen={handleOpen}>
       <div className="flex gap-x-3.75">
@@ -26,4 +27,6 @@ export const ChatElement = ({ chat, handleOpen }: IChatElementProps) => {
       </div>
     </ChatElementLayout>
   );
-};
+});
+
+ChatElement.displayName = "ChatElement";
