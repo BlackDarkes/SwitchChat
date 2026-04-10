@@ -9,6 +9,7 @@ import { ThemeToggle } from "../../../theme-toggle";
 import { useLoginStore } from "../../model/login-store";
 import { useRouter } from "next/navigation";
 import { ButtonAuth } from "../../ui";
+import { toast } from "sonner";
 
 export const RegisterForm = () => {
   const {
@@ -20,21 +21,26 @@ export const RegisterForm = () => {
   } = useForm<TypeRegisterSchema>({
     resolver: zodResolver(registerSchema),
   });
-  const { register: resisterUser, isLoading } = useLoginStore();
+  const { register: registerUser, isLoading } = useLoginStore();
   const router = useRouter();
 
   const onSubmit = async (data: TypeRegisterSchema) => {
     try {
-      const resultMessage = await resisterUser(data);
+      const resultMessage = await registerUser(data);
 
-      alert(resultMessage);
+      toast.success(resultMessage ?? "Регистрация прошла успешно!");
 
       router.push("/login");
     } catch (error) {
-      alert(error);
-    }
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Произошла ошибка при регистрации. Попробуйте позже.";
 
-    reset();
+      toast.error(errorMessage);
+
+      reset();
+    }
   };
 
   return (
@@ -93,11 +99,12 @@ export const RegisterForm = () => {
       </div>
 
       <p className="ml-auto">
-        Уже есть аккаунт?{" "}
-        <LinkUnderline title="Войти" link="/login" />
+        Уже есть аккаунт? <LinkUnderline title="Войти" link="/login" />
       </p>
 
-      <ButtonAuth>{isLoading ? "Регистрация..." : "Зарегистрироваться"}</ButtonAuth>
+      <ButtonAuth>
+        {isLoading ? "Регистрация..." : "Зарегистрироваться"}
+      </ButtonAuth>
     </form>
   );
 };

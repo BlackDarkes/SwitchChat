@@ -44,12 +44,13 @@ export const useLoginStore = create<ILoginStore>()(
       register: async (data: TypeRegisterSchema) => {
         set({ isLoading: true, error: "" });
         try {
-          const { data: res  } = await apiClient.auth.register(data);
+          const { message } = await userApi.register(data);
           set({  isLoading: false });
-          return res.message
+          return message
         } catch(error: any) {
           const errorMessage = error?.response?.data?.message || error.message;
           set({ error: errorMessage });
+          throw new Error(errorMessage);
         } finally {
           set({ isLoading: false });
         }

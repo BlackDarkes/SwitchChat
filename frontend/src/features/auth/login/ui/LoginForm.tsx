@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -10,7 +9,7 @@ import { useLoginStore } from "../../model/login-store";
 import { useRouter } from "next/navigation";
 import { InputField, LinkUnderline } from "@/shared/ui";
 import { ButtonAuth } from "../../ui";
-import { useToastStore } from "@/features/toast";
+import { toast } from "sonner";
 
 export const LoginForm = () => {
   const {
@@ -28,7 +27,6 @@ export const LoginForm = () => {
     },
   });
   const { login, isLoading } = useLoginStore();
-  const { handleOpen, setMessage, setType } = useToastStore();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<TypeLoginSchema> = async (
@@ -37,16 +35,14 @@ export const LoginForm = () => {
     try {
       const serverMessage = await login(data);
 
-      setMessage(serverMessage!);
-      setType("success");
-      handleOpen();
+      toast.success(serverMessage!);
 
       setValue("email", "");
       setValue("password", "");
 
       router.push("/");
-    } catch (error: any) {
-      alert(error);
+    } catch {
+      toast.error("Неверные логин или пароль");
 
       setValue("password", "");
     }
