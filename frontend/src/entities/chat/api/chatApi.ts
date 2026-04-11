@@ -29,7 +29,7 @@ export const chatApi = {
   search: async (search: string): Promise<IChat[]> =>
     extractData(apiClient.chat.search({ search })),
 
-  create: async (data: TypeCreateChatSchema): Promise<IChat> =>
+  create: async (data: TypeCreateChatSchema): Promise<{ chat: IChat, message: string }> =>
     extractData(apiClient.chat.create(data)),
 
   join: async (id: string): Promise<IChat> =>

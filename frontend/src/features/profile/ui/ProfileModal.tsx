@@ -18,17 +18,23 @@ export const ProfileModal = ({
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
       <div
-        className={cn("flex flex-col items-center gap-y-2.5")}
+        className={cn("flex flex-col items-center gap-y-7.5")}
         onClick={(e) => e.stopPropagation()}
       >
-        <UserAvatar
-          userAvatar={user?.avatar}
-          userName={user?.name}
-          isAvatar={true}
-          size="big"
-        />
+        <div className={cn(
+          "flex flex-col items-center gap-y-2.5"
+        )}>
+          <UserAvatar
+            userAvatar={user?.avatar}
+            userName={user?.name}
+            isAvatar={true}
+            size="big"
+          />
 
-        <h3 className={cn("text-[clamp(20px,1.5vw,24px)]")}>{user?.name}</h3>
+          <h3 className={cn("text-[clamp(14px,1.5vw,16px)] text-center")}>
+            {user?.name}
+          </h3>
+        </div>
 
         <div className={cn("flex flex-col gap-y-5 w-[min(100%,250px)]")}>
           <div>

@@ -4,7 +4,7 @@ import { chatApi, TypeCreateChatSchema } from "@/entities/chat";
 import { IChat } from "@/shared/types";
 
 export const useCreateChat = () => {
-  return useMutation<IChat, Error, TypeCreateChatSchema>({
+  return useMutation<{ chat: IChat, message: string }, Error, TypeCreateChatSchema>({
     mutationKey: ["createChat"],
     mutationFn: async (data: TypeCreateChatSchema) => {
       const res = await chatApi.create(data);

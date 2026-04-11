@@ -1,4 +1,8 @@
+import { ChatMemberElement } from "@/entities/chat";
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
+import { useProfileStore } from "@/features/profile";
+import { useHandleOpenProfile } from "@/shared/hooks/handle-open-profile";
+import { cn } from "@/shared/lib/utils";
 import { copyName } from "@/shared/model/copy-name";
 import { IChat } from "@/shared/types";
 import { CloseButton, Modal } from "@/shared/ui";
@@ -14,6 +18,9 @@ export const ChatInfoModal = ({
   isOpen,
   handleOpen,
 }: IChatInfoModalProps) => {
+  const { handleOpen: handleOpenUserProfile, setUser } = useProfileStore();
+  const { handleOpenProfile } = useHandleOpenProfile();
+
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
       <CloseButton handleClose={handleOpen} />
@@ -28,7 +35,10 @@ export const ChatInfoModal = ({
 
         <section className="flex flex-col gap-y-5 w-[min(100%,250px)]">
           <div>
-            <p onClick={() => copyName(chat?.username)} className="cursor-pointer">
+            <p
+              onClick={() => copyName(chat?.username)}
+              className="cursor-pointer"
+            >
               {chat?.username}
             </p>
             <span className="text-[14px] text-secondary-color select-none">
@@ -36,7 +46,7 @@ export const ChatInfoModal = ({
             </span>
           </div>
           <div>
-            { chat?.description  ? (
+            {chat?.description ? (
               <p>{chat?.description}</p>
             ) : (
               <p className="text-primary-color/60 select-none">Нет описания</p>
@@ -54,9 +64,21 @@ export const ChatInfoModal = ({
           <p>{chat?.chatMembers.length}</p>
         </div>
 
-        <ul className="mt-5">
+        <ul className={cn(
+          "flex flex-col gap-y-2.5 px-2.5 mt-5 max-h-35 overflow-y-auto custom-scroll"
+        )}>
           {chat?.chatMembers.map((member) => (
-            <li key={member.id}>{member?.user.name}</li>
+            <ChatMemberElement
+              key={member.id}
+              chatMember={member}
+              handleOpenProfile={() =>
+                handleOpenProfile({
+                  user: member.user,
+                  handleOpen: handleOpenUserProfile,
+                  setUser,
+                })
+              }
+            />
           ))}
         </ul>
       </div>

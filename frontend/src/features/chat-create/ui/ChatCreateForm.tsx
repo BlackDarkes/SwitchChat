@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useCreateChat } from "../api/create-chat";
 import { InputField } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
+import { toast } from "sonner";
 
 export const ChatCreateForm = () => {
   const {
@@ -34,12 +35,15 @@ export const ChatCreateForm = () => {
   ) => {
     try {
       const result = await createChat(data);
+
       setValue("name", "");
       setValue("type", "GROUP");
       handleOpen();
-      router.push(`/chat/${result.id}`);
-    } catch (error) {
-      console.log(error);
+      
+      toast.success(result.message);
+      router.push(`/chat/${result.chat.id}`);
+    } catch {
+      toast.error("Произошла ошибка при создании чата.");
     }
   };
 
