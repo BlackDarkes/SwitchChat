@@ -27,6 +27,8 @@ export const ContactSearchList = ({ user }: IContactSearchListProps) => {
     handleOpenProfile();
   };
 
+  console.log(contacts)
+
   return (
     <Container mod="default">
       <SearchInput
