@@ -25,7 +25,7 @@ export const ContactList = ({ contacts, user }: IContactListProps) => {
   return (
     <ul
       className={cn(
-        "flex flex-col gap-y-2.5 overflow-y-auto h-[calc(100dvh-120px)]",
+        "flex flex-col px-2.5 gap-y-2.5 overflow-y-auto h-[calc(100dvh-120px)] custom-scroll",
       )}
     >
       {contacts.length ? (
