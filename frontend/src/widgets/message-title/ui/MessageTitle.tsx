@@ -10,6 +10,8 @@ import { ChatInfoModal, useChatInfoStore } from "@/features/chat-info-modal";
 import { IChat } from "@/shared/types";
 import { EllipsisVertical } from "lucide-react";
 import { useHandleBack } from "../model/handle-back";
+import { TruncateName } from "@/shared/ui";
+import { cn } from "@/shared/lib/utils";
 
 interface IMessageTitleProps {
   chat: IChat | undefined;
@@ -31,9 +33,14 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
           size="middle"
         />
 
-        <div className="">
-          <h3>{chat?.name}</h3>
-          <p>{chat?.chatMembers?.length} пользователей</p>
+        <div className="flex flex-col justify-between">
+          <TruncateName className={cn(
+            "w-25 text-[clamp(14px,1.5vw,20px)] font-bold",
+            "md:w-[clamp(150px,14vw,300px)]",
+          )}>
+            {chat?.name}
+          </TruncateName>
+          <p className="text-[clamp(12px,1.5vw,14px)] text-secondary-color">{chat?.chatMembers?.length} пользователей</p>
         </div>
 
       </div>

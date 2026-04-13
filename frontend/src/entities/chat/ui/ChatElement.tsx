@@ -4,6 +4,8 @@ import { IChat } from "@/shared/types";
 import { ChatAvatar } from "./ChatAvatar";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
 import { memo } from "react";
+import { TruncateName } from "@/shared/ui";
+import { cn } from "@/shared/lib/utils";
 
 interface IChatElementProps {
   chat: IChat;
@@ -17,11 +19,17 @@ export const ChatElement = memo(({ chat, handleOpen }: IChatElementProps) => {
         <ChatAvatar chatAvatar={chat.avatar} chatName={chat.name} size="big" />
 
         <div className="flex flex-col justify-between h-full">
-          <h3 className="text-[clamp(18px,1.5vw,22px)] font-semibold">
-            {chat.name}
+          <h3 className="text-[clamp(16px,1.5vw,20px)] font-semibold">
+            <TruncateName className={cn(
+              "max-w-35"
+            )}>
+              {chat.name}
+            </TruncateName>
           </h3>
-          <p className="text-[clamp(14px,1.5vw,16px)] text-secondary-color">
-            {chat.messages?.at(-1)?.text}
+          <p className="text-[clamp(14px,1.5vw,15px)] text-secondary-color">
+            <TruncateName>
+              {chat.messages?.at(-1)?.text}
+            </TruncateName>
           </p>
         </div>
       </div>

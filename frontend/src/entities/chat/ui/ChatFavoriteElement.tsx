@@ -5,6 +5,7 @@ import { UserAvatar } from "@/entities/user";
 import { IUser } from "@/shared/types/user/user.interface";
 import { IChat } from "@/shared/types";
 import { memo } from "react";
+import { TruncateName } from "@/shared/ui";
 
 interface IChatFavoriteElementProps {
   user: IUser | undefined;
@@ -33,9 +34,9 @@ export const ChatFavoriteElement = memo(({
               userName={user?.name}
               size="big"
             />
-            <span className={cn("max-w-full max-h-5 text-[12px] truncate")}>
+            <TruncateName textSize={12}>
               {user?.name}
-            </span>
+            </TruncateName>
           </>
         ) : (
           <>
@@ -44,9 +45,9 @@ export const ChatFavoriteElement = memo(({
               chatName={chat?.name}
               size="middle"
             />
-            <span className={cn("max-w-full max-h-5 text-[12px] truncate")}>
+            <TruncateName textSize={12}>
               {chat?.name}
-            </span>
+            </TruncateName>
           </>
         )}
       </Link>

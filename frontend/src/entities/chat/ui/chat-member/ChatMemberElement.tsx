@@ -1,6 +1,7 @@
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { IChatMember } from "@/shared/types";
+import { TruncateName } from "@/shared/ui";
 import { memo } from "react";
 
 interface IChatMemberElementProps {
@@ -29,7 +30,9 @@ export const ChatMemberElement = memo(
             userName={chatMember.user.name}
             handleOpen={handleOpenProfile}
           />
-          <span className={cn("max-w-25 max-h-5.5 truncate")}>{chatMember.user.name}</span>
+          <TruncateName className={cn("max-w-25")}>
+            {chatMember.user.name}
+          </TruncateName>
         </div>
 
         <span>{handleRole()}</span>

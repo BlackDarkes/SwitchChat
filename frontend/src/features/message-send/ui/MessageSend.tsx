@@ -5,6 +5,7 @@ import { sendMessageSchema, TypeSendMessageSchema } from "../../../entities/mess
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useParams } from "next/navigation";
+import { toast } from "sonner";
 
 export const MessageSend = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,8 +21,8 @@ export const MessageSend = () => {
   const onSubmit = async (data: TypeSendMessageSchema) => {
     try {
       await sendMessage(data);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      toast.error("Не удалось отправить сообщение");
     }
     setValue("text", "");
   };
