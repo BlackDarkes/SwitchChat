@@ -30,7 +30,7 @@ export const ChatElementDirect = memo(
 
           <div className="flex flex-col justify-between h-full">
             <h3 className="text-[clamp(18px,1.5vw,22px)] font-semibold">
-              <TruncateName className={cn("max-w-35")}>
+              <TruncateName className={cn("max-w-35 max-h-7.5")}>
                 {user.name}
               </TruncateName>
             </h3>

@@ -2,7 +2,7 @@
 
 import { useMobileMessages } from "@/features/mobile-messages";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export default function MessageLayout({
   children,
@@ -11,17 +11,12 @@ export default function MessageLayout({
 }) {
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const pathName = usePathname();
-  const openRef = useRef(true);
 
   useEffect(() => {
-    if (openRef.current && pathName.includes("chat")) {
+    if (pathName.includes("chat")) {
       handleMobileMessagesOpen(true);
     }
-
-    return () => {
-      openRef.current = false;
-    };
-  }, []);
+  }, [pathName]);
 
   return <>{children}</>;
 }

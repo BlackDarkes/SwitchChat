@@ -86,7 +86,7 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
   };
 
   return (
-    <section ref={containerRef} className="overflow-y-auto custom-scroll">
+    <section ref={containerRef} className="overflow-y-auto custom-scroll h-[calc(100vh-240px)]">
       <Container mod="default">
         <div className="flex flex-col max-h-[calc(100vh-200px)] pt-6.25 after:block after:h-2.5 after:shrink-0">
           {groupedMessages.length === 0 ? (

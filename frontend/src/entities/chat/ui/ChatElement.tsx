@@ -21,7 +21,7 @@ export const ChatElement = memo(({ chat, handleOpen }: IChatElementProps) => {
         <div className="flex flex-col justify-between h-full">
           <h3 className="text-[clamp(16px,1.5vw,20px)] font-semibold">
             <TruncateName className={cn(
-              "max-w-35"
+              "max-w-35 max-h-7.5"
             )}>
               {chat.name}
             </TruncateName>
