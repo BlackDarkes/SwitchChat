@@ -27,7 +27,7 @@ export const UserAvatar = memo(({
           width={60}
           height={60}
           className={cn(
-            "cursor-pointer",
+            "shrink-0 cursor-pointer",
             {
               "cursor-default": isAvatar,
               "w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)]": size === "middle",
@@ -39,7 +39,7 @@ export const UserAvatar = memo(({
       ) : (
         <div
           className={cn(
-            "flex justify-center items-center",
+            "flex justify-center items-center shrink-0",
             "bg-primary-color text-primary-bg uppercase font-bold rounded-full",
             "cursor-pointer",
             {

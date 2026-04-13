@@ -16,7 +16,7 @@ export const MessageElement = memo(({ message, userId, handleOpen }: IMessageEle
 
   return (
     <li
-      className={cn("flex items-start gap-x-3.75", {
+      className={cn("flex items-start gap-x-2.5", {
         "self-end": isOwnerMessage,
       })}
     >
@@ -28,17 +28,19 @@ export const MessageElement = memo(({ message, userId, handleOpen }: IMessageEle
 
       <div
         className={cn(
-          "flex justify-between flex-col gap-x-2.5 p-[10px_25px_23px_15px]",
-          "bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_18px]",
+          "flex justify-between flex-col gap-x-[clamp(5px,1.5vw,25px)] p-[10px_20px_17px_15px]",
+          "max-w-150 bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_18px]",
           "shadow-box",
-          "md:flex-row max-md:max-w-55"
+          "md:flex-row  max-md:p-[10px_20px_17px_12px]"
         )}
       >
         <div>
           <TruncateName className="mb-2.5 font-bold w-45 md:w-full">
             {message.user.name}
           </TruncateName>
-          <p className="font-normal">{message.text}</p>
+          <p className={cn(
+            "font-normal max-md:max-w-[clamp(80px,65vw,400px)]",
+          )}>{message.text}</p>
         </div>
 
         <div className={cn(

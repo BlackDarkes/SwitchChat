@@ -6,7 +6,7 @@ import { ProfileModal, useProfileStore } from "@/features/profile";
 import { cn } from "@/shared/lib/utils";
 import { ChatIsland } from "@/widgets/chat-island";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export default function MainLayout({
   children,
