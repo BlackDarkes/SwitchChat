@@ -25,7 +25,6 @@ export const ChatList = ({ chats, isPending }: IChatListProps) => {
               if (chat.type === "DIRECT") {
                 return (
                   <div key={chat.id}>
-                    
                     <ChatElementDirect chat={chat} handleOpen={handleOpen} />
                   </div>
                 );

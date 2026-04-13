@@ -34,7 +34,7 @@ export const ChatFavoriteElement = memo(({
               userName={user?.name}
               size="big"
             />
-            <TruncateName textSize={12}>
+            <TruncateName className={cn("text-[clamp(10px,1.5vw,12px)]")}>
               {user?.name}
             </TruncateName>
           </>
@@ -45,7 +45,7 @@ export const ChatFavoriteElement = memo(({
               chatName={chat?.name}
               size="middle"
             />
-            <TruncateName textSize={12}>
+            <TruncateName className={cn("text-[clamp(10px,1.5vw,12px)]")}>
               {chat?.name}
             </TruncateName>
           </>

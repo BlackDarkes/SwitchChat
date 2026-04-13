@@ -45,8 +45,8 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
 
       </div>
 
-      <button className="ml-auto" type="button" onClick={handleOpenChatAction}>
-        <EllipsisVertical width={35} height={35} />
+      <button className="ml-auto w-[clamp(25px,4vw,30px)] h-[clamp(25px,4vw,30px)]" type="button" onClick={handleOpenChatAction}>
+        <EllipsisVertical className="w-full h-full" />
       </button>
 
       <ChatInfoModal chat={chat} isOpen={isOpen} handleOpen={handleOpenModal} />

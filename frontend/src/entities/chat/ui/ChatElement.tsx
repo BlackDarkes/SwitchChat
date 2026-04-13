@@ -26,8 +26,10 @@ export const ChatElement = memo(({ chat, handleOpen }: IChatElementProps) => {
               {chat.name}
             </TruncateName>
           </h3>
-          <p className="text-[clamp(14px,1.5vw,15px)] text-secondary-color">
-            <TruncateName>
+          <p className="block text-[clamp(14px,1.5vw,15px)] max-w-100 text-secondary-color">
+            <TruncateName className={cn(
+              "w-[clamp(10px,22vw,400px)]"
+            )}>
               {chat.messages?.at(-1)?.text}
             </TruncateName>
           </p>

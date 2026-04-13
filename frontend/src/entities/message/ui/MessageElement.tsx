@@ -1,6 +1,7 @@
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { IMessage } from "@/shared/types";
+import { TruncateName } from "@/shared/ui";
 import { memo } from "react";
 
 interface IMessageElementProps {
@@ -27,15 +28,23 @@ export const MessageElement = memo(({ message, userId, handleOpen }: IMessageEle
 
       <div
         className={cn(
-          `flex justify-between p-[10px_25px_23px_15px] w-[clamp(300px,35vw,600px)] bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_18px] shadow-box`,
+          "flex justify-between flex-col gap-x-2.5 p-[10px_25px_23px_15px]",
+          "bg-message-bg text-primary-color font-medium rounded-[16px_12px_12px_18px]",
+          "shadow-box",
+          "md:flex-row max-md:max-w-55"
         )}
       >
         <div>
-          <h4 className="mb-2.5 font-bold">{message.user.name}</h4>
+          <TruncateName className="mb-2.5 font-bold w-45 md:w-full">
+            {message.user.name}
+          </TruncateName>
           <p className="font-normal">{message.text}</p>
         </div>
 
-        <div className="text-opacity-color text-xs mt-2.5">
+        <div className={cn(
+          "text-opacity-color text-xs mt-2.5",
+          "max-md:self-end",
+        )}>
           {message.createdAt.split("T")[1].split(".")[0]}
         </div>
       </div>
