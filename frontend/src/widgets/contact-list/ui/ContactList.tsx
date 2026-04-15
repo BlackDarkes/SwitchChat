@@ -4,7 +4,6 @@ import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
 import { IContact } from "@/shared/types/contact/contact.interface";
 import { IUser } from "@/shared/types/user/user.interface";
-import { useEffect } from "react";
 
 interface IContactListProps {
   contacts: IContact[];
@@ -13,13 +12,10 @@ interface IContactListProps {
 
 export const ContactList = ({ contacts, user }: IContactListProps) => {
   const { setType } = useTypeChatStore();
-  const { setUser, handleOpen: handleOpenProfile } = useProfileStore();
-
-  useEffect(() => setUser(user), [user, setUser]);
+  const { openProfile } = useProfileStore();
 
   const handleContactClick = (targetUser: IUser) => {
-    setUser(targetUser);
-    handleOpenProfile();
+    openProfile(targetUser, false);
   };
 
   return (

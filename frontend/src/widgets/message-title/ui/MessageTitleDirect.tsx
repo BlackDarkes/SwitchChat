@@ -19,14 +19,13 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
   const { isOpen: isOpenChatAction, handleOpen: handleOpenChatAction } =
     useChatActionMenuStore();
   const { user } = useLoginStore();
-  const { handleOpen, setUser } = useProfileStore();
+  const { openProfile } = useProfileStore();
   const currentChatMember = chat?.chatMembers[0].user.id === user?.id ? chat?.chatMembers[1] : chat?.chatMembers[0];
 
   const handleOpenProfile = () => {
     if (currentChatMember) {
-      setUser(currentChatMember.user);
+      openProfile(currentChatMember.user, false);
     }
-    handleOpen();
   };
 
   return (

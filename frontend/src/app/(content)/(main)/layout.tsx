@@ -21,7 +21,7 @@ export default function MainLayout({
 }) {
   const { isOpen } = useMobileMessages();
   const { data: chatFavorites } = useChatFavorites();
-  const { isOpen: profileIsOpen, user, handleOpen } = useProfileStore();
+  const { isOpen: profileIsOpen, user, isMyProfile, closeProfile } = useProfileStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const pathName = usePathname();
 
@@ -78,8 +78,8 @@ export default function MainLayout({
       <aside
         className={cn(
           "flex flex-col justify-between",
-          "w-[max(100%,1160px)] h-dvh bg-accent-bg transition-all duration-300 z-600",
-          "max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:-translate-x-[105%]",
+          "w-[max(100%,1160px)] h-dvh bg-accent-bg transition-all duration-300 ",
+          "max-md:fixed max-md:top-0 max-md:right-0 max-md:w-full max-md:-translate-x-[105%] max-md:z-600",
           {
             "max-md:translate-x-0 ": isOpen,
           },
@@ -91,7 +91,8 @@ export default function MainLayout({
       <ProfileModal
         user={user}
         isOpen={profileIsOpen}
-        handleOpen={handleOpen}
+        isMyProfile={isMyProfile}
+        handleOpen={closeProfile} 
       />
     </main>
   );

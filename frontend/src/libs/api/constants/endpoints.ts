@@ -8,6 +8,7 @@ export const ENDPOINTS = {
   user: {
     me: "/user/me",
     search: "/user/search",
+    update: "/user",
   },
   contact: {
     getContacts: "/contacts",

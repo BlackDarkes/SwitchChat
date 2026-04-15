@@ -5,9 +5,10 @@ import { devtools } from "zustand/middleware";
 interface IProfileStore {
   isOpen: boolean;
   user: IUser | undefined;
+  isMyProfile: boolean;
 
-  handleOpen: () => void;
-  setUser: (user: IUser | undefined) => void;
+  openProfile: (user: IUser | undefined, isMy: boolean) => void;
+  closeProfile: () => void;
 }
 
 export const useProfileStore = create<IProfileStore>()(
@@ -15,10 +16,10 @@ export const useProfileStore = create<IProfileStore>()(
     (set) => ({
       isOpen: false,
       user: undefined,
+      isMyProfile: false,
 
-      handleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
-
-      setUser: (user: IUser | undefined) => set({ user }),
+      openProfile: (user, isMy) => set({ isOpen: true, user, isMyProfile: isMy }),
+      closeProfile: () => set({ isOpen: false }),
     }),
     { name: "profile-store" },
   ),

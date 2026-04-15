@@ -6,6 +6,11 @@ export {
   type TypeRegisterSchema,
   registerSchema,
 } from "./model/validate/register-schema";
+export {
+  type TypeProfileUpdateSchema,
+  profileUpdateSchema,
+} from "./model/validate/profile-update-schema";
+
 export { userApi } from "./api/userApi";
 export { useSearchUser } from "./api/useSearchUser";
 

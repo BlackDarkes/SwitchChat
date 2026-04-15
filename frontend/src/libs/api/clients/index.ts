@@ -1,5 +1,6 @@
 "use client";
 
+import { TypeProfileUpdateSchema } from "@/entities/user";
 import { ENDPOINTS } from "../constants/endpoints";
 import { baseClient } from "./base-client";
 
@@ -20,6 +21,9 @@ export const apiClient = {
 
     search: (params?: { search: string }) =>
       baseClient.get(`${ENDPOINTS.user.search}?query=${params?.search}`),
+
+    profileUpdate: (data: TypeProfileUpdateSchema) =>
+      baseClient.patch(ENDPOINTS.user.update, data),
   },
   contact: {
     getContacts: () => baseClient.get(ENDPOINTS.contact.getContacts),

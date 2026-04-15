@@ -3,6 +3,7 @@ import { TypeLoginSchema } from "../model/validate/login-schema";
 import { TypeRegisterSchema } from "../model/validate/register-schema";
 import { IUser } from "@/shared/types/user/user.interface";
 import { IContact } from "@/shared/types/contact/contact.interface";
+import { TypeProfileUpdateSchema } from "../model/validate/profile-update-schema";
 
 const extractData = <T>(promise: Promise<{ data: T }>): Promise<T> =>
   promise.then(({ data }) => data);
@@ -23,4 +24,7 @@ export const userApi = {
 
   search: async (search: string): Promise<IContact[]> =>
     extractData(apiClient.user.search({ search })),
+
+  profileUpdate: async (data: TypeProfileUpdateSchema): Promise<IUser> =>
+    extractData(apiClient.user.profileUpdate(data)),
 };

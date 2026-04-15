@@ -14,7 +14,7 @@ interface IContactSearchListProps {
 
 export const ContactSearchList = ({ user }: IContactSearchListProps) => {
   const { setType } = useTypeChatStore();
-  const { setUser, handleOpen: handleOpenProfile } = useProfileStore();
+  const { openProfile } = useProfileStore();
   const { handleOpen } = useSearchUserStore();
   const [search, setSearch] = useState<string>("");
   const { data: contacts } = useSearchUser(search);
@@ -23,8 +23,7 @@ export const ContactSearchList = ({ user }: IContactSearchListProps) => {
     setSearch(e.target.value);
 
   const handleContactClick = (targetUser: IUser) => {
-    setUser(targetUser);
-    handleOpenProfile();
+    openProfile(targetUser, false);
   };
 
   return (

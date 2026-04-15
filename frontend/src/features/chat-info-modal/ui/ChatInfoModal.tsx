@@ -18,7 +18,7 @@ export const ChatInfoModal = ({
   isOpen,
   handleOpen,
 }: IChatInfoModalProps) => {
-  const { handleOpen: handleOpenUserProfile, setUser } = useProfileStore();
+  const { openProfile } = useProfileStore();
   const { handleOpenProfile } = useHandleOpenProfile();
 
   return (
@@ -74,8 +74,7 @@ export const ChatInfoModal = ({
               handleOpenProfile={() =>
                 handleOpenProfile({
                   user: member.user,
-                  handleOpen: handleOpenUserProfile,
-                  setUser,
+                  handleOpen: openProfile,
                 })
               }
             />

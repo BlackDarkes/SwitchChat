@@ -30,7 +30,7 @@ function formatDateHeader(date: Date): string {
 
 export const MessageList = ({ messages }: IMessagesListProps) => {
   const { user } = useLoginStore();
-  const { handleOpen, setUser } = useProfileStore();
+  const { openProfile } = useProfileStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const uniqueMessages = useMemo(() => {
@@ -81,8 +81,7 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
   }, [uniqueMessages.length]);
 
   const handleOpenProfile = (profile: IUser) => {
-    if (profile) setUser(profile);
-    handleOpen();
+    openProfile(profile, false);
   };
 
   return (

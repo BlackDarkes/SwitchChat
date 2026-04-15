@@ -1,8 +1,9 @@
-import { Controller, Get, HttpCode, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Patch, Query, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CurrentUser } from "@/app/common/decorators/current-user.decorator";
 import { AuthGuard } from "@/app/common/guards/auth.guard";
 import { UserRepository } from "./user.repository";
+import { Prisma } from "@/app/generated/prisma/client";
 
 @Controller("user")
 @UseGuards(AuthGuard)
@@ -31,5 +32,14 @@ export class UserController {
 		@Query("query") search: string
 	) {
 		return this.userRepository.searchUser(userId, search);
+	}
+
+	@Patch("")
+	@HttpCode(200)
+	async update(
+		@CurrentUser("id") userId: string,
+		@Body() data: Prisma.UserUpdateInput
+	) {
+		return this.userService.update(userId, data);
 	}
 }

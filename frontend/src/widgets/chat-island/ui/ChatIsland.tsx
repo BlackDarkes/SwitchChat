@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export const ChatIsland = () => {
   const { user } = useLoginStore();
   const { type, setType } = useTypeChatStore();
-  const { handleOpen, setUser } = useProfileStore();
+  const { openProfile } = useProfileStore();
 
   useEffect(() => {
     const url = window.location.href;
@@ -26,9 +26,8 @@ export const ChatIsland = () => {
 
   const handleOpenProfile = () => {
     if (user) {
-      setUser(user); 
+      openProfile(user, true);
     }
-    handleOpen(); 
   };
 
   return (
