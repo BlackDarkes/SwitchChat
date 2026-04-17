@@ -36,8 +36,8 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
             size="middle"
           />
 
-          <div className="flex flex-col min-w-0">
-            <TruncateName className="text-sm font-semibold text-primary-color truncate md:text-base">
+          <div className="flex flex-col items-start min-w-0">
+            <TruncateName className="text-sm font-semibold text-primary-color md:text-base">
               {chat?.name}
             </TruncateName>
             <span className="text-xs text-secondary-color truncate md:text-sm">

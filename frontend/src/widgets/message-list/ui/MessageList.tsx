@@ -3,6 +3,7 @@
 import { MessageElement } from "@/entities/message";
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { useProfileStore } from "@/features/profile";
+import { formatDate } from "@/shared/model/format-date";
 import { IMessage } from "@/shared/types";
 import { IUser } from "@/shared/types/user/user.interface";
 import { Container } from "@/shared/ui";
@@ -10,22 +11,6 @@ import { useEffect, useRef, useMemo } from "react";
 
 interface IMessagesListProps {
   messages: IMessage[] | undefined;
-}
-
-function formatDateHeader(date: Date): string {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-  const msgDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-  if (msgDate.getTime() === today.getTime()) return "Сегодня";
-  if (msgDate.getTime() === yesterday.getTime()) return "Вчера";
-
-  return new Intl.DateTimeFormat("ru-RU", {
-    day: "numeric",
-    month: "long",
-  }).format(date);
 }
 
 export const MessageList = ({ messages }: IMessagesListProps) => {
@@ -95,7 +80,7 @@ export const MessageList = ({ messages }: IMessagesListProps) => {
               <div key={group.dateStr} className="flex flex-col">
                 <div className="flex justify-center my-4">
                   <span className="bg-gray-100 text-gray-500 text-xs font-medium px-3 py-1 rounded-full shadow-sm">
-                    {formatDateHeader(group.date)}
+                    {formatDate(group.date)}
                   </span>
                 </div>
 
