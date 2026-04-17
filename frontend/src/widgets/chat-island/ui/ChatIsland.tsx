@@ -16,49 +16,63 @@ export const ChatIsland = () => {
 
   useEffect(() => {
     const url = window.location.href;
-
-    if (url.includes("chats")) {
-      setType("CHATS");
-    } else if (url.includes("groups")) {
-      setType("GROUPS");
-    }
+    if (url.includes("chats")) setType("CHATS");
+    else if (url.includes("groups")) setType("GROUPS");
   }, []);
 
   const handleOpenProfile = () => {
-    if (user) {
-      openProfile(user, true);
-    }
+    if (user) openProfile(user, true);
   };
 
   return (
     <section className="m-5 w-full">
       <Container>
         <div className="flex justify-between items-center p-[10px_25px] bg-accent-bg rounded-4xl shadow-box">
-          <button type="button">
+          <button
+            type="button"
+            onClick={() => setType("CHATS")}
+            className={cn(
+              "flex items-center justify-center w-12 h-12 rounded-full",
+              "cursor-pointer transition-all duration-200 ease-out",
+              "hover:bg-secondary-bg/20 hover:scale-105",
+              "active:scale-95 active:bg-secondary-bg/40",
+              "focus:outline-none"
+            )}
+          >
             <PencilLine
               size={30}
-              onClick={() => setType("CHATS")}
               className={cn(
-                `duration-400 transition hover:stroke-accent-color`,
-                {
-                  "stroke-accent-color": type === "CHATS",
-                },
+                "duration-400 transition hover:stroke-accent-color",
+                { "stroke-accent-color": type === "CHATS" }
               )}
             />
           </button>
-          <button type="button">
+
+          <button
+            type="button"
+            onClick={() => setType("GROUPS")}
+            className={cn(
+              "flex items-center justify-center w-12 h-12 rounded-full",
+              "cursor-pointer transition-all duration-200 ease-out",
+              "hover:bg-secondary-bg/20 hover:scale-105",
+              "active:scale-95 active:bg-secondary-bg/40",
+              "focus:outline-none"
+            )}
+          >
             <BookOpenText
               size={30}
-              onClick={() => setType("GROUPS")}
               className={cn(
-                `duration-400 transition hover:stroke-accent-color`,
-                {
-                  "stroke-accent-color": type === "GROUPS",
-                },
+                "duration-400 transition hover:stroke-accent-color",
+                { "stroke-accent-color": type === "GROUPS" }
               )}
             />
           </button>
-          <button type="button" onClick={handleOpenProfile}>
+
+          <button
+            type="button"
+            onClick={handleOpenProfile}
+            className="cursor-pointer transition-all duration-200 ease-out hover:scale-105 active:scale-95 focus:outline-none"
+          >
             <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
           </button>
         </div>

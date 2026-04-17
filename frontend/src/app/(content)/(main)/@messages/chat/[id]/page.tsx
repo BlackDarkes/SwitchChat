@@ -5,6 +5,7 @@ import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useLoginStore } from "@/features/auth/model/login-store";
 import { ButtonChatJoin } from "@/features/chat-join";
 import { useTypeChatStore } from "@/features/switch-type-chat";
+import { MessageSubscription } from "@/shared/ui";
 import { MessageField } from "@/widgets/message-field/ui/MessageField";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
@@ -24,7 +25,7 @@ export default function Page() {
     } else if (chat?.type === "GROUP") {
       setType("GROUPS");
     }
-  }, [chat?.type]);
+  }, [chat?.type, setType]);
 
   if (
     chat?.type === "SELF" &&
@@ -56,7 +57,7 @@ export default function Page() {
               (member) =>
                 member.userId === user?.id && member.role === "MEMBER",
             ) ? (
-            <p>Вы подписаны на канал</p>
+            <MessageSubscription />
           ) : (
             <ButtonChatJoin id={id} />
           )}

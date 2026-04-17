@@ -1,6 +1,5 @@
 "use client";
 
-import { useChatFavorites } from "@/entities/chat";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { ProfileModal, useProfileStore } from "@/features/profile";
 import { cn } from "@/shared/lib/utils";
@@ -20,17 +19,21 @@ export default function MainLayout({
   favorites: React.ReactNode;
 }) {
   const { isOpen } = useMobileMessages();
-  const { data: chatFavorites } = useChatFavorites();
-  const { isOpen: profileIsOpen, user, isMyProfile, closeProfile } = useProfileStore();
+  const {
+    isOpen: profileIsOpen,
+    user,
+    isMyProfile,
+    closeProfile,
+  } = useProfileStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const pathName = usePathname();
 
   useEffect(() => {
     if (!pathName.includes("chat")) {
       handleMobileMessagesOpen(false);
-      console.log("WORK")
+      console.log("WORK");
     }
-  }, [pathName]);
+  }, [pathName, handleMobileMessagesOpen]);
 
   return (
     <main
@@ -49,19 +52,7 @@ export default function MainLayout({
       >
         {children}
         <div className={cn("flex h-full", "max-md:flex-col")}>
-          <div
-            className={cn(
-              "py-5",
-              "w-20 bg-accent-bg h-[calc(100dvh-clamp(83px,4vw,86px))]  overflow-y-auto",
-              "max-md:w-screen max-md:py-2.5 max-md:h-fit max-md:px-0.5",
-              "custom-scroll",
-              {
-                hidden: !chatFavorites?.length,
-              },
-            )}
-          >
-            {favorites}
-          </div>
+          {favorites}
           <div
             className={cn(
               "flex flex-col items-center justify-between",
@@ -92,7 +83,7 @@ export default function MainLayout({
         user={user}
         isOpen={profileIsOpen}
         isMyProfile={isMyProfile}
-        handleOpen={closeProfile} 
+        handleOpen={closeProfile}
       />
     </main>
   );

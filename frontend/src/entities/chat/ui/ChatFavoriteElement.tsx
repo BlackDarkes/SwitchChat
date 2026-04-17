@@ -12,44 +12,36 @@ interface IChatFavoriteElementProps {
   chat: IChat;
 }
 
-export const ChatFavoriteElement = memo(({
-  chat,
-  user: currentUser,
-}: IChatFavoriteElementProps) => {
-  const user =
-    chat.chatMembers?.[0]?.userId === currentUser?.id
-      ? chat.chatMembers?.[1]?.user
-      : chat.chatMembers?.[0]?.user;
+export const ChatFavoriteElement = memo(({ chat, user: currentUser }: IChatFavoriteElementProps) => {
+  const user = chat.chatMembers?.find(m => m.userId !== currentUser?.id)?.user;
+  const name = chat.type === "DIRECT" ? user?.name : chat?.name;
 
   return (
-    <li className={cn("px-2 w-15.75")}>
+    <li className="flex flex-col items-center group snap-start">
       <Link
         href={`/chat/${chat.id}`}
-        className={cn("flex flex-col items-center gap-y-1.25")}
-      >
-        {chat.type === "DIRECT" ? (
-          <>
-            <UserAvatar
-              userAvatar={user?.avatar}
-              userName={user?.name}
-              size="big"
-            />
-            <TruncateName className={cn("text-[clamp(10px,1.5vw,12px)]")}>
-              {user?.name}
-            </TruncateName>
-          </>
-        ) : (
-          <>
-            <ChatAvatar
-              chatAvatar={chat?.avatar}
-              chatName={chat?.name}
-              size="middle"
-            />
-            <TruncateName className={cn("text-[clamp(10px,1.5vw,12px)]")}>
-              {chat?.name}
-            </TruncateName>
-          </>
+        className={cn(
+          "flex flex-col items-center gap-1.5 p-1 rounded-xl",
+          "transition-all duration-200 ease-out",
+          "hover:scale-105 active:scale-95",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-color/50"
         )}
+      >
+        <div className="relative">
+          {chat.type === "DIRECT" ? (
+            <UserAvatar userAvatar={user?.avatar} userName={user?.name} size="big" />
+          ) : (
+            <ChatAvatar chatAvatar={chat?.avatar} chatName={chat?.name} size="middle" />
+          )}
+        </div>
+
+        <TruncateName className={cn(
+          "whitespace-nowrap text-center transition-colors duration-200",
+          "max-w-12 text-[10px] md:max-w-16 md:text-xs",
+          "text-secondary-color group-hover:text-primary-color"
+        )}>
+          {name}
+        </TruncateName>
       </Link>
     </li>
   );

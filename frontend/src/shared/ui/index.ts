@@ -5,3 +5,4 @@ export { CloseButton } from "./CloseButton/CloseButton";
 export { InputField } from "./InputField/InputField";
 export { Toaster } from "./sonner";
 export { TruncateName } from "./truncate-name";
+export { MessageSubscription } from "./message-subscription";

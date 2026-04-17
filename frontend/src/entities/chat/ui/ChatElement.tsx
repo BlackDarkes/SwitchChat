@@ -1,11 +1,8 @@
-"use client";
-
 import { IChat } from "@/shared/types";
 import { ChatAvatar } from "./ChatAvatar";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
 import { memo } from "react";
 import { TruncateName } from "@/shared/ui";
-import { cn } from "@/shared/lib/utils";
 
 interface IChatElementProps {
   chat: IChat;
@@ -15,27 +12,14 @@ interface IChatElementProps {
 export const ChatElement = memo(({ chat, handleOpen }: IChatElementProps) => {
   return (
     <ChatElementLayout chat={chat} handleOpen={handleOpen}>
-      <div className="flex gap-x-3.75">
-        <ChatAvatar chatAvatar={chat.avatar} chatName={chat.name} size="big" />
-
-        <div className="flex flex-col justify-between h-full">
-          <h3 className="text-[clamp(16px,1.5vw,20px)] font-semibold">
-            <TruncateName className={cn(
-              "max-w-35 max-h-7.5"
-            )}>
-              {chat.name}
-            </TruncateName>
-          </h3>
-          <p className="block text-[clamp(14px,1.5vw,15px)] max-w-100 text-secondary-color">
-            <TruncateName className={cn(
-              "w-[clamp(80px,22vw,400px)]",
-              "max-xl:w-[clamp(80px,16vw,260px)]",
-              "max-md:w-[clamp(80px,42vw,400px)]",
-            )}>
-              {chat.messages?.at(-1)?.text}
-            </TruncateName>
-          </p>
-        </div>
+      <ChatAvatar chatAvatar={chat.avatar} chatName={chat.name} size="big" />
+      <div className="flex flex-col min-w-0 flex-1 justify-center">
+        <h3 className="text-base font-semibold text-primary-color truncate">
+          <TruncateName>{chat.name}</TruncateName>
+        </h3>
+        <p className="text-sm text-secondary-color truncate mt-0.5">
+          <TruncateName>{chat.messages?.at(-1)?.text || ""}</TruncateName>
+        </p>
       </div>
     </ChatElementLayout>
   );
