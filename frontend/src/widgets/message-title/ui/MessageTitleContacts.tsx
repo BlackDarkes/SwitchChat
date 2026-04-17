@@ -1,3 +1,5 @@
+"use client";
+
 import { MessageTitleLayout } from "@/entities/message";
 import { useHandleBack } from "../model/handle-back";
 import { SearchButton, useSearchUserStore } from "@/features/search";
@@ -9,14 +11,19 @@ export const MessageTitleContacts = () => {
 
   return (
     <MessageTitleLayout handleBack={handleBack}>
-      <div className="flex justify-between items-center w-full">
-        <h3 className="text-[clamp(20px,2.5vw,24px)]">Друзья</h3>
-        { isOpen ? (
-          <CloseButton handleClose={() => handleOpen(false)} />
+      <div className="flex w-full items-center justify-between px-1">
+        <h3 className="text-lg font-bold text-primary-color md:text-xl">Друзья</h3>
+        
+        {isOpen ? (
+          <CloseButton 
+            handleClose={() => handleOpen(false)} 
+          />
         ) : (
-          <SearchButton handleOpen={() => handleOpen(true)} />
-        ) }
+          <SearchButton 
+            handleOpen={() => handleOpen(true)} 
+          />
+        )}
       </div>
     </MessageTitleLayout>
   );
-}
+};

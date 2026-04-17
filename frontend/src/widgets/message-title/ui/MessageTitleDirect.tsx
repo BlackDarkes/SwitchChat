@@ -1,3 +1,5 @@
+"use client";
+
 import { MessageTitleLayout } from "@/entities/message";
 import { useHandleBack } from "../model/handle-back";
 import { EllipsisVertical } from "lucide-react";
@@ -20,36 +22,53 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
     useChatActionMenuStore();
   const { user } = useLoginStore();
   const { openProfile } = useProfileStore();
-  const currentChatMember = chat?.chatMembers[0].user.id === user?.id ? chat?.chatMembers[1] : chat?.chatMembers[0];
+
+  const currentChatMember = chat?.chatMembers?.find(
+    (m) => m.userId !== user?.id,
+  );
+  const memberUser = currentChatMember?.user;
 
   const handleOpenProfile = () => {
-    if (currentChatMember) {
-      openProfile(currentChatMember.user, false);
-    }
+    if (memberUser) openProfile(memberUser, false);
   };
 
   return (
     <MessageTitleLayout handleBack={handleBack}>
-      <div onClick={handleOpenProfile} className="flex items-center gap-x-2.5 cursor-pointer">
-        <UserAvatar
-          userAvatar={currentChatMember?.user.avatar}
-          userName={currentChatMember?.user.name}
-          size="big"
+      <div className="flex w-full items-center gap-3 px-1">
+        <button
+          type="button"
+          onClick={handleOpenProfile}
+          className="flex min-w-0 flex-1 items-center gap-3 -m-2 p-2 rounded-xl cursor-pointer transition-all duration-200 hover:bg-secondary-bg/20 active:scale-[0.98] focus:outline-none"
+        >
+          <UserAvatar
+            userAvatar={memberUser?.avatar}
+            userName={memberUser?.name}
+            size="middle"
+          />
+          <div className="flex flex-col min-w-0 text-left">
+            <span className="text-sm font-semibold text-primary-color truncate md:text-base">
+              {memberUser?.name || "Пользователь"}
+            </span>
+            <span className="text-xs text-secondary-color truncate md:text-sm">
+              {/* Здесь будет статус: online, last seen, typing и т.д. */}в сети
+            </span>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleOpenChatAction}
+          aria-label="Меню чата"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:bg-secondary-bg/20 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-color)/50"
+        >
+          <EllipsisVertical className="h-5 w-5 text-secondary-color" />
+        </button>
+
+        <ChatActionMenu
+          isOpen={isOpenChatAction}
+          handleOpen={handleOpenChatAction}
         />
-
-        <div className="">
-          <h3>{currentChatMember?.user.name}</h3>
-        </div>
       </div>
-
-      <button className="ml-auto w-[clamp(25px,4vw,30px)] h-[clamp(25px,4vw,30px)]" type="button" onClick={handleOpenChatAction}>
-        <EllipsisVertical className="w-full h-full" />
-      </button>
-
-      <ChatActionMenu
-        isOpen={isOpenChatAction}
-        handleOpen={handleOpenChatAction}
-      />
     </MessageTitleLayout>
   );
 };
