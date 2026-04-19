@@ -3,12 +3,14 @@ import { useMobileMessages } from "@/features/mobile-messages";
 import { cn } from "@/shared/lib/utils";
 import { IChat } from "@/shared/types";
 import { Container } from "@/shared/ui";
+import { Loader2, SearchX } from "lucide-react";
 
 interface ISearchModalProps {
   chats: IChat[];
   isOpen: boolean;
   handleOpen: (open: boolean) => void;
   setSearchInput: (value: string) => void;
+  isLoading?: boolean;
 }
 
 export const SearchModal = ({
@@ -16,6 +18,7 @@ export const SearchModal = ({
   isOpen,
   handleOpen,
   setSearchInput,
+  isLoading = false,
 }: ISearchModalProps) => {
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
 
@@ -33,28 +36,37 @@ export const SearchModal = ({
         "overflow-y-auto custom-scroll opacity-0 pointer-events-none duration-400 transition-all z-300",
         "max-md:w-full",
         {
-          "opacity-100 pointer-events-auto select-auto": isOpen
+          "opacity-100 pointer-events-auto select-auto": isOpen,
         }
       )}
     >
       <Container>
-        <ul className={cn("flex flex-col gap-y-4 max-md:h-fit ")}>
-          {chats.map((chat) => {
-            return chat.type === "DIRECT" ? (
-              <ChatElementDirect
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center h-40 gap-3 text-secondary-color">
+            <Loader2 className="h-6 w-6 animate-spin" />
+            <span className="text-sm font-medium">Ищем чаты...</span>
+          </div>
+        ) : chats.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-40 gap-3 text-secondary-color">
+            <SearchX className="h-8 w-8 opacity-50" />
+            <span className="text-sm font-medium">Ничего не найдено</span>
+          </div>
+        ) : (
+          <ul className="flex flex-col gap-y-2">
+            {chats.map((chat) => (
+              <li
                 key={chat.id}
-                chat={chat}
-                handleOpen={handleChatOpen}
-              />
-            ) : (
-              <ChatElement
-                key={chat.id}
-                chat={chat}
-                handleOpen={handleChatOpen}
-              />
-            );
-          })}
-        </ul>
+                className="rounded-xl transition-colors hover:bg-secondary-bg/30 active:bg-secondary-bg/50"
+              >
+                {chat.type === "DIRECT" ? (
+                  <ChatElementDirect chat={chat} handleOpen={handleChatOpen} />
+                ) : (
+                  <ChatElement chat={chat} handleOpen={handleChatOpen} />
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </Container>
     </div>
   );

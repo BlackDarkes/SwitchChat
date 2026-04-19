@@ -16,8 +16,7 @@ import { useMobileMessages } from "@/features/mobile-messages";
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { isOpen, handleOpen } = useBurgerStore();
-  const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } =
-    useSettingsStore();
+  const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } = useSettingsStore();
   const {
     setSearchResult,
     searchResult,
@@ -26,7 +25,7 @@ export const Header = () => {
   } = useSearchChatStore();
   const { handleOpen: handleCreateChatOpen } = useChatCreateStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
-  const { data: search } = useSearch(searchInput);
+  const { data: search, isLoading } = useSearch(searchInput);
 
   useEffect(() => {
     if (!searchInput.trim()) {
@@ -58,6 +57,7 @@ export const Header = () => {
             handleMobileMessagesOpen={handleMobileMessagesOpen}
           />
         </div>
+
         <SearchInput
           id="test"
           value={searchInput}
@@ -70,6 +70,7 @@ export const Header = () => {
           isOpen={isOpenSearch}
           handleOpen={handleSearchOpen}
           setSearchInput={setSearchInput}
+          isLoading={isLoading}
         />
 
         <ChatCreateModal />
