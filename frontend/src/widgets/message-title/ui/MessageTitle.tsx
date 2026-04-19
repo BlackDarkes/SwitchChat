@@ -46,7 +46,6 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
           </div>
         </button>
 
-        {/* Кнопка меню */}
         <button
           type="button"
           onClick={handleOpenChatAction}

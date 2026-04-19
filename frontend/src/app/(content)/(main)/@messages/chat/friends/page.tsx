@@ -22,22 +22,37 @@ export default function Page() {
     if (searchRef.current) {
       handleMobileMessagesOpen(true);
     }
-
     return () => {
       searchRef.current = false;
     };
-  });
+  }, [handleMobileMessagesOpen]);
 
   return (
-    <div>
+    <div className="flex flex-col h-screen">
       <MessageTitleContacts />
 
-      <Container mod="default" className={cn("pt-5 w-full h-[calc(100%-86px)]")}>
-        {isOpen ? (
-          <ContactSearchList user={user} />
-        ) : (
+      <Container mod="default" className="relative w-full flex-1 overflow-hidden mt-2.5">
+        <div
+          className={cn(
+            "absolute inset-0 pt-px w-full overflow-y-auto transition-all duration-300 ease-out",
+            isOpen
+              ? "opacity-0 -translate-y-4 pointer-events-none"
+              : "opacity-100 translate-y-0 pointer-events-auto"
+          )}
+        >
           <ContactList contacts={contacts || []} user={user} />
-        )}
+        </div>
+
+        <div
+          className={cn(
+            "absolute inset-0 pt-px w-full overflow-y-auto transition-all duration-300 ease-out",
+            isOpen
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 translate-y-4 pointer-events-none"
+          )}
+        >
+          <ContactSearchList user={user} />
+        </div>
       </Container>
     </div>
   );

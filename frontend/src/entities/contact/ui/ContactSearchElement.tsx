@@ -8,21 +8,31 @@ interface IContactSearchElementProps {
   contact: IContact;
 }
 
-export const ContactSearchElement = memo(({
-  contact,
-}: IContactSearchElementProps) => {
+export const ContactSearchElement = memo(({ contact }: IContactSearchElementProps) => {
+  const user = contact?.contact;
+
   return (
-    <li className={cn("flex justify-between items-center gap-x-2.5")}>
-      <div className={cn("flex items-center gap-x-2.5")}>
-        <UserAvatar
-          userAvatar={contact?.contact?.avatar}
-          userName={contact?.contact?.name}
-        />
-
-        <h3 className="text-[18px]">{contact?.contact?.name}</h3>
+    <li
+      className={cn(
+        "flex w-full items-center justify-between gap-3 p-3 rounded-xl",
+        "transition-all duration-200 select-none",
+        "hover:bg-secondary-bg/20 active:scale-[0.99]",
+        "focus-within:outline-none focus-within:ring-2 focus-within:ring-accent-color/50"
+      )}
+    >
+      <div className="flex min-w-0 items-center gap-3 flex-1">
+        <div className="shrink-0 pointer-events-none">
+          <UserAvatar
+            userAvatar={user?.avatar}
+            userName={user?.name}
+          />
+        </div>
+        <h3 className="text-lg font-medium text-primary-color truncate">
+          {user?.name}
+        </h3>
       </div>
-
-      <ButtonContactAdd id={contact?.contact?.id} />
+        
+      <ButtonContactAdd id={user?.id} />
     </li>
   );
 });
