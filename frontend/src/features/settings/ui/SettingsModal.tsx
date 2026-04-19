@@ -1,5 +1,15 @@
-import { cn } from "@/shared/lib/utils";
-import { Modal } from "@/shared/ui";
+"use client";
+
+import { useState } from "react";
+import {
+  Modal,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui";
+import { Languages } from "lucide-react";
 
 interface ISettingsModalProps {
   isOpen: boolean;
@@ -7,29 +17,33 @@ interface ISettingsModalProps {
 }
 
 export const SettingsModal = ({ isOpen, handleOpen }: ISettingsModalProps) => {
+  const [language, setLanguage] = useState<string>("ru");
+
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
-      <div className={cn(
-        "cursor-default"
-      )} onClick={(e) => e.stopPropagation()}>
-        <h2 className={cn(
-          "text-center"
-        )}>Настройки</h2>
+      <div
+        className="flex w-full max-w-[320px] flex-col gap-6 px-4 py-6"
+      >
+        <div className="flex items-center gap-2 justify-center pb-4 border-b border-border-color/50">
+          <Languages size={20} className="text-secondary-color" />
+          <h2 className="text-lg font-bold text-primary-color">Настройки</h2>
+        </div>
 
-        <div className={cn("w-full mt-7.5")}>
-          <label htmlFor="type" className={cn("block mb-2 ml-2.5")}>
-            Язык мессенджера
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-secondary-color">
+            Язык интерфейса
           </label>
-          <select
-            defaultValue="GROUP"
-            id="type"
-            className={cn(
-              "w-full text-primary-color py-2 px-3 bg-primary-bg rounded-md border border-primary-color",
-            )}
-          >
-            <option value="GROUP">Русский</option>
-            <option value="CHANNEL">Английский</option>
-          </select>
+
+          <Select value={language} onValueChange={setLanguage}>
+            <SelectTrigger className="w-full border-border-color bg-primary-bg text-primary-color focus:ring-accent-color/50 hover:border-secondary-color/50 transition-colors">
+              <SelectValue placeholder="Выберите язык" />
+            </SelectTrigger>
+
+            <SelectContent className="bg-primary-bg border-border-color text-primary-color z-800">
+              <SelectItem value="ru">Русский</SelectItem>
+              <SelectItem value="en">English</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </Modal>

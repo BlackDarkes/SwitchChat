@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil } from "lucide-react";
+import { Pencil, Copy, Check, Upload } from "lucide-react";
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { copyName } from "@/shared/model/copy-name";
@@ -24,6 +24,7 @@ export const ProfileModal = ({
   handleOpen,
 }: IProfileModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -46,7 +47,9 @@ export const ProfileModal = ({
     setIsEditing(true);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -61,7 +64,7 @@ export const ProfileModal = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const result = profileUpdateSchema.safeParse(formData);
-    
+
     if (!result.success) {
       const newErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
@@ -77,154 +80,175 @@ export const ProfileModal = ({
     });
   };
 
-  const handleCancel = () => {
+  const handleCopyUsername = () => {
+    copyName(user?.username);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleClose = () => {
+    handleOpen();
     setIsEditing(false);
     setErrors({});
   };
 
-  const handleCloseModal = () => {
-    handleOpen(); 
-    setIsEditing(false); 
-    setErrors({});
-  };
-
   return (
-    <Modal isOpen={isOpen} handleOpen={handleCloseModal}>
+    <Modal isOpen={isOpen} handleOpen={handleClose}>
       <div
-        className={cn("flex flex-col items-center gap-y-7.5")}
+        className="flex w-full max-w-[320px] flex-col items-center gap-6 px-4 py-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={cn("flex flex-col items-center gap-y-2.5")}>
-          <UserAvatar
-            userAvatar={user?.avatar}
-            userName={user?.name}
-            isAvatar={true}
-            size="big"
-          />
+        <div className="flex flex-col items-center gap-3 w-full">
+          <div className="relative">
+            <UserAvatar
+              userAvatar={user?.avatar}
+              userName={user?.name}
+              size="big"
+            />
+            {isMyProfile && isEditing && formData.avatar && (
+              <span className="absolute -bottom-1 -right-1 bg-accent-color text-white text-[10px] px-1.5 py-0.5 rounded-full shadow-sm">
+                Новый
+              </span>
+            )}
+          </div>
 
-          <div className="flex items-center gap-2">
-            <h3 className={cn("text-[clamp(14px,1.5vw,16px)] text-center")}>
-              {isEditing ? (
-                <input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className={cn(
-                    "px-2 py-1 rounded border bg-transparent text-center focus:outline-none focus:ring-2 focus:ring-accent-color",
-                    errors.name && "border-red-500"
-                  )}
-                  disabled={isPending}
-                />
-              ) : (
-                user?.name
-              )}
-            </h3>
+          <div className="flex items-center gap-2 justify-center w-full">
+            {isEditing ? (
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                disabled={isPending}
+                className={cn(
+                  "w-full px-3 py-2 rounded-xl border border-border-color bg-primary-bg text-center text-base font-semibold text-primary-color placeholder:text-secondary-color/50 focus:outline-none focus:ring-2 focus:ring-accent-color/50 transition",
+                  errors.name && "border-red-500 focus:ring-red-500/50"
+                )}
+                placeholder="Ваше имя"
+              />
+            ) : (
+              <h3 className="text-lg font-bold text-center text-primary-color truncate">
+                {user?.name}
+              </h3>
+            )}
 
             {!isEditing && isMyProfile && (
               <button
                 type="button"
                 onClick={handleStartEdit}
-                className="absolute top-5 left-5 p-1 rounded-full hover:bg-accent-bg/50 text-secondary-color hover:text-accent-color transition-colors"
+                className="shrink-0 p-2 rounded-full hover:bg-secondary-bg/30 text-secondary-color hover:text-accent-color transition-all duration-200 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-color/50"
                 title="Редактировать профиль"
               >
-                <Pencil size={20} />
+                <Pencil size={18} />
               </button>
             )}
           </div>
-
-          {errors.name && <span className="text-xs text-red-500 mt-1">{errors.name}</span>}
+          {errors.name && (
+            <span className="text-xs text-red-500 mt-1">{errors.name}</span>
+          )}
         </div>
 
-        <div className={cn("flex flex-col gap-y-5 w-[min(100%,250px)]")}>
-          <div>
+        <div className="flex flex-col gap-5 w-full">
+          <div className="space-y-1.5">
             {isEditing ? (
-              <>
-                <input
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={cn(
-                    "w-full px-3 py-2 rounded border bg-transparent focus:outline-none focus:ring-2 focus:ring-accent-color",
-                    errors.email && "border-red-500"
-                  )}
-                  disabled={isPending}
-                />
-                {errors.email && <span className="text-xs text-red-500">{errors.email}</span>}
-                <span className="text-[14px] text-secondary-color select-none">Почта</span>
-              </>
+              <input
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                disabled={isPending}
+                className={cn(
+                  "w-full px-3 py-2.5 rounded-xl border border-border-color bg-primary-bg text-sm text-primary-color placeholder:text-secondary-color/50 focus:outline-none focus:ring-2 focus:ring-accent-color/50 transition",
+                  errors.email && "border-red-500 focus:ring-red-500/50"
+                )}
+                placeholder="example@mail.com"
+              />
             ) : (
-              <>
-                <p>{user?.email}</p>
-                <span className="text-[14px] text-secondary-color select-none">Почта</span>
-              </>
+              <p className="text-sm text-primary-color">{user?.email}</p>
+            )}
+            <span className="text-xs text-secondary-color select-none">Почта</span>
+            {errors.email && (
+              <span className="text-xs text-red-500">{errors.email}</span>
             )}
           </div>
 
-          <div>
+          <div className="space-y-1.5">
             {isEditing ? (
-              <>
-                <textarea
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className={cn(
-                    "w-full px-3 py-2 rounded border bg-transparent resize-none focus:outline-none focus:ring-2 focus:ring-accent-color",
-                    errors.bio && "border-red-500"
-                  )}
-                  disabled={isPending}
-                />
-                {errors.bio && <span className="text-xs text-red-500">{errors.bio}</span>}
-                <span className="text-[14px] text-secondary-color select-none">Описание</span>
-              </>
+              <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleInputChange}
+                rows={3}
+                disabled={isPending}
+                className={cn(
+                  "w-full px-3 py-2.5 rounded-xl border border-border-color bg-primary-bg text-sm text-primary-color placeholder:text-secondary-color/50 resize-none focus:outline-none focus:ring-2 focus:ring-accent-color/50 transition",
+                  errors.bio && "border-red-500 focus:ring-red-500/50"
+                )}
+                placeholder="Расскажите о себе"
+              />
             ) : user?.bio ? (
-              <>
-                <p>{user?.bio}</p>
-                <span className="text-[14px] text-secondary-color select-none">Описание</span>
-              </>
+              <p className="text-sm text-primary-color leading-relaxed">
+                {user.bio}
+              </p>
             ) : (
-              <>
-                <p className="text-primary-color/60 select-none">Нет описания</p>
-                <span className="text-[14px] text-secondary-color select-none">Описание</span>
-              </>
+              <p className="text-sm text-secondary-color italic">Нет описания</p>
+            )}
+            <span className="text-xs text-secondary-color select-none">Описание</span>
+            {errors.bio && (
+              <span className="text-xs text-red-500">{errors.bio}</span>
             )}
           </div>
 
           {!isEditing && (
-            <div>
-              <p
-                className={cn("cursor-pointer")}
-                onClick={() => copyName(user?.username)}
+            <div className="space-y-1.5">
+              <button
+                type="button"
+                onClick={handleCopyUsername}
+                className="flex items-center gap-1.5 text-sm text-accent-color hover:underline focus:outline-none transition"
               >
-                {user?.username}
-              </p>
-              <span className="text-[14px] text-secondary-color select-none">Тег</span>
+                <span>@{user?.username}</span>
+                {copied ? (
+                  <Check size={14} className="text-green-500" />
+                ) : (
+                  <Copy size={14} />
+                )}
+              </button>
+              <span className="text-xs text-secondary-color select-none">Тег</span>
             </div>
           )}
 
           {isEditing && isMyProfile && (
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="w-full text-sm text-secondary-color file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-accent-bg file:text-accent-color"
-                disabled={isPending}
-              />
-              {errors.avatar && <span className="text-xs text-red-500">{errors.avatar}</span>}
-              <span className="text-[14px] text-secondary-color select-none">Аватар</span>
+            <div className="space-y-1.5">
+              <label className="flex items-center justify-center w-full px-4 py-3 rounded-xl border border-dashed border-border-color bg-primary-bg/50 cursor-pointer hover:bg-secondary-bg/20 transition">
+                <Upload size={16} className="mr-2 text-secondary-color" />
+                <span className="text-xs text-secondary-color truncate max-w-50">
+                  {formData.avatar ? formData.avatar.name : "Загрузить аватар"}
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  disabled={isPending}
+                />
+              </label>
+              {errors.avatar && (
+                <span className="text-xs text-red-500">{errors.avatar}</span>
+              )}
+              <span className="text-xs text-secondary-color select-none">Аватар</span>
             </div>
           )}
         </div>
 
         {isEditing && (
-          <div className="flex gap-3 w-full justify-center mt-2">
+          <div className="flex gap-3 w-full mt-2">
             <button
               type="button"
-              onClick={handleCancel}
+              onClick={() => {
+                setIsEditing(false);
+                setErrors({});
+              }}
               disabled={isPending}
-              className="px-4 py-2 rounded-md bg-secondary-bg text-primary-color hover:opacity-80 transition disabled:opacity-50"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-border-color bg-primary-bg text-sm font-medium text-primary-color hover:bg-secondary-bg/30 transition disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-color/50"
             >
               Отмена
             </button>
@@ -232,7 +256,7 @@ export const ProfileModal = ({
               type="button"
               onClick={handleSubmit}
               disabled={isPending}
-              className="px-4 py-2 rounded-md bg-accent-color text-white font-medium hover:opacity-80 transition disabled:opacity-50"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-accent-color text-sm font-medium text-white hover:opacity-90 active:scale-[0.98] transition disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-color/50"
             >
               {isPending ? "Сохранение..." : "Сохранить"}
             </button>
