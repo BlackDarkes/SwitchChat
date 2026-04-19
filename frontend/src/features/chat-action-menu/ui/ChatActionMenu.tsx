@@ -7,31 +7,30 @@ interface IChatActionMenuProps {
   handleOpen: () => void;
 }
 
-export const ChatActionMenu = ({
-  isOpen,
-  handleOpen,
-}: IChatActionMenuProps) => {
+export const ChatActionMenu = ({ isOpen, handleOpen }: IChatActionMenuProps) => {
   const { id } = useParams<{ id: string }>();
 
   return (
     <section
       onClick={handleOpen}
       className={cn(
-        "fixed inset-0 opacity-0 pointer-events-none transition-all duration-400", 
-        {
-          "opacity-100 pointer-events-auto select-auto": isOpen,
-        }
+        "fixed inset-0 z-40 transition-opacity duration-200 ease-out",
+        isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
+      aria-hidden={!isOpen}
     >
       <div
+        onClick={(e) => e.stopPropagation()}
         className={cn(
-          "absolute top-24 right-5 flex flex-col items-center justify-center p-3.75 w-40 bg-primary-bg rounded-2xl opacity-0 pointer-events-none transition duration-300 z-500",
-          {
-            "opacity-100 pointer-events-auto": isOpen,
-          },
+          "absolute top-14 right-4 md:right-6 w-48 max-w-[90vw] p-1.5",
+          "bg-primary-bg rounded-xl shadow-shadow-box ring-1 ring-border-color/30",
+          "transition-all duration-200 ease-out origin-top-right",
+          isOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
         )}
+        role="menu"
+        aria-hidden={!isOpen}
       >
-        <ButtonChatLeave id={id} />
+        <ButtonChatLeave id={id} onClose={handleOpen} />
       </div>
     </section>
   );
