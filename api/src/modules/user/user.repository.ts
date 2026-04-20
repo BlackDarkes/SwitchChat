@@ -1,7 +1,12 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { QueryMode } from "@/app/generated/prisma/internal/prismaNamespace";
-import { ChatMember, Contact, User } from "@/app/generated/prisma/client";
+import {
+	ChatMember,
+	Contact,
+	Prisma,
+	User,
+} from "@/app/generated/prisma/client";
 
 type ContactWithUsers = Contact & {
 	owner: User & { chatMembers: ChatMember[] };
@@ -28,10 +33,6 @@ export class UserRepository {
 	}
 
 	async getById(id: string) {
-		if (!id) {
-			throw new BadRequestException("Пользователь с таким id не найден");
-		}
-
 		return this.prismaService.client.user.findUnique({ where: { id } });
 	}
 
@@ -47,8 +48,6 @@ export class UserRepository {
 		userId: string,
 		search: string,
 	): Promise<ContactSearchResult[]> {
-		if (!search.trim()) return [];
-
 		const users = await this.prismaService.client.user.findMany({
 			where: {
 				id: { not: userId },
@@ -110,5 +109,24 @@ export class UserRepository {
 				},
 			} as ContactSearchResult;
 		});
+	}
+
+	async create(data: Prisma.UserCreateInput) {
+		return this.prismaService.client.user.create({ data });
+	}
+
+	async update(id: string, data: Prisma.UserUpdateInput) {
+		return this.prismaService.client.user.update({ where: { id }, data });
+	}
+
+	async updateUsername(id: string, username: string) {
+		return this.prismaService.client.user.update({
+			where: { id },
+			data: { username },
+		});
+	}
+
+	async remove(id: string) {
+		return this.prismaService.client.user.delete({ where: { id } });
 	}
 }

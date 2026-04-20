@@ -1,40 +1,49 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { SessionRepository } from "./session.repository";
 
 @Injectable()
 export class SessionService {
-	constructor(private readonly prismaService: PrismaService) {}
-
-	async updateSession(userId: string, refreshToken: string, userAgent: string) {
-		const existingSession =
-			await this.prismaService.client.userSession.findFirst({
-				where: { userId, userAgent },
-			});
-
-		if (existingSession) {
-			return this.prismaService.client.userSession.update({
-				where: { id: existingSession.id },
-				data: { refreshToken },
-			});
-		}
-
-		return this.prismaService.client.userSession.create({
-			data: { userId, refreshToken, userAgent },
-		});
-	}
+	constructor(private readonly sessionRepository: SessionRepository) {}
 
 	async findSessionId(userId: string, userAgent: string) {
-		const session = await this.prismaService.client.userSession.findFirst({
-			where: { userId, userAgent },
-			select: { id: true },
-		});
+		const session = await this.sessionRepository.findSessionId(
+			userId,
+			userAgent,
+		);
 
-    return session?.id;
+		return session?.id;
+	}
+
+	async updateSession(userId: string, refreshToken: string, userAgent: string) {
+		const existingSession = await this.sessionRepository.findSessionId(
+			userId,
+			userAgent,
+		);
+
+		if (existingSession) {
+			return this.sessionRepository.updateSession(
+				userId,
+				refreshToken,
+				userAgent,
+			);
+		}
+
+		return this.sessionRepository.create({
+			id: userId,
+			refreshToken,
+			userAgent,
+			user: { connect: { id: userId } },
+		});
 	}
 
 	async removeSession(refreshToken: string) {
-    return this.prismaService.client.userSession.deleteMany({
-      where: { refreshToken },
-    })
-  }
+		const existingSession =
+			await this.sessionRepository.findSessionbyRefreshToken(refreshToken);
+
+		if (!existingSession) {
+			throw new BadRequestException("Сессия не найдена");
+		}
+
+		return this.sessionRepository.removeSession(refreshToken);
+	}
 }
