@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { SessionRepository } from "./session.repository";
+import { Request } from "express";
 
 @Injectable()
 export class SessionService {
@@ -14,7 +15,8 @@ export class SessionService {
 		return session?.id;
 	}
 
-	async updateSession(userId: string, refreshToken: string, userAgent: string) {
+	async updateSession(userId: string, req: Request, userAgent: string) {
+		const refreshToken = req?.cookies?.["refresh_token"];
 		const existingSession = await this.sessionRepository.findSessionId(
 			userId,
 			userAgent,

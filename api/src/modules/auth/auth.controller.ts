@@ -23,10 +23,11 @@ export class AuthController {
   @HttpCode(200)
   async login(
     @Res({ passthrough: true }) res: Response,
+    @Req() req: Request,
     @Body() data: TypeLoginSchema,
     @Headers("user-agent") userAgent: string
   ) {
-    const { password: _, ...user } = await this.authService.login(res, data, userAgent);
+    const { password: _, ...user } = await this.authService.login(res, req, data, userAgent);
 
     return {
       message: "Пользователь успешно авторизован",

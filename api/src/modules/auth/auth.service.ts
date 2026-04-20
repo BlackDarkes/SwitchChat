@@ -3,7 +3,6 @@ import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { Request, Response } from "express";
 import { hash, compare } from "bcryptjs";
-import { isDev } from "@/utils/is-dev.utils";
 import { v4 as uuid } from "uuid";
 import { TypeRegisterSchema } from "./common/dto/register.dto";
 import { UserService } from "../user/user.service";
@@ -57,7 +56,7 @@ export class AuthService {
 		await this.chatsService.create({ name: "Избранное", ownerId: user.id, type: "SELF" });
 	}
 
-	async login(res: Response, data: TypeLoginSchema, userAgent) {
+	async login(res: Response, req: Request, data: TypeLoginSchema, userAgent) {
 		const { email, password } = data;
 		const user = await this.userRepository.getByEmail(email);
 
@@ -65,7 +64,7 @@ export class AuthService {
 			throw new UnauthorizedException("Неверный логин или пароль");
 		}
 
-		await this.auth(res, user.id, user.email, user.username, userAgent);
+		await this.auth(res, req, user.id, user.email, user.username, userAgent);
 		return user;
 	}
 
@@ -106,7 +105,7 @@ export class AuthService {
 				throw new UnauthorizedException("Пользователь не найден");
 			}
 
-			await this.auth(res, user.id, user.email, user.username, userAgent);
+			await this.auth(res, req, user.id, user.email, user.username, userAgent);
 
 			return user;
 		} catch {
@@ -169,6 +168,7 @@ export class AuthService {
 
 	private async auth(
 		res: Response,
+		req: Request,
 		id: string,
 		email: string,
 		tag: string,
@@ -176,7 +176,7 @@ export class AuthService {
 	) {
 		const { access_token, refresh_token } = this.crateTokens(id, email, tag);
 
-		await this.sessionService.updateSession(id, refresh_token, userAgent);
+		await this.sessionService.updateSession(id, req, userAgent);
 
 		const accessTokenExpires = new Date(Date.now() + 1000 * 60 * 60); // 1 hours
 		const refreshTokenExpires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30); // 30 days
