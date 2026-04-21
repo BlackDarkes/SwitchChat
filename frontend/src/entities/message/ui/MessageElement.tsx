@@ -23,7 +23,10 @@ export const MessageElement = memo(({ message, userId, handleOpen }: IMessageEle
       <button
         type="button"
         onClick={handleOpen}
-        className="shrink-0 translate-y-0.5 transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none"
+        className={cn(
+          "shrink-0 translate-y-0.5 transition-transform duration-200",
+          "hover:scale-105 active:scale-95 focus:outline-none",
+        )}
         aria-label={`Профиль: ${message.user.name}`}
       >
         <UserAvatar

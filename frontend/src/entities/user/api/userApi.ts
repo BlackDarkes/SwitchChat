@@ -4,9 +4,7 @@ import { TypeRegisterSchema } from "../model/validate/register-schema";
 import { IUser } from "@/shared/types/user/user.interface";
 import { IContact } from "@/shared/types/contact/contact.interface";
 import { TypeProfileUpdateSchema } from "../model/validate/profile-update-schema";
-
-const extractData = <T>(promise: Promise<{ data: T }>): Promise<T> =>
-  promise.then(({ data }) => data);
+import { extractData } from "@/shared/model/extract-data";
 
 export const userApi = {
   login: async (

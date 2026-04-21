@@ -6,24 +6,7 @@ import { ContextMenu } from "radix-ui";
 import { ButtonAddFavorite } from "@/features/chat-add-favorite";
 import { ButtonRemoveFavorite } from "@/features/chat-remote-favorite";
 import { IChat } from "@/shared/types";
-
-const formatChatDate = (dateStr: string | undefined) => {
-  if (!dateStr) return "";
-  const date = new Date(dateStr);
-  const now = new Date();
-  const isToday = date.toDateString() === now.toDateString();
-  const isYesterday =
-    new Date(now.setDate(now.getDate() - 1)).toDateString() ===
-    date.toDateString();
-
-  if (isToday)
-    return date.toLocaleTimeString("ru-RU", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  if (isYesterday) return "Вчера";
-  return date.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit" });
-};
+import { formatChatDate } from "../../model/format-chat-date";
 
 interface IChatElementLayoutProps {
   chat: IChat;
@@ -41,7 +24,7 @@ export const ChatElementLayout = ({
   const lastDate = formatChatDate(chat.messages?.at(-1)?.createdAt);
 
   return (
-    <li
+    <div
       className={cn(
         "w-full rounded-xl transition-all duration-200",
         isActive
@@ -92,8 +75,19 @@ export const ChatElementLayout = ({
         </ContextMenu.Trigger>
 
         <ContextMenu.Portal>
-          <ContextMenu.Content className="p-2 min-w-48 bg-card border border-border rounded-xl shadow-xl z-50 animate-in fade-in zoom-in-95 data-[side=top]:slide-in-from-bottom-2 data-[side=bottom]:slide-in-from-top-2">
-            <ContextMenu.Item className="rounded-lg px-2 py-1.5 text-sm cursor-pointer hover:bg-accent focus:bg-accent focus:outline-none">
+          <ContextMenu.Content
+            className={cn(
+              "p-2 min-w-48 bg-card border border-border rounded-xl",
+              "shadow-xl z-50 animate-in fade-in zoom-in-95",
+              "data-[side=top]:slide-in-from-bottom-2 data-[side=bottom]:slide-in-from-top-2",
+            )}
+          >
+            <ContextMenu.Item
+              className={cn(
+                "rounded-lg px-2 py-1.5 text-sm cursor-pointer",
+                "hover:bg-accent focus:bg-accent focus:outline-none",
+              )}
+            >
               {chat.chatMembers?.some((member) => member.isFavorite) ? (
                 <ButtonRemoveFavorite chatId={chat.id} />
               ) : (
@@ -103,6 +97,6 @@ export const ChatElementLayout = ({
           </ContextMenu.Content>
         </ContextMenu.Portal>
       </ContextMenu.Root>
-    </li>
+    </div>
   );
 };

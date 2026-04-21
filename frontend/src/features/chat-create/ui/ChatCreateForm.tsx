@@ -3,7 +3,7 @@
 import {
   createChatSchema,
   TypeCreateChatSchema,
-} from "@/entities/chat/model/create-chat-schema";
+} from "@/entities/chat/model/validate/create-chat-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useChatCreateStore } from "../model/chat-create-store";
@@ -41,7 +41,7 @@ export const ChatCreateForm = () => {
   const onSubmit: SubmitHandler<TypeCreateChatSchema> = async (data) => {
     try {
       const result = await createChat(data);
-      handleOpen(); 
+      handleOpen();
       toast.success(result.message);
       setValue("name", "");
       router.push(`/chat/${result.chat.id}`);

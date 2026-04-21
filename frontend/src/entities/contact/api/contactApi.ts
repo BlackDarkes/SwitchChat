@@ -1,8 +1,6 @@
 import { apiClient } from "@/libs/api/clients";
+import { extractData } from "@/shared/model/extract-data";
 import { IContact } from "@/shared/types/contact/contact.interface";
-
-const extractData = <T>(promise: Promise<{ data: T }>) =>
-  promise.then((res) => res.data);
 
 export const contactApi = {
   getContacts: async (): Promise<IContact[]> =>

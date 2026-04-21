@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 import { ReactNode } from "react";
-import { CloseButton } from "../CloseButton/CloseButton";
+import { CloseButton } from "./close-button";
 
 interface IModalProps {
   children: ReactNode;

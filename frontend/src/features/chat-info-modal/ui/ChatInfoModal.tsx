@@ -1,4 +1,4 @@
-import { ChatMemberElement } from "@/entities/chat";
+import { ChatMemberElement } from "@/entities/chat-member";
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
 import { useProfileStore } from "@/features/profile";
 import { useHandleOpenProfile } from "@/shared/hooks/handle-open-profile";

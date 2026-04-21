@@ -1,8 +1,8 @@
-export { Container } from "./Container/Container";
-export { Modal } from "./Modal/Modal";
-export { LinkUnderline } from "./LinkUnderline/LinkUnderline";
-export { CloseButton } from "./CloseButton/CloseButton";
-export { InputField } from "./InputField/InputField";
+export { Container } from "./container";
+export { Modal } from "./modal";
+export { LinkUnderline } from "./link-underline";
+export { CloseButton } from "./close-button";
+export { InputField } from "./input-field";
 export { Toaster } from "./sonner";
 export { TruncateName } from "./truncate-name";
 export { MessageSubscription } from "./message-subscription";

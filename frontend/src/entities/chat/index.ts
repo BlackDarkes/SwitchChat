@@ -5,13 +5,12 @@ export {
   useGroupChats,
   useDirectChats,
   useChatById,
-  useChatFavorites
+  useChatFavorites,
 } from "./api/useChat";
 export { useSearch } from "./api/useSearchChat";
 
-export type { TypeCreateChatSchema } from "./model/create-chat-schema";
+export type { TypeCreateChatSchema } from "./model/validate/create-chat-schema";
 
 export { ChatElement } from "./ui/ChatElement";
 export { ChatFavoriteElement } from "./ui/ChatFavoriteElement";
 export { ChatElementDirect } from "./ui/ChatElementDirect";
-export { ChatMemberElement } from "./ui/chat-member/ChatMemberElement";

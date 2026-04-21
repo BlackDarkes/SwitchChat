@@ -1,11 +1,9 @@
 "use client";
 
 import { apiClient } from "@/libs/api/clients";
-import { TypeCreateChatSchema } from "../model/create-chat-schema";
+import { TypeCreateChatSchema } from "../model/validate/create-chat-schema";
 import { IChat, IChatMember } from "@/shared/types";
-
-const extractData = <T>(promise: Promise<{ data: T }>) =>
-  promise.then((res) => res.data);
+import { extractData } from "@/shared/model/extract-data";
 
 export const chatApi = {
   getUserChats: async (): Promise<{ chats: IChat[] }> =>
@@ -29,7 +27,9 @@ export const chatApi = {
   search: async (search: string): Promise<IChat[]> =>
     extractData(apiClient.chat.search({ search })),
 
-  create: async (data: TypeCreateChatSchema): Promise<{ chat: IChat, message: string }> =>
+  create: async (
+    data: TypeCreateChatSchema,
+  ): Promise<{ chat: IChat; message: string }> =>
     extractData(apiClient.chat.create(data)),
 
   join: async (id: string): Promise<IChat> =>
