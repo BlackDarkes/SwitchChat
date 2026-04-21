@@ -1,7 +1,7 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
-import * as cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
@@ -14,6 +14,7 @@ async function bootstrap() {
 		origin: [
 			config.get<string>("CLIENT_URL"),
 			config.get<string>("CLIENT_URL_2"),
+			config.get<string>("CLIENT_URL_3"),
 		],
 		credentials: true,
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

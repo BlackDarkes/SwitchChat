@@ -16,7 +16,8 @@ const nextConfig: NextConfig = {
         destination: `${apiPath}/:path`,
       }
     ]
-  }
+  },
+  output: "standalone",
 };
 
 export default nextConfig;

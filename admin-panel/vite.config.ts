@@ -33,7 +33,7 @@ export default defineConfig(({ mode }): IVitestConfigExport => {
         }
       }
 		},
-    preview: { port: 3000 },
+    preview: { port: 8080 },
     resolve: {
       alias: {
         "@/app": resolve(__dirname, "./src/app"),
