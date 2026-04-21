@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { type TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { v4 as uuid } from "uuid";
-import { ChatsRepository } from "./chat.repository";
+import { ChatsRepository } from "./chats.repository";
 import { EnumRoleMember } from "@/app/generated/prisma/enums";
 
 @Injectable()

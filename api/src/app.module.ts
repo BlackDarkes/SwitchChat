@@ -7,6 +7,8 @@ import { ChatsModule } from './modules/chats/chats.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { SessionModule } from './modules/session/session.module';
 import { ContactsModule } from './modules/contacts/contacts.module';
+import { ChatMemberModule } from './modules/chat-member/chat-member.module';
+import { ReactionModule } from './modules/reaction/reaction.module';
 
 @Module({
 	imports: [
@@ -18,6 +20,8 @@ import { ContactsModule } from './modules/contacts/contacts.module';
 		MessagesModule,
 		SessionModule,
 		ContactsModule,
+		ChatMemberModule,
+		ReactionModule,
 	],
 })
 export class AppModule {}

@@ -9,7 +9,6 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { ContactsService } from "./contacts.service";
-import { ContactsRepository } from "./contacts.repository";
 import { CurrentUser } from "@/app/common/decorators/current-user.decorator";
 import { JwtGuard } from "../auth/common/guard/jwt.guard";
 
@@ -18,13 +17,12 @@ import { JwtGuard } from "../auth/common/guard/jwt.guard";
 export class ContactsController {
 	constructor(
 		private readonly contactsService: ContactsService,
-		private readonly contactsRepository: ContactsRepository,
 	) {}
 
 	@Get("")
 	@HttpCode(200)
 	async getContacts(@CurrentUser("id") userId: string) {
-		const contacts = await this.contactsRepository.getUserContacts(userId);
+		const contacts = await this.contactsService.getUserContacts(userId);
 
 		return contacts;
 	}
@@ -35,7 +33,7 @@ export class ContactsController {
 		@CurrentUser("id") userId: string,
 		@Query("query") search: string,
 	) {
-		return this.contactsRepository.searchContact(userId, search);
+		return this.contactsService.searchContact(userId, search);
 	}
 
 	@Post("")

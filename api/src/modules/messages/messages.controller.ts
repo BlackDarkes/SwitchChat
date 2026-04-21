@@ -54,16 +54,6 @@ export class MessagesController {
     return { message: "Сообщение удалено" };
   }
 
-  @Post(":id/react/:emoji")
-  @HttpCode(201)
-  async react(
-    @Param("id") messageId: string,
-    @Param("emoji") emoji: string,
-    @CurrentUser("id") userId: string,
-  ) {
-    return this.messagesService.addReaction(userId, messageId, emoji);
-  }
-
   @Post(":chatId/read/:messageId")
   @HttpCode(201)
   async readMessage(

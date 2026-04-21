@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { SessionRepository } from "./session.repository";
 import { Request } from "express";
+import { Prisma } from "@/app/generated/prisma/client";
 
 @Injectable()
 export class SessionService {
@@ -13,6 +14,14 @@ export class SessionService {
 		);
 
 		return session?.id;
+	}
+
+	async findSessionbyRefreshToken(refreshToken: string) {
+		return this.sessionRepository.findSessionbyRefreshToken(refreshToken);
+	}
+
+	async create(data: Prisma.UserSessionCreateInput) {
+		return this.sessionRepository.create(data);
 	}
 
 	async updateSession(userId: string, req: Request, userAgent: string) {

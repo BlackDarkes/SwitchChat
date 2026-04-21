@@ -7,7 +7,7 @@ import {
 } from "@nestjs/websockets";
 import { Socket, Server } from "socket.io";
 import { ChatsService } from "./chats.service";
-import { ChatsRepository } from "./chat.repository";
+import { ChatsRepository } from "./chats.repository";
 import { JwtService } from "@nestjs/jwt";
 import { parse } from "cookie";
 import { BadGatewayException } from "@nestjs/common";

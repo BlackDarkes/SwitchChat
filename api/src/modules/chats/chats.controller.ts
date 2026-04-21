@@ -11,7 +11,7 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { ChatsService } from "./chats.service";
-import { ChatsRepository } from "./chat.repository";
+import { ChatsRepository } from "./chats.repository";
 import { TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { CurrentUser } from "@/app/common/decorators/current-user.decorator";
 import { EnumRoleMember } from "@/app/generated/prisma/enums";

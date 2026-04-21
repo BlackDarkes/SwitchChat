@@ -22,8 +22,6 @@ export class ContactsRepository {
 	}
 
 	async searchContact(userId: string, search: string): Promise<Contact[] | []> {
-		if (!search.trim()) return [];
-
 		const contacts = await this.prismaService.client.contact.findMany({
 			where: {
 				ownerId: userId,
@@ -57,5 +55,17 @@ export class ContactsRepository {
 		});
 
 		return contacts;
+	}
+
+	async addContact(userId: string, contactId: string) {
+		return this.prismaService.client.contact.create({
+			data: { ownerId: userId, contactId: contactId },
+		})
+	}
+
+	async removeContact(userId: string, contactId: string) {
+		return this.prismaService.client.contact.deleteMany({
+			where: { ownerId: userId, contactId: contactId },
+		});
 	}
 }

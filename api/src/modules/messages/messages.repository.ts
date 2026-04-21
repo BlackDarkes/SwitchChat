@@ -51,6 +51,41 @@ export class MessagesRepository {
 		});
 	}
 
+	async createTransaction(
+		userId: string,
+		chatId: string,
+		data: TypeCreateMessageSchema,
+	) {
+		const { attachments, ...message } = data;
+
+		await this.prismaService.client.$transaction(async (tx) => {
+			const messageCreate = await tx.message.create({
+				data: {
+					...message,
+					chatId,
+					userId,
+					attachments: attachments
+						? {
+								create: attachments.map((file) => ({
+									...file,
+									fileSize: Number(file.fileSize),
+									mimeType: file.mimeType,
+								})),
+							}
+						: undefined,
+				},
+				include: { attachments: true, user: true },
+			});
+
+			await tx.chat.update({
+				where: { id: chatId },
+				data: { updatedAt: new Date() },
+			});
+
+			return messageCreate;
+		});
+	}
+
 	async update(messageId: string, data: TypeUpdateMessageSchema) {
 		return this.prismaService.client.message.update({
 			where: { id: messageId },
