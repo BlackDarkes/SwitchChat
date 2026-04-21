@@ -3,6 +3,7 @@ import { type TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { v4 as uuid } from "uuid";
 import { ChatsRepository } from "./chats.repository";
 import { ChatMemberRepository } from "../chat-member/chat-member.repository";
+import { Prisma } from "@/app/generated/prisma/client";
 
 @Injectable()
 export class ChatsService {
@@ -89,6 +90,10 @@ export class ChatsService {
 		return this.chatRepository.update(chatId, {
 			chatMembers: { create: { userId, role: "MEMBER" } },
 		});
+	}
+
+	async update(id: string, data: Prisma.ChatUpdateInput) {
+		return this.chatRepository.update(id, data);
 	}
 
 	async leaveChat(chatId: string, userId: string) {

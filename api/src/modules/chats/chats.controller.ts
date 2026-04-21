@@ -14,6 +14,7 @@ import { ChatsService } from "./chats.service";
 import { TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { CurrentUser } from "@/app/common/decorators/current-user.decorator";
 import { JwtGuard } from "../auth/common/guard/jwt.guard";
+import { Prisma } from "@/app/generated/prisma/client";
 
 @Controller("chats")
 @UseGuards(JwtGuard)
@@ -89,6 +90,12 @@ export class ChatsController {
 	@HttpCode(201)
 	async join(@Param("id") id: string, @CurrentUser("id") userId: string) {
 		return this.chatsService.joinChat(id, userId);
+	}
+
+	@Patch(":id")
+	@HttpCode(200)
+	async update(@Param("id") id: string, @Body() data: Prisma.ChatUpdateInput) {
+		return this.chatsService.update(id, data);
 	}
 
 	@Delete(":id/leave")

@@ -4,6 +4,7 @@ import { apiClient } from "@/libs/api/clients";
 import { TypeCreateChatSchema } from "../model/validate/create-chat-schema";
 import { IChat, IChatMember } from "@/shared/types";
 import { extractData } from "@/shared/model/extract-data";
+import { TypeUpdateChatSchema } from "../model/validate/update-chat-schema";
 
 export const chatApi = {
   getUserChats: async (): Promise<{ chats: IChat[] }> =>
@@ -31,6 +32,9 @@ export const chatApi = {
     data: TypeCreateChatSchema,
   ): Promise<{ chat: IChat; message: string }> =>
     extractData(apiClient.chat.create(data)),
+
+  update: async (id: string, data: TypeUpdateChatSchema): Promise<IChat> =>
+    extractData(apiClient.chat.update(id, data)),
 
   join: async (id: string): Promise<IChat> =>
     extractData(apiClient.chat.join(id)),

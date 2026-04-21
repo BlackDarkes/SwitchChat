@@ -1,5 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import { Pencil } from "lucide-react";
+import { useLoginStore } from "@/features/auth/model/login-store";
 import { ChatMemberElement } from "@/entities/chat-member";
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
+import { ChatUpdateForm } from "@/features/chat-update/ui/ChatUpdateForm"; // Путь к форме выше
 import { useProfileStore } from "@/features/profile";
 import { useHandleOpenProfile } from "@/shared/hooks/handle-open-profile";
 import { copyName } from "@/shared/model/copy-name";
@@ -13,8 +19,20 @@ interface IChatInfoModalProps {
 }
 
 export const ChatInfoModal = ({ chat, isOpen, handleOpen }: IChatInfoModalProps) => {
+  const { user } = useLoginStore();
   const { openProfile } = useProfileStore();
   const { handleOpenProfile } = useHandleOpenProfile();
+  const [isEditing, setIsEditing] = useState(false);
+  
+  const isOwner = chat?.ownerId === user?.id;
+
+  if (isEditing && chat) {
+    return (
+      <Modal isOpen={isOpen} handleOpen={handleOpen}>
+        <ChatUpdateForm chat={chat} onSuccess={() => setIsEditing(false)} />
+      </Modal>
+    );
+  }
 
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen}>
@@ -22,6 +40,16 @@ export const ChatInfoModal = ({ chat, isOpen, handleOpen }: IChatInfoModalProps)
         className="flex w-full max-w-[320px] flex-col gap-6 px-4 py-6"
         onClick={(e) => e.stopPropagation()}
       >
+        {isOwner && (
+          <button
+            type="button"
+            onClick={() => setIsEditing(true)}
+            className="absolute top-4 left-4 p-2 rounded-full hover:bg-secondary-bg/30 text-secondary-color hover:text-accent-color transition-all duration-200 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-color/50"
+            title="Редактировать чат"
+          >
+            <Pencil size={18} />
+          </button>
+        )}
 
         <div className="flex flex-col items-center gap-3 -mt-1">
           <ChatAvatar chatAvatar={chat?.avatar} chatName={chat?.name} size="big" />

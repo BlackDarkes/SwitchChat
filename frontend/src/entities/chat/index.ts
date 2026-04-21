@@ -10,6 +10,7 @@ export {
 export { useSearch } from "./api/useSearchChat";
 
 export type { TypeCreateChatSchema } from "./model/validate/create-chat-schema";
+export { type TypeUpdateChatSchema, updateChatSchema } from "./model/validate/update-chat-schema";
 
 export { ChatElement } from "./ui/ChatElement";
 export { ChatFavoriteElement } from "./ui/ChatFavoriteElement";
