@@ -11,70 +11,49 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { ChatsService } from "./chats.service";
-import { ChatsRepository } from "./chats.repository";
 import { TypeCreateChatSchema } from "./common/dto/create-chat.dto";
 import { CurrentUser } from "@/app/common/decorators/current-user.decorator";
-import { EnumRoleMember } from "@/app/generated/prisma/enums";
 import { JwtGuard } from "../auth/common/guard/jwt.guard";
 
 @Controller("chats")
 @UseGuards(JwtGuard)
 export class ChatsController {
-	constructor(
-		private readonly chatsService: ChatsService,
-		private readonly chatRepository: ChatsRepository,
-	) {}
+	constructor(private readonly chatsService: ChatsService) {}
 
 	@Get("all")
 	@HttpCode(200)
 	async getAll() {
-		const chats = await this.chatRepository.getAll();
-
-		return {
-			chats,
-		};
+		return this.chatsService.getAll();
 	}
 
 	@Get("")
 	@HttpCode(200)
 	async getAllByUserId(@CurrentUser("id") userId: string) {
-		const chats = await this.chatRepository.getAllByUserId(userId);
-
-		return {
-			chats,
-		};
+		return this.chatsService.getAllByUserId(userId);
 	}
 
 	@Get("favorite")
 	@HttpCode(200)
 	async getFavoriteChats(@CurrentUser("id") userId: string) {
-		const chat = await this.chatRepository.getFavoriteChats(userId);
-
-		return chat;
+		return this.chatsService.getFavoriteChats(userId);
 	}
 
 	@Get("self")
 	@HttpCode(200)
 	async getSelfChats(@CurrentUser("id") userId: string) {
-		const chat = await this.chatRepository.getSelfChats(userId);
-
-		return chat;
+		return this.chatsService.getSelfChats(userId);
 	}
 
 	@Get("direct")
 	@HttpCode(200)
 	async getDirectChats(@CurrentUser("id") userId: string) {
-		const chats = await this.chatRepository.getDirectChats(userId);
-
-		return chats;
+		return this.chatsService.getDirectChats(userId);
 	}
 
 	@Get("group")
 	@HttpCode(200)
 	async getChannelChats(@CurrentUser("id") userId: string) {
-		const chats = await this.chatRepository.getGroupChats(userId);
-
-		return chats;
+		return this.chatsService.getGroupChats(userId);
 	}
 
 	@Get("search")
@@ -83,15 +62,13 @@ export class ChatsController {
 		@CurrentUser("id") userId: string,
 		@Query("query") query: string,
 	) {
-		return this.chatRepository.searchChats(userId, query);
+		return this.chatsService.searchChats(userId, query);
 	}
 
 	@Get(":id")
 	@HttpCode(200)
 	async getChatInfo(@Param("id") chatId: string) {
-		const chat = await this.chatRepository.getChatWithFullInfo(chatId);
-
-		return chat;
+		return this.chatsService.getChatWithFullInfo(chatId);
 	}
 
 	@Post("")
@@ -118,27 +95,6 @@ export class ChatsController {
 	@HttpCode(200)
 	async leave(@Param("id") chatId: string, @CurrentUser("id") userId: string) {
 		return this.chatsService.leaveChat(chatId, userId);
-	}
-
-	// Добавить @role("admin")
-	@Delete(":id/kik/:targetUserId")
-	@HttpCode(200)
-	async kik(
-		@Param("id") chatId: string,
-		@Param("targetUserId") userId: string,
-		@CurrentUser("id") adminId: string,
-	) {
-		return this.chatsService.kikMember(chatId, userId, adminId);
-	}
-
-	@Patch(":id/member/:targetUserId/role")
-	@HttpCode(200)
-	async updateRole(
-		@Param("id") chatId: string,
-		@Param("targetUserId") userId: string,
-		@Body("role") role: EnumRoleMember,
-	) {
-		return this.chatsService.updateMemberRole(chatId, userId, role);
 	}
 
 	@Patch(":id/add-favorite")

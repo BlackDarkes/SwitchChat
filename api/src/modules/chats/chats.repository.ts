@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { Chat, EnumChatTypes } from "@/app/generated/prisma/client";
+import { Chat, EnumChatTypes, Prisma } from "@/app/generated/prisma/client";
 import { QueryMode } from "@/app/generated/prisma/internal/prismaNamespace";
 
 @Injectable()
@@ -46,7 +46,7 @@ export class ChatsRepository {
 			where: { chatMembers: { some: { userId, isFavorite: true } } },
 			include: {
 				chatMembers: { include: { user: true } },
-			}
+			},
 		});
 	}
 
@@ -78,6 +78,13 @@ export class ChatsRepository {
 				chatMembers: { include: { user: true } },
 			},
 			orderBy: { updatedAt: "desc" },
+		});
+	}
+
+	async getOnlineMembers(chatId: string) {
+		return this.prismaService.client.chatMember.findMany({
+			where: { chatId, user: { isOnline: true } },
+			include: { user: true },
 		});
 	}
 
@@ -141,6 +148,65 @@ export class ChatsRepository {
 					{ chatMembers: { some: { userId: user1Id } } },
 					{ chatMembers: { some: { userId: user2Id } } },
 				],
+			},
+		});
+	}
+
+	async create(data: Prisma.ChatCreateInput) {
+		return this.prismaService.client.chat.create({ data });
+	}
+
+	async addFavorite(chatId: string, userId: string) {
+		return this.prismaService.client.chat.update({
+			where: { id: chatId },
+			data: {
+				chatMembers: {
+					updateMany: { where: { userId }, data: { isFavorite: true } },
+				},
+			},
+		});
+	}
+
+	async update(id: string, data: Prisma.ChatUpdateInput) {
+		return this.prismaService.client.chat.update({ where: { id }, data });
+	}
+
+	async changeOwner(chatId: string, newOwnerId: string, chat: Chat) {
+		return this.prismaService.client.$transaction(async (tx) => {
+			await tx.chat.update({
+				where: { id: chatId },
+				data: { ownerId: newOwnerId },
+			});
+
+			await tx.chatMember.updateMany({
+				where: { chatId, userId: chat.ownerId },
+				data: { role: "ADMIN" },
+			});
+
+			await tx.chatMember.updateMany({
+				where: { chatId, userId: newOwnerId },
+				data: { role: "OWNER" },
+			});
+		});
+	}
+
+	async delete(chatId: string, userId: string) {
+		return this.prismaService.client.chatMember.deleteMany({
+			where: { chatId, userId },
+		});
+	}
+
+	async deleteChat(chatId: string) {
+		return this.prismaService.client.chat.deleteMany({ where: { id: chatId } });
+	}
+
+	async removeFavorite(chatId: string, userId: string) {
+		return this.prismaService.client.chat.update({
+			where: { id: chatId },
+			data: {
+				chatMembers: {
+					updateMany: { where: { userId }, data: { isFavorite: false } },
+				},
 			},
 		});
 	}

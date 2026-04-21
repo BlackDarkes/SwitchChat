@@ -6,6 +6,7 @@ import { ChatsRepository } from "./chats.repository";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtConfig } from "@/app/config/jwt.config";
+import { ChatMemberModule } from "../chat-member/chat-member.module";
 
 @Module({
 	imports: [
@@ -14,6 +15,7 @@ import { JwtConfig } from "@/app/config/jwt.config";
 			useFactory: JwtConfig,
 			inject: [ConfigService],
 		}),
+		ChatMemberModule,
 	],
 	controllers: [ChatsController],
 	providers: [ChatsService, ChatsRepository, ChatsGateway],
