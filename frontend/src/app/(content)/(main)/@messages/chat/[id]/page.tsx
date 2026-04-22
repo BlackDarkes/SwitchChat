@@ -6,7 +6,7 @@ import { useLoginStore } from "@/features/auth";
 import { ButtonChatJoin } from "@/features/chat-join";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { MessageSubscription } from "@/shared/ui";
-import { MessageField } from "@/widgets/message-field/ui/MessageField";
+import { MessageField } from "@/widgets/message-field";
 import { MessageList } from "@/widgets/message-list";
 import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
 import { redirect, useParams } from "next/navigation";

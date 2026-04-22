@@ -9,8 +9,9 @@ import {
 import { ChatInfoModal, useChatInfoStore } from "@/features/chat-info-modal";
 import { IChat } from "@/shared/types";
 import { EllipsisVertical } from "lucide-react";
-import { useHandleBack } from "../model/handle-back";
+import { useHandleBack } from "@/shared/hooks/handle-back";
 import { TruncateName } from "@/shared/ui";
+import { cn } from "@/shared/lib/utils";
 
 interface IMessageTitleProps {
   chat: IChat | undefined;
@@ -28,7 +29,11 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
         <button
           type="button"
           onClick={handleOpenModal}
-          className="flex min-w-0 flex-1 items-center gap-3 -m-2 p-2 rounded-xl cursor-pointer transition-all duration-200 hover:bg-secondary-bg/20 active:scale-[0.98] focus:outline-none"
+          className={cn(
+            "flex min-w-0 flex-1 items-center gap-3 -m-2 p-2 rounded-xl",
+            "cursor-pointer transition-all duration-200",
+            "hover:bg-secondary-bg/20 active:scale-[0.98] focus:outline-none"
+          )}
         >
           <ChatAvatar
             chatAvatar={chat?.avatar}
@@ -37,10 +42,16 @@ export const MessageTitle = ({ chat }: IMessageTitleProps) => {
           />
 
           <div className="flex flex-col items-start min-w-0">
-            <TruncateName className="text-sm font-semibold text-primary-color md:text-base">
+            <TruncateName className={cn(
+              "text-sm font-semibold text-primary-color",
+              "md:text-base",
+            )}>
               {chat?.name}
             </TruncateName>
-            <span className="text-xs text-secondary-color truncate md:text-sm">
+            <span className={cn(
+              "text-xs text-secondary-color truncate",
+              "md:text-sm",
+            )}>
               {chat?.chatMembers?.length} участников
             </span>
           </div>

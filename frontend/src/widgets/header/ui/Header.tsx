@@ -1,31 +1,28 @@
 "use client";
 
 import { useBurgerStore, BurgerButton } from "@/features/burger-button";
-import { SearchInput, SearchModal } from "@/features/search";
+import { SearchInput, useSearchChatStore } from "@/features/search";
 import { ChangeEvent, useEffect, useState } from "react";
 import { BurgerMenu } from "./burger/BurgerMenu";
 import { BURGER_ITEMS } from "../model/burger-items";
 import { Container } from "@/shared/ui";
-import { SettingsModal, useSettingsStore } from "@/features/settings";
-import { useSearchChatStore } from "@/features/search/search-chat/model/search-chat-store";
+import { useSettingsStore } from "@/features/settings";
 import { useSearch } from "@/entities/chat";
-import { ChatCreateModal, useChatCreateStore } from "@/features/chat-create";
+import { useChatCreateStore } from "@/features/chat-create";
 import { useMobileMessages } from "@/features/mobile-messages";
 
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { isOpen, handleOpen } = useBurgerStore();
-  const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } =
+  const { handleOpen: handleSettingsOpen } =
     useSettingsStore();
   const {
     setSearchResult,
-    searchResult,
-    isOpen: isOpenSearch,
     handleOpen: handleSearchOpen,
   } = useSearchChatStore();
   const { handleOpen: handleCreateChatOpen } = useChatCreateStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
-  const { data: search, isLoading } = useSearch(searchInput);
+  const { data: search } = useSearch(searchInput);
 
   useEffect(() => {
     if (!searchInput.trim()) {
@@ -64,18 +61,7 @@ export const Header = () => {
           handleInput={handleInput}
           handleOpen={handleSearchOpen}
         />
-
-        <SearchModal
-          chats={searchResult || []}
-          isOpen={isOpenSearch}
-          handleOpen={handleSearchOpen}
-          setSearchInput={setSearchInput}
-          isLoading={isLoading}
-        />
-
-        <ChatCreateModal />
       </Container>
-      <SettingsModal isOpen={isOpenSettings} handleOpen={handleSettingsOpen} />
     </header>
   );
 };

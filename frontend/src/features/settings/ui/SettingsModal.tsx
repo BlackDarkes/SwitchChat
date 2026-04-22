@@ -11,13 +11,11 @@ import {
 } from "@/shared/ui";
 import { Languages } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+import { useSettingsStore } from "../model/settings-store";
 
-interface ISettingsModalProps {
-  isOpen: boolean;
-  handleOpen: () => void;
-}
-
-export const SettingsModal = ({ isOpen, handleOpen }: ISettingsModalProps) => {
+export const SettingsModal = () => {
+  const { isOpen, handleOpen } =
+      useSettingsStore();
   const [language, setLanguage] = useState<string>("ru");
 
   return (

@@ -71,7 +71,10 @@ export const ChatIsland = () => {
           <button
             type="button"
             onClick={handleOpenProfile}
-            className="cursor-pointer transition-all duration-200 ease-out hover:scale-105 active:scale-95 focus:outline-none"
+            className={cn(
+              "cursor-pointer transition-all duration-200 ease-out",
+              "hover:scale-105 active:scale-95 focus:outline-none"
+            )}
           >
             <UserAvatar userAvatar={user?.avatar} userName={user?.name} />
           </button>

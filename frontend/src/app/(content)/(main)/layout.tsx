@@ -1,7 +1,6 @@
 "use client";
 
 import { useMobileMessages } from "@/features/mobile-messages";
-import { ProfileModal, useProfileStore } from "@/features/profile";
 import { cn } from "@/shared/lib/utils";
 import { ChatIsland } from "@/widgets/chat-island";
 import { usePathname } from "next/navigation";
@@ -19,12 +18,6 @@ export default function MainLayout({
   favorites: React.ReactNode;
 }) {
   const { isOpen } = useMobileMessages();
-  const {
-    isOpen: profileIsOpen,
-    user,
-    isMyProfile,
-    closeProfile,
-  } = useProfileStore();
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const pathName = usePathname();
 
@@ -78,13 +71,6 @@ export default function MainLayout({
       >
         {messages}
       </aside>
-
-      <ProfileModal
-        user={user}
-        isOpen={profileIsOpen}
-        isMyProfile={isMyProfile}
-        handleOpen={closeProfile}
-      />
     </main>
   );
 }

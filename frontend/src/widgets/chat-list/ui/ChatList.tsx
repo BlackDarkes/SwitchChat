@@ -5,6 +5,7 @@ import { Container } from "@/shared/ui";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { ChatListSkeleton } from "./ChatListSkeleton";
 import { IChat } from "@/shared/types";
+import { cn } from "@/shared/lib/utils";
 
 interface IChatListProps {
   chats: IChat[] | undefined;
@@ -19,7 +20,10 @@ export const ChatList = ({ chats, isPending }: IChatListProps) => {
   return (
     <section className="w-full overflow-auto custom-scroll">
       <Container>
-        <ul className="flex flex-col max-h-[calc(100vh-200px)] gap-y-5 pt-5 py-5 after:block after:h-2.5 after:shrink-0 ">
+        <ul className={cn(
+          "flex flex-col max-h-[calc(100vh-200px)] gap-y-5 pt-5 py-5",
+          "after:block after:h-2.5 after:shrink-0"
+        )}>
           {chats?.length ? (
             chats?.map((chat: IChat) => {
               if (chat.type === "DIRECT") {

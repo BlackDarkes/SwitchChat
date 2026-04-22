@@ -5,24 +5,12 @@ import { Pencil, Copy, Check, Upload } from "lucide-react";
 import { UserAvatar } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { copyName } from "@/shared/model/copy-name";
-import { IUser } from "@/shared/types/user/user.interface";
 import { Modal } from "@/shared/ui";
 import { profileUpdateSchema } from "@/entities/user";
 import { useProfileUpdate } from "@/features/profile-update/api/profile-update";
+import { useProfileStore } from "../model/profile-store";
 
-interface IProfileModalProps {
-  user: IUser | undefined;
-  isOpen: boolean;
-  isMyProfile?: boolean;
-  handleOpen: () => void;
-}
-
-export const ProfileModal = ({
-  user,
-  isOpen,
-  isMyProfile = false,
-  handleOpen,
-}: IProfileModalProps) => {
+export const ProfileModal = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,6 +20,12 @@ export const ProfileModal = ({
     avatar: null as File | null,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const {
+    isOpen,
+    user,
+    isMyProfile,
+    closeProfile: handleOpen,
+  } = useProfileStore();
 
   const { mutate: updateProfile, isPending } = useProfileUpdate();
 
@@ -48,7 +42,7 @@ export const ProfileModal = ({
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -121,7 +115,7 @@ export const ProfileModal = ({
                 disabled={isPending}
                 className={cn(
                   "w-full px-3 py-2 rounded-xl border border-border-color bg-primary-bg text-center text-base font-semibold text-primary-color placeholder:text-secondary-color/50 focus:outline-none focus:ring-2 focus:ring-accent-color/50 transition",
-                  errors.name && "border-red-500 focus:ring-red-500/50"
+                  errors.name && "border-red-500 focus:ring-red-500/50",
                 )}
                 placeholder="Ваше имя"
               />
@@ -158,14 +152,16 @@ export const ProfileModal = ({
                 disabled={isPending}
                 className={cn(
                   "w-full px-3 py-2.5 rounded-xl border border-border-color bg-primary-bg text-sm text-primary-color placeholder:text-secondary-color/50 focus:outline-none focus:ring-2 focus:ring-accent-color/50 transition",
-                  errors.email && "border-red-500 focus:ring-red-500/50"
+                  errors.email && "border-red-500 focus:ring-red-500/50",
                 )}
                 placeholder="example@mail.com"
               />
             ) : (
               <p className="text-sm text-primary-color">{user?.email}</p>
             )}
-            <span className="text-xs text-secondary-color select-none">Почта</span>
+            <span className="text-xs text-secondary-color select-none">
+              Почта
+            </span>
             {errors.email && (
               <span className="text-xs text-red-500">{errors.email}</span>
             )}
@@ -181,7 +177,7 @@ export const ProfileModal = ({
                 disabled={isPending}
                 className={cn(
                   "w-full px-3 py-2.5 rounded-xl border border-border-color bg-primary-bg text-sm text-primary-color placeholder:text-secondary-color/50 resize-none focus:outline-none focus:ring-2 focus:ring-accent-color/50 transition",
-                  errors.bio && "border-red-500 focus:ring-red-500/50"
+                  errors.bio && "border-red-500 focus:ring-red-500/50",
                 )}
                 placeholder="Расскажите о себе"
               />
@@ -190,9 +186,13 @@ export const ProfileModal = ({
                 {user.bio}
               </p>
             ) : (
-              <p className="text-sm text-secondary-color italic">Нет описания</p>
+              <p className="text-sm text-secondary-color italic">
+                Нет описания
+              </p>
             )}
-            <span className="text-xs text-secondary-color select-none">Описание</span>
+            <span className="text-xs text-secondary-color select-none">
+              Описание
+            </span>
             {errors.bio && (
               <span className="text-xs text-red-500">{errors.bio}</span>
             )}
@@ -212,7 +212,9 @@ export const ProfileModal = ({
                   <Copy size={14} />
                 )}
               </button>
-              <span className="text-xs text-secondary-color select-none">Тег</span>
+              <span className="text-xs text-secondary-color select-none">
+                Тег
+              </span>
             </div>
           )}
 
@@ -234,7 +236,9 @@ export const ProfileModal = ({
               {errors.avatar && (
                 <span className="text-xs text-red-500">{errors.avatar}</span>
               )}
-              <span className="text-xs text-secondary-color select-none">Аватар</span>
+              <span className="text-xs text-secondary-color select-none">
+                Аватар
+              </span>
             </div>
           )}
         </div>

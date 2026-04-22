@@ -4,12 +4,12 @@ import { useLoginStore } from "@/features/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
-  
+
   const isAuth = useLoginStore((state) => state.isAuth);
-  
+
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [isAuth, pathname, isInitialized, router]);
 
   return <>{children}</>;
-}
+};

@@ -1,31 +1,29 @@
 import { ChatElement, ChatElementDirect } from "@/entities/chat";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { cn } from "@/shared/lib/utils";
-import { IChat } from "@/shared/types";
 import { Container } from "@/shared/ui";
 import { Loader2, SearchX } from "lucide-react";
+import { useSearchChatStore } from "../model/search-chat-store";
 
 interface ISearchModalProps {
-  chats: IChat[];
-  isOpen: boolean;
-  handleOpen: (open: boolean) => void;
-  setSearchInput: (value: string) => void;
   isLoading?: boolean;
 }
 
 export const SearchModal = ({
-  chats,
-  isOpen,
-  handleOpen,
-  setSearchInput,
   isLoading = false,
 }: ISearchModalProps) => {
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
+  const {
+    setSearchResult: setSearchInput,
+    searchResult: chats,
+    isOpen,
+    handleOpen,
+  } = useSearchChatStore();
 
   const handleChatOpen = () => {
     handleOpen(false);
     handleMobileMessagesOpen(false);
-    setSearchInput("");
+    setSearchInput([]);
   };
 
   return (
@@ -37,7 +35,7 @@ export const SearchModal = ({
         "max-md:w-full",
         {
           "opacity-100 pointer-events-auto select-auto": isOpen,
-        }
+        },
       )}
     >
       <Container>

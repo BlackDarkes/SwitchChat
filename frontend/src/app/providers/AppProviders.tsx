@@ -6,6 +6,7 @@ import { AuthProvider } from "./AuthProvider";
 import { SocketContextProvider } from "@/shared/lib/socket";
 import { ThemeProvider } from "./ThemeProvider";
 import { ENV } from "@/shared/config/env";
+import { ModalProvider } from "./ModalProvider";
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   const apiUrl = ENV.api_url;
@@ -14,7 +15,9 @@ export const AppProviders = ({ children }: { children: ReactNode }) => {
     <QueryProvider>
       <AuthProvider>
         <SocketContextProvider apiUrl={apiUrl || ""}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ModalProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </ModalProvider>
         </SocketContextProvider>
       </AuthProvider>
     </QueryProvider>

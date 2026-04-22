@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageTitleLayout } from "@/entities/message";
-import { useHandleBack } from "../model/handle-back";
+import { useHandleBack } from "@/shared/hooks/handle-back";
 import { EllipsisVertical } from "lucide-react";
 import {
   ChatActionMenu,
@@ -11,6 +11,7 @@ import { useLoginStore } from "@/features/auth";
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
 import { useProfileStore } from "@/features/profile";
 import { IChat } from "@/shared/types";
+import { cn } from "@/shared/lib/utils";
 
 interface IMessageTitleDirectProps {
   chat: IChat | undefined;
@@ -38,7 +39,11 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
         <button
           type="button"
           onClick={handleOpenProfile}
-          className="flex min-w-0 flex-1 items-center gap-3 -m-2 p-2 rounded-xl cursor-pointer transition-all duration-200 hover:bg-secondary-bg/20 active:scale-[0.98] focus:outline-none"
+          className={cn(
+            "flex min-w-0 flex-1 items-center gap-3 -m-2 p-2 rounded-xl",
+            "cursor-pointer transition-all duration-200",
+            "hover:bg-secondary-bg/20 active:scale-[0.98] focus:outline-none"
+          )}
         >
           <UserAvatar
             userAvatar={memberUser?.avatar}
@@ -46,7 +51,10 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
             size="middle"
           />
           <div className="flex flex-col min-w-0 text-left">
-            <span className="text-sm font-semibold text-primary-color truncate md:text-base">
+            <span className={cn(
+              "text-sm font-semibold text-primary-color truncate",
+              "md:text-base",
+            )}>
               {memberUser?.name || "Пользователь"}
             </span>
             <span className="text-xs text-secondary-color truncate md:text-sm">
@@ -59,7 +67,10 @@ export const MessageTitleDirect = ({ chat }: IMessageTitleDirectProps) => {
           type="button"
           onClick={handleOpenChatAction}
           aria-label="Меню чата"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:bg-secondary-bg/20 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-color)/50"
+          className={cn(
+            "flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-200",
+            "hover:bg-secondary-bg/20 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-(--accent-color)/50"
+          )}
         >
           <EllipsisVertical className="h-5 w-5 text-secondary-color" />
         </button>
