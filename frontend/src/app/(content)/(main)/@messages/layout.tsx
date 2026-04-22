@@ -16,7 +16,7 @@ export default function MessageLayout({
     if (pathName.includes("chat")) {
       handleMobileMessagesOpen(true);
     }
-  }, [pathName]);
+  }, [pathName, handleMobileMessagesOpen]);
 
   return <>{children}</>;
 }

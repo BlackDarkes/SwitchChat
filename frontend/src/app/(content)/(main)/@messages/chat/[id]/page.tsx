@@ -2,7 +2,7 @@
 
 import { useChatById } from "@/entities/chat";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { ButtonChatJoin } from "@/features/chat-join";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { MessageSubscription } from "@/shared/ui";

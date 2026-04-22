@@ -5,7 +5,7 @@ import { messageApi } from "./messageApi";
 import { useChatSocketSync } from "@/entities/chat/api/useChatSocketSync";
 import { IMessage } from "@/shared/types";
 import { TypeSendMessageSchema } from "../model/validate/send-message-schema";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 
 interface MessagesPageData {
   data: IMessage[];

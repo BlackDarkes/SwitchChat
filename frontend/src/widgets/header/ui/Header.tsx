@@ -1,14 +1,13 @@
 "use client";
 
-import { useBurgerStore } from "@/features/burger-button/model/burger-store";
-import { BurgerButton } from "@/features/burger-button/ui/BurgerButton";
+import { useBurgerStore, BurgerButton } from "@/features/burger-button";
 import { SearchInput, SearchModal } from "@/features/search";
 import { ChangeEvent, useEffect, useState } from "react";
 import { BurgerMenu } from "./burger/BurgerMenu";
 import { BURGER_ITEMS } from "../model/burger-items";
 import { Container } from "@/shared/ui";
 import { SettingsModal, useSettingsStore } from "@/features/settings";
-import { useSearchChatStore } from "@/features/search/model/search-chat-store";
+import { useSearchChatStore } from "@/features/search/search-chat/model/search-chat-store";
 import { useSearch } from "@/entities/chat";
 import { ChatCreateModal, useChatCreateStore } from "@/features/chat-create";
 import { useMobileMessages } from "@/features/mobile-messages";
@@ -16,7 +15,8 @@ import { useMobileMessages } from "@/features/mobile-messages";
 export const Header = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { isOpen, handleOpen } = useBurgerStore();
-  const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } = useSettingsStore();
+  const { isOpen: isOpenSettings, handleOpen: handleSettingsOpen } =
+    useSettingsStore();
   const {
     setSearchResult,
     searchResult,

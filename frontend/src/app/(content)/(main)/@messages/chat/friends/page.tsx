@@ -1,7 +1,7 @@
 "use client";
 
 import { useContact } from "@/entities/contact";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { ContactList } from "@/widgets/contact-list";
 import { MessageTitleContacts } from "@/widgets/message-title";
 import { useSearchUserStore } from "@/features/search";

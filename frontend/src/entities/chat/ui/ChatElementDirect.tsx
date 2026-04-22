@@ -1,6 +1,6 @@
 import { IChat } from "@/shared/types";
 import { ChatElementLayout } from "./chat-layout/ChatElementLayout";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { memo } from "react";
 import { TruncateName } from "@/shared/ui";
 import { ChatAvatar } from "./ChatAvatar";

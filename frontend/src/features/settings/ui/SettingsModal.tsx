@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/shared/ui";
 import { Languages } from "lucide-react";
+import { cn } from "@/shared/lib/utils";
 
 interface ISettingsModalProps {
   isOpen: boolean;
@@ -35,7 +36,10 @@ export const SettingsModal = ({ isOpen, handleOpen }: ISettingsModalProps) => {
           </label>
 
           <Select value={language} onValueChange={setLanguage}>
-            <SelectTrigger className="w-full border-border-color bg-primary-bg text-primary-color focus:ring-accent-color/50 hover:border-secondary-color/50 transition-colors">
+            <SelectTrigger className={cn(
+              "w-full border-border-color bg-primary-bg text-primary-color transition-colors",
+              "focus:ring-accent-color/50 hover:border-secondary-color/50"
+            )}>
               <SelectValue placeholder="Выберите язык" />
             </SelectTrigger>
 

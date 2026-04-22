@@ -1,7 +1,7 @@
 "use client";
 
 import { UserAvatar } from "@/entities/user";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { useProfileStore } from "@/features/profile";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { cn } from "@/shared/lib/utils";
@@ -18,7 +18,7 @@ export const ChatIsland = () => {
     const url = window.location.href;
     if (url.includes("chats")) setType("CHATS");
     else if (url.includes("groups")) setType("GROUPS");
-  }, []);
+  }, [setType]);
 
   const handleOpenProfile = () => {
     if (user) openProfile(user, true);
@@ -32,11 +32,11 @@ export const ChatIsland = () => {
             type="button"
             onClick={() => setType("CHATS")}
             className={cn(
-              "flex items-center justify-center w-12 h-12 rounded-full",
+              "flex items-center justify-center w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] rounded-full",
               "cursor-pointer transition-all duration-200 ease-out",
               "hover:bg-secondary-bg/20 hover:scale-105",
               "active:scale-95 active:bg-secondary-bg/40",
-              "focus:outline-none"
+              "focus:outline-none",
             )}
           >
             <PencilLine
@@ -52,7 +52,7 @@ export const ChatIsland = () => {
             type="button"
             onClick={() => setType("GROUPS")}
             className={cn(
-              "flex items-center justify-center w-12 h-12 rounded-full",
+              "flex items-center justify-center w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] rounded-full",
               "cursor-pointer transition-all duration-200 ease-out",
               "hover:bg-secondary-bg/20 hover:scale-105",
               "active:scale-95 active:bg-secondary-bg/40",

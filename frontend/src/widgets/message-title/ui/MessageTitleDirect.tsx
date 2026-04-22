@@ -7,7 +7,7 @@ import {
   ChatActionMenu,
   useChatActionMenuStore,
 } from "@/features/chat-action-menu";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { UserAvatar } from "@/entities/user/ui/UserAvatar";
 import { useProfileStore } from "@/features/profile";
 import { IChat } from "@/shared/types";

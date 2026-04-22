@@ -86,7 +86,8 @@ export const ChatCreateForm = () => {
             >
               <SelectTrigger
                 className={cn(
-                  "w-full border-border-color bg-primary-bg text-primary-color focus:ring-accent-color/50 hover:border-secondary-color/50 transition-colors",
+                  "w-full border-border-color bg-primary-bg text-primary-color ",
+                  "focus:ring-accent-color/50 hover:border-secondary-color/50 transition-colors",
                   errors.type && "border-red-500 focus:ring-red-500/50",
                 )}
               >
@@ -111,7 +112,8 @@ export const ChatCreateForm = () => {
         disabled={isPending}
         className={cn(
           "w-full px-4 py-3 rounded-xl bg-accent-color text-white font-medium text-sm",
-          "transition-all duration-200 hover:opacity-90 active:scale-[0.98]",
+          "transition-all duration-200",
+          "hover:opacity-90 active:scale-[0.98]",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-color/50",
           "disabled:opacity-50 disabled:cursor-not-allowed",
         )}

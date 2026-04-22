@@ -2,7 +2,7 @@ import Link from "next/link";
 import { IBurgerItems } from "../../model/burger-items";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { Moon, Sun } from "lucide-react";
 
 interface IBurgerMenuItemProps {

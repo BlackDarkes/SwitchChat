@@ -1,6 +1,5 @@
-export { useSearchChatStore } from "./model/search-chat-store";
-export { useSearchUserStore } from "./model/search-user-store";
+export { useSearchChatStore } from "./search-chat";
+export { useSearchUserStore } from "./search-contact";
 
-export { SearchInput } from "./ui/SearchInput"; 
+export { SearchInput, SearchModal } from "./search-chat";
 export { SearchButton } from "./ui/SearchButton";
-export { SearchModal } from "./ui/SearchModal";

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Pencil } from "lucide-react";
-import { useLoginStore } from "@/features/auth/model/login-store";
 import { ChatMemberElement } from "@/entities/chat-member";
+import { useLoginStore } from "@/features/auth";
 import { ChatAvatar } from "@/entities/chat/ui/ChatAvatar";
-import { ChatUpdateForm } from "@/features/chat-update/ui/ChatUpdateForm"; // Путь к форме выше
+import { ChatUpdateForm } from "@/features/chat-update";
 import { useProfileStore } from "@/features/profile";
 import { useHandleOpenProfile } from "@/shared/hooks/handle-open-profile";
 import { copyName } from "@/shared/model/copy-name";

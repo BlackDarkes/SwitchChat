@@ -1,11 +1,8 @@
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { MessageButton } from "./message-button/MessageButton";
 import { MessageInput } from "./message-input/MessageInput";
-import {
-  sendMessageSchema,
-  TypeSendMessageSchema,
-} from "../../../entities/message/model/validate/send-message-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { sendMessageSchema, TypeSendMessageSchema } from "@/entities/message";
 import { useChatMessages } from "@/entities/message/api/useChatMessages";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";

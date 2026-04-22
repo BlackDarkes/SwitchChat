@@ -1,7 +1,7 @@
 "use client";
 
 import { useChatFavorites } from "@/entities/chat";
-import { useLoginStore } from "@/features/auth/model/login-store";
+import { useLoginStore } from "@/features/auth";
 import { ChatFavorites } from "@/widgets/chat-favorites";
 
 export default function Page() {
