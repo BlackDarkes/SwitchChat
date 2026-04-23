@@ -2,7 +2,7 @@
 
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { messageApi } from "./messageApi";
-import { useChatSocketSync } from "@/entities/chat/api/useChatSocketSync";
+import { useChatSocketSync } from "@/entities/chat";
 import { IMessage } from "@/shared/types";
 import { TypeSendMessageSchema } from "../model/validate/send-message-schema";
 import { useLoginStore } from "@/features/auth";

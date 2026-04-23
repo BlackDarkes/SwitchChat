@@ -1,17 +1,16 @@
 "use client";
 
 import { chatApi } from "@/entities/chat";
-import { useChatMessages } from "@/entities/message/api/useChatMessages";
+import { useChatMessages } from "@/entities/message";
 import { useMobileMessages } from "@/features/mobile-messages";
 import { IChat } from "@/shared/types";
-import { MessageField } from "@/widgets/message-field/ui/MessageField";
+import { MessageField } from "@/widgets/message-field";
 import { MessageList } from "@/widgets/message-list";
-import { MessageTitleSelf } from "@/widgets/message-title";
+import { MessageTitleSelf } from "@/widgets/message-titles";
 import { useEffect, useRef, useState } from "react";
 
 export default function Page() {
   const [chat, setChat] = useState<IChat | undefined>();
-  const [id, setId] = useState<string | undefined>(undefined);
   const { handleOpen: handleMobileMessagesOpen } = useMobileMessages();
   const searchRef = useRef(true);
 
@@ -24,7 +23,6 @@ export default function Page() {
       const selfChat = await chatApi.getSelfChat();
 
       setChat(selfChat);
-      setId(selfChat?.id);
     };
 
     fetchChat();
@@ -32,7 +30,7 @@ export default function Page() {
     return () => {
       searchRef.current = false;
     };
-  }, []);
+  }, [handleMobileMessagesOpen]);
 
   const chatId = chat?.id ?? "";
 

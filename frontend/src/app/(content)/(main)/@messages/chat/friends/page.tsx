@@ -3,7 +3,7 @@
 import { useContact } from "@/entities/contact";
 import { useLoginStore } from "@/features/auth";
 import { ContactList } from "@/widgets/contact-list";
-import { MessageTitleContacts } from "@/widgets/message-title";
+import { MessageTitleContacts } from "@/widgets/message-titles";
 import { useSearchUserStore } from "@/features/search";
 import { ContactSearchList } from "@/widgets/contact-search-list";
 import { useEffect, useRef } from "react";
@@ -31,13 +31,16 @@ export default function Page() {
     <div className="flex flex-col h-screen">
       <MessageTitleContacts />
 
-      <Container mod="default" className="relative w-full flex-1 overflow-hidden mt-2.5">
+      <Container
+        mod="default"
+        className="relative w-full flex-1 overflow-hidden mt-2.5"
+      >
         <div
           className={cn(
             "absolute inset-0 pt-px w-full overflow-y-auto transition-all duration-300 ease-out",
             isOpen
               ? "opacity-0 -translate-y-4 pointer-events-none"
-              : "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-100 translate-y-0 pointer-events-auto",
           )}
         >
           <ContactList contacts={contacts || []} user={user} />
@@ -48,7 +51,7 @@ export default function Page() {
             "absolute inset-0 pt-px w-full overflow-y-auto transition-all duration-300 ease-out",
             isOpen
               ? "opacity-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 translate-y-4 pointer-events-none"
+              : "opacity-0 translate-y-4 pointer-events-none",
           )}
         >
           <ContactSearchList user={user} />

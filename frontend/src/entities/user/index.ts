@@ -1,3 +1,6 @@
+export { userApi } from "./api/userApi";
+export { useSearchUser } from "./api/useSearchUser";
+
 export {
   type TypeLoginSchema,
   loginSchema,
@@ -10,8 +13,5 @@ export {
   type TypeProfileUpdateSchema,
   profileUpdateSchema,
 } from "./model/validate/profile-update-schema";
-
-export { userApi } from "./api/userApi";
-export { useSearchUser } from "./api/useSearchUser";
 
 export { UserAvatar } from "./ui/UserAvatar";

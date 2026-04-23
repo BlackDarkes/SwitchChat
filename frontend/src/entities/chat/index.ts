@@ -7,6 +7,7 @@ export {
   useChatById,
   useChatFavorites,
 } from "./api/useChat";
+export { useChatSocketSync } from "./api/useChatSocketSync";
 export { useSearch } from "./api/useSearchChat";
 
 export type { TypeCreateChatSchema } from "./model/validate/create-chat-schema";

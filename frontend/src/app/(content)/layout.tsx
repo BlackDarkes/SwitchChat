@@ -1,5 +1,3 @@
-import { Toaster } from "sonner";
-
 export default function ContentLayout({
   children,
 }: {
@@ -8,7 +6,6 @@ export default function ContentLayout({
   return (
     <>
       {children}
-      <Toaster position="bottom-right" closeButton={true} duration={5000} />
     </>
   );
 }

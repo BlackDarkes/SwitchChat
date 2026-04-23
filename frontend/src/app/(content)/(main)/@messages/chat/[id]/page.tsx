@@ -1,14 +1,14 @@
 "use client";
 
 import { useChatById } from "@/entities/chat";
-import { useChatMessages } from "@/entities/message/api/useChatMessages";
+import { useChatMessages } from "@/entities/message";
 import { useLoginStore } from "@/features/auth";
 import { ButtonChatJoin } from "@/features/chat-join";
 import { useTypeChatStore } from "@/features/switch-type-chat";
 import { MessageSubscription } from "@/shared/ui";
 import { MessageField } from "@/widgets/message-field";
 import { MessageList } from "@/widgets/message-list";
-import { MessageTitle, MessageTitleDirect } from "@/widgets/message-title";
+import { MessageTitle, MessageTitleDirect } from "@/widgets/message-titles";
 import { redirect, useParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -50,7 +50,8 @@ export default function Page() {
             )) ||
           chat?.ownerId === user?.id ? (
             <MessageField />
-          ) : chat?.type === "GROUP" && chat?.chatMembers.some((member) => member.userId === user?.id) ? (
+          ) : chat?.type === "GROUP" &&
+            chat?.chatMembers.some((member) => member.userId === user?.id) ? (
             <MessageField />
           ) : chat?.type === "CHANNEL" &&
             chat?.chatMembers.some(

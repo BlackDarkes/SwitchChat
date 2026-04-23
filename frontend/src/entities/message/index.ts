@@ -1,4 +1,5 @@
 export { messageApi } from "./api/messageApi";
+export { useChatMessages } from "./api/useChatMessages";
 export { useMessages } from "./api/useMessages";
 
 export {
