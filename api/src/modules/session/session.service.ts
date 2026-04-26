@@ -48,13 +48,6 @@ export class SessionService {
 	}
 
 	async removeSession(refreshToken: string) {
-		const existingSession =
-			await this.sessionRepository.findSessionbyRefreshToken(refreshToken);
-
-		if (!existingSession) {
-			throw new BadRequestException("Сессия не найдена");
-		}
-
 		return this.sessionRepository.removeSession(refreshToken);
 	}
 }
