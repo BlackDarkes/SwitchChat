@@ -11,8 +11,8 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-ENV API_URL=http://localhost:8000
 ENV NODE_ENV=production
+ENV API_URL=http://localhost:8000
 
 RUN pnpm build
 
@@ -21,12 +21,12 @@ RUN pnpm build
 FROM node:24-alpine AS run
 WORKDIR /app
 
-ENV API_URL=http://localhost:8000
 ENV NODE_ENV=production
+ENV API_URL=http://localhost:8000
 
-COPY --from=build /app/public ./public
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
+COPY --from=build /app/public ./public
 
 EXPOSE 3000
 

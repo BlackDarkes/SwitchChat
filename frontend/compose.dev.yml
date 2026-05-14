@@ -1,0 +1,17 @@
+services:
+  frontend:
+    container_name: next_web_dev
+    image: node:24-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://localhost:8000
+      - API_URL2=http://192.168.0.128:8000
+      - HOST=0.0.0.0
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: sh -c "corepack enable && pnpm install && pnpm dev"
