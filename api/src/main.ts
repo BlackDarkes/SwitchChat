@@ -15,6 +15,7 @@ async function bootstrap() {
 			config.get<string>("CLIENT_URL"),
 			config.get<string>("CLIENT_URL_2"),
 			config.get<string>("CLIENT_URL_3"),
+			config.get<string>("CLIENT_URL_4"),
 		],
 		credentials: true,
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
