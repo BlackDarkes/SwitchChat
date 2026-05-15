@@ -1,1 +1,70 @@
-version: "1.0"
+services:
+  bd:
+    image: postgres:16-alpine
+    container_name: nest_prod_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./prisma/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - app-network
+
+  api:
+    container_name: nest_backend_prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${PORT}
+      CLIENT_URL: ${CLIENT_URL}
+      CLIENT_URL_2: ${CLIENT_URL_2}
+      CLIENT_URL_3: ${CLIENT_URL_3}
+      CLIENT_URL_4: ${CLIENT_URL_4}
+      ADMIN_URL: ${ADMIN_URL}
+
+      TTL_ACCESS_TOKEN: ${TTL_ACCESS_TOKEN}
+      TTL_REFRESH_TOKEN: ${TTL_REFRESH_TOKEN}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+
+      DATABASE_URL: ${DATABASE_URL}
+      
+      SECRET_JWT: ${SECRET_JWT}
+    
+    depends_on:
+      bd: 
+        condition: service_healthy
+    ports:
+      - "${PORT}:${PORT}"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: 1
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8000/health', r => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pg_data:
