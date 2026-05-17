@@ -1,3 +1,5 @@
+"use client"
+
 import { useContact } from "@/entities/contact";
 import { useLoginStore } from "@/features/auth";
 import { ContactList } from "@/widgets/contact-list";

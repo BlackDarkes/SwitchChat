@@ -7,13 +7,13 @@ RUN corepack enable
 
 COPY package* pnpm-lock.yaml ./
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . . 
 
-RUN pnpm build
+RUN pnpm prisma generate
 
-RUN pnpm prune --prod
+RUN pnpm build
 
 
 # Запуск
@@ -28,7 +28,11 @@ ENV HOST=0.0.0.0
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=build /app/prisma ./prisma
+
+RUN npx prisma generate
 
 EXPOSE 8000
 
-CMD [ "node", "dist/main.js" ]
+CMD [ "node", "dist/src/main.js" ]
