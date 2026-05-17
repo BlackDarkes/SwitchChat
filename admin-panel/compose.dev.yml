@@ -1,0 +1,29 @@
+services:
+  admin-panel:
+    container_name: admin_panel_dev
+    image: node:24-alpine
+    working_dir: /app
+    ports:
+      - "8080:8080"
+      - "24678:24678"
+    environment:
+      - NODE_ENV=dev
+
+      - VITE_API_URL=http://localhost:8000
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/dist
+    
+    command: sh -c "corepack enable && pnpm install && pnpm dev"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
