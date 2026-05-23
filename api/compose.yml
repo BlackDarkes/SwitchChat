@@ -1,6 +1,6 @@
 services:
   bd:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     container_name: nest_prod_db
     restart: always
     environment:
@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./prisma/data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 10s
